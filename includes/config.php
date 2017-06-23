@@ -8,9 +8,7 @@ define( 'THEME_STATIC_URL', THEME_URL . '/static' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL . '/css' );
 define( 'THEME_JS_URL', THEME_STATIC_URL . '/js' );
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
-define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
-	// TODO
-) ) );
+
 
 function __init__() {
 	add_theme_support( 'post-thumbnails' );
@@ -53,6 +51,13 @@ add_action( 'after_setup_theme', '__init__' );
 
 function define_customizer_sections( $wp_customize ) {
 	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'analytics',
+		array(
+			'title' => 'Analytics'
+		)
+	);
+
+	$wp_customize->add_section(
 		THEME_CUSTOMIZER_PREFIX . 'webfonts',
 		array(
 			'title' => 'Web Fonts'
@@ -64,12 +69,38 @@ add_action( 'customize_register', 'define_customizer_sections' );
 
 
 function define_customizer_fields( $wp_customize ) {
+	// Analytics
+	$wp_customize->add_setting(
+		'gw_verify'
+	);
+
+	$wp_customize->add_control(
+		'gw_verify',
+		array(
+			'type'        => 'text',
+			'label'       => 'Google WebMaster Verification',
+			'description' => 'Example: <em>9Wsa3fspoaoRE8zx8COo48-GCMdi5Kd-1qFpQTTXSIw</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'analytics'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'ga_account'
+	);
+
+	$wp_customize->add_control(
+		'ga_account',
+		array(
+			'type'        => 'text',
+			'label'       => 'Google Analytics Account',
+			'description' => 'Example: <em>UA-9876543-21</em>. Leave blank for development.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'analytics'
+		)
+	);
+
 	// Web Fonts
 	$wp_customize->add_setting(
-		'cloud_typography_key',
-		array(
-			'default' => get_theme_mod_default( 'cloud_typography_key' )
-		)
+		'cloud_typography_key'
 	);
 
 	$wp_customize->add_control(
