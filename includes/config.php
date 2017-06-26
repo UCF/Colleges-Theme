@@ -31,18 +31,23 @@ function __init__() {
 	register_nav_menu( 'footer-menu-2', __( 'Footer Menu 2' ) );
 
 	register_sidebar( array(
-		'name' => __( 'Footer - Column One' ),
-		'id' => 'footer-one',
-		'description' => 'Far left column in footer on the bottom of pages. If left empty, this column will contain a UCF logo and your organization\'s address.',
+		'name' => __( 'Footer - Column 1' ),
+		'id' => 'footer-col-1',
+		'description' => 'Center column in footer, on the bottom of pages.',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
+		'before_title'  => '<h2 class="h6 heading-underline letter-spacing-3">',
+		'after_title'   => '</h2>',
 	) );
+
 	register_sidebar( array(
-		'name' => __( 'Footer - Column Two' ),
-		'id' => 'footer-two',
-		'description' => 'Second column from the left in footer, on the bottom of pages.',
+		'name' => __( 'Footer - Column 2' ),
+		'id' => 'footer-col-2',
+		'description' => 'Far right column in footer, on the bottom of pages.',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
+		'before_title'  => '<h2 class="h6 heading-underline letter-spacing-3">',
+		'after_title'   => '</h2>',
 	) );
 }
 
@@ -69,6 +74,21 @@ add_action( 'customize_register', 'define_customizer_sections' );
 
 
 function define_customizer_fields( $wp_customize ) {
+	// Site Identity
+	$wp_customize->add_setting(
+		'organization_address'
+	);
+
+	$wp_customize->add_control(
+		'organization_address',
+		array(
+			'type'        => 'textarea',
+			'label'       => 'Organization Address',
+			'description' => 'The address of your organization.',
+			'section'     => 'title_tagline'
+		)
+	);
+
 	// Analytics
 	$wp_customize->add_setting(
 		'gw_verify'

@@ -138,3 +138,21 @@ function get_media_background_video( $videos, $loop=false ) {
 <?php
 	return ob_get_clean();
 }
+
+
+/**
+ * Display college address information
+ **/
+function display_contact_address() {
+	$address = get_theme_mod( 'organization_address' );
+	if ( !empty( $address ) ) {
+		ob_start();
+	?>
+	<address class="address">
+		<?php echo wptexturize( nl2br( $address ) ); ?>
+	</address>
+	<?php
+		return ob_get_clean();
+	}
+	return;
+}
