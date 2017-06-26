@@ -98,13 +98,13 @@ function get_header_title( $post ) {
 	$title = '';
 
 	if ( is_front_page() ) {
-		$title = get_field( $post->ID, 'homepage_header_title', true );
+		$title = get_field( 'homepage_header_title', $post->ID );
 	}
 	else if ( $post->post_type == 'person' ) {
 		$title = 'Faculty and Research'; // TODO make this configurable
 	}
 	else {
-		$title = get_field( $post->ID, 'page_header_title', true );
+		$title = get_field( 'page_header_title', $post->ID );
 	}
 
 	if ( !$title ) {
@@ -126,10 +126,29 @@ function get_header_subtitle( $post ) {
 		$subtitle = get_bloginfo( 'name' ); // TODO make this configurable
 	}
 	else {
-		$subtitle = get_field( $post->ID, 'page_header_subtitle', true );
+		$subtitle = get_field( 'page_header_subtitle', $post->ID );
 	}
 
 	return $subtitle;
+}
+
+
+/**
+ * Returns markup for a call-to-action button in the homepage header.
+ **/
+function get_homepage_header_cta( $post, $position ) {
+	if ( $post->ID !== intval( get_option( 'page_on_front' ) ) ) { return false; }
+
+	$btn_text = get_field( 'homepage_button_' . $position . '_text', $post->ID );
+	$btn_href = get_field( 'homepage_button_' . $position . '_url', $post->ID );
+
+	if ( !$btn_text || !$btn_href ) { return false; }
+
+	ob_start();
+?>
+<a class="btn btn-outline-inverse header-button" href="<?php echo $btn_href; ?>"><?php echo wptexturize( $btn_text ); ?></a>
+<?php
+	return ob_get_clean();
 }
 
 
@@ -141,10 +160,9 @@ function get_header_media_markup( $post ) {
 	$title               = get_header_title( $post );
 	$subtitle            = get_header_subtitle( $post );
 
-	// TODO these buttons need new fields for specifying an href value
-	$homepage_button_left_text   = get_field( $post->ID, 'homepage_button_left_text', true );
-	$homepage_button_center_text = get_field( $post->ID, 'homepage_button_center_text', true );
-	$homepage_button_right_text  = get_field( $post->ID, 'homepage_button_right_text', true );
+	$homepage_button_left   = get_homepage_header_cta( $post, 'left' );
+	$homepage_button_center = get_homepage_header_cta( $post, 'center' );
+	$homepage_button_right  = get_homepage_header_cta( $post, 'right' );
 
 	$videos     = get_header_videos( $post );
 	$images     = get_header_images( $post );
@@ -176,61 +194,64 @@ function get_header_media_markup( $post ) {
 			}
 			?>
 			<div class="header-content">
-				<div class="header-content-flexfix">
-					<?php if ( is_front_page() ) : ?>
-						<div class="header-content-inner d-flex h-100 mt-5">
-							<div class="container">
-								<div class="row">
-									<div class="col-md-8 offset-md-2 col-12 offset-xs-0">
-										<div class="home-header-title-wrapper">
-											<h2 class="h1 header-title"><?php echo $title ?></h2>
-											<div class="header-button-wrapper d-md-flex">
-												<?php if ( $homepage_button_left_text ) : ?>
-													<button type="button" class="btn btn-outline-inverse header-button"><?php echo do_shortcode( $homepage_button_left_text ); ?></button>
-												<?php endif; ?>
-												<?php if ( $homepage_button_center_text ) : ?>
-													<button type="button" class="btn btn-outline-inverse header-button"><?php echo do_shortcode( $homepage_button_center_text ); ?></button>
-												<?php endif; ?>
-												<?php if ( $homepage_button_right_text ) : ?>
-													<button type="button" class="btn btn-outline-inverse header-button"><?php echo do_shortcode( $homepage_button_right_text ); ?></button>
-												<?php endif; ?>
-											</div>
-										</div>
-										<div class="chevron-wrapper h-100 d-flex align-items-end justify-content-center">
-											<a href="#article-home">
-												<span class="fa fa-chevron-down" aria-hidden="true"></span>
-											</a>
-										</div>
-									</div>
+
+			<?php if ( is_front_page() ) : ?>
+				<div class="container d-flex flex-column justify-content-between">
+					<div class="row">
+						<div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-12">
+							<div class="home-header-title-wrapper bg-default-t-1">
+								<h2 class="h1 header-title mb-0"><?php echo $title ?></h2>
+								<?php if ( $homepage_button_left || $homepage_button_center || $homepage_button_right ): ?>
+								<div class="row mt-3 mt-md-4">
+									<?php if ( $homepage_button_left ) : ?>
+									<div class="col-md d-flex justify-content-center align-items-center"><?php echo $homepage_button_left; ?></div>
+									<?php endif; ?>
+
+									<?php if ( $homepage_button_center ) : ?>
+									<div class="col-md d-flex justify-content-center align-items-center"><?php echo $homepage_button_center; ?></div>
+									<?php endif; ?>
+
+									<?php if ( $homepage_button_right ) : ?>
+									<div class="col-md d-flex justify-content-center align-items-center"><?php echo $homepage_button_right; ?></div>
+									<?php endif; ?>
 								</div>
+								<?php endif;?>
 							</div>
 						</div>
-					<?php elseif ( $header_right_layout ) : ?>
-						<div class="container">
-							<div class="row">
-								<div class="col-md-6 offset-md-6 col-sm-7 col-sm-offset-5">
-									<div class="header-right-title-wrapper">
-										<h1 class="header-right-title"><?php echo $title; ?></h1>
-										<p class="header-right-subtitle"><?php echo $subtitle; ?></p>
-									</div>
-									<!-- TODO social buttons here (via plugin) -->
-								</div>
-							</div>
-						</div>
-					<?php else : ?>
-						<div class="container">
-							<div class="row">
-								<div class="col-12">
-									<div class="header-title-wrapper">
-										<h1 class="header-title"><?php echo $title; ?></h1>
-										<p class="header-subtitle"><?php echo $subtitle; ?></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					<?php endif; ?>
+					</div>
+					<div class="chevron-wrapper">
+						<a href="#article-home">
+							<span class="fa fa-chevron-down" aria-hidden="true"></span>
+						</a>
+					</div>
 				</div>
+			<?php elseif ( $header_right_layout ) : ?>
+				<div class="container d-flex align-items-center">
+					<div class="row">
+						<div class="col-md-6 offset-md-6 col-sm-7 col-sm-offset-5">
+							<div class="header-right-title-wrapper">
+								<h1 class="header-right-title"><?php echo $title; ?></h1>
+								<?php if ( $subtitle ): ?>
+								<p class="header-right-subtitle"><?php echo $subtitle; ?></p>
+								<?php endif; ?>
+							</div>
+							<!-- TODO social buttons here (via plugin) -->
+						</div>
+					</div>
+				</div>
+			<?php else : ?>
+				<div class="container d-flex align-items-center">
+					<div class="header-title-wrapper">
+						<h1 class="header-title"><?php echo $title; ?></h1>
+						<?php if ( $subtitle ): ?>
+						<p class="header-subtitle"><?php echo $subtitle; ?></p>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+
 			</div>
+		</div>
 <?php
 	endif;
 	return ob_get_clean();
