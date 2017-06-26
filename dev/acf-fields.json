@@ -474,8 +474,8 @@
             },
             {
                 "key": "field_5925d351ac3e8",
-                "label": "Page Header Sub Title",
-                "name": "page_header_sub_title",
+                "label": "Page Header Subtitle",
+                "name": "page_header_subtitle",
                 "type": "text",
                 "instructions": "",
                 "required": 0,

@@ -6,5 +6,6 @@
 	<body ontouchstart <?php body_class(); ?>>
 		<?php do_action( 'after_body_open' ); ?>
 		<header>
-			<!-- TODO -->
+			<?php echo get_header_markup(); ?>
 		</header>
+		<main>

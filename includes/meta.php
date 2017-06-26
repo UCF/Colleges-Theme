@@ -10,7 +10,7 @@
 function enqueue_frontend_assets() {
 	wp_enqueue_style( 'style', THEME_CSS_URL . '/style.min.css' );
 
-	if ( $fontkey = get_theme_mod_or_default( 'cloud_typography_key' ) ) {
+	if ( $fontkey = get_theme_mod( 'cloud_typography_key' ) ) {
 		wp_enqueue_style( 'webfont', $fontkey );
 	}
 

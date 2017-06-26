@@ -4,6 +4,8 @@ include_once 'includes/config.php';
 include_once 'includes/meta.php';
 include_once 'includes/wp-bs-navwalker.php';
 
+include_once 'includes/header-functions.php';
+
 
 /**
  * Returns an array of src's for a media background <picture>'s <source>s by
