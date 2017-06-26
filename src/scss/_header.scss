@@ -9,8 +9,14 @@
   padding-top: .7rem;
 }
 
-.navbar-nav .nav-link {
-  font-weight: 500;
+.navbar-nav {
+  @include media-breakpoint-only(md) {
+    margin-right: 0;
+  }
+
+  .nav-link {
+    font-weight: 500;
+  }
 }
 
 

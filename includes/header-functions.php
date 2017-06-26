@@ -48,8 +48,8 @@ function get_nav_markup() {
 					'container_class' => 'collapse navbar-collapse',
 					'container_id'    => 'header-menu',
 					'menu_class'      => 'nav navbar-nav ml-md-auto',
-					'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
-					'walker'          => new WP_Bootstrap_Navwalker()
+					'fallback_cb'     => 'bs4Navwalker::fallback',
+					'walker'          => new bs4Navwalker()
 				) );
 			?>
 		</div>
