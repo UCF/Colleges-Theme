@@ -188,14 +188,14 @@ add_filter( 'redirect_canonical', 'no_redirect_on_404' );
 
 
 /**
- * Kill attachment pages, author pages, daily archive pages, search, and feeds.
+ * Kill attachment pages, author pages, daily archive pages, and feeds.
  *
  * http://betterwp.net/wordpress-tips/disable-some-wordpress-pages/
  **/
 function kill_unused_templates() {
 	global $wp_query, $post;
 
-	if ( is_author() || is_attachment() || is_day() || is_search() || is_feed() ) {
+	if ( is_author() || is_attachment() || is_day() || is_feed() ) {
 		wp_redirect( home_url() );
 		exit();
 	}
