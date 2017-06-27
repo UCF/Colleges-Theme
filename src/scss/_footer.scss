@@ -1,0 +1,8 @@
+.primary-footer-section-center,
+.primary-footer-section-right {
+  &:not(:empty) {
+    @include media-breakpoint-down(md) {
+      margin-top: $spacer-y;
+    }
+  }
+}

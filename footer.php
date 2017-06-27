@@ -9,22 +9,12 @@
 							<!-- TODO social buttons (via plugin) -->
 						</section>
 					</div>
-
-					<?php if ( is_active_sidebar( 'footer-col-1' ) ): ?>
 					<div class="col-lg-4">
-						<section class="primary-footer-section-center">
-							<?php dynamic_sidebar( 'footer-col-1' ); ?>
-						</section>
+						<section class="primary-footer-section-center"><?php dynamic_sidebar( 'footer-col-1' ); ?></section>
 					</div>
-					<?php endif; ?>
-
-					<?php if ( is_active_sidebar( 'footer-col-2' ) ): ?>
 					<div class="col-lg-4">
-						<section class="primary-footer-section-right">
-							<?php dynamic_sidebar( 'footer-col-2' ); ?>
-						</section>
+						<section class="primary-footer-section-right"><?php dynamic_sidebar( 'footer-col-2' ); ?></section>
 					</div>
-					<?php endif; ?>
 				</div>
 			</div>
 		</footer>
