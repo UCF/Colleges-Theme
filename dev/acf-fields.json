@@ -45,10 +45,10 @@
             },
             {
                 "key": "field_593ab7a188cdf",
-                "label": "Header Right Layout",
-                "name": "page_header_right_layout",
-                "type": "true_false",
-                "instructions": "If checked the alternate header layout with copy aligned right and social icons is used.",
+                "label": "Header Content Position",
+                "name": "page_header_content_position",
+                "type": "select",
+                "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -56,11 +56,20 @@
                     "class": "",
                     "id": ""
                 },
-                "message": "",
-                "default_value": 0,
+                "choices": {
+                    "left": "Left",
+                    "center": "Center",
+                    "right": "Right"
+                },
+                "default_value": [
+                    "left"
+                ],
+                "allow_null": 0,
+                "multiple": 0,
                 "ui": 0,
-                "ui_on_text": "",
-                "ui_off_text": ""
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
             },
             {
                 "key": "field_590ca625f6657",
@@ -83,7 +92,7 @@
                 "label": "Header Image (-sm+)",
                 "name": "page_header_image",
                 "type": "image",
-                "instructions": "Header image to display at the -sm breakpoint and up. Recommend size: 1600 × 600",
+                "instructions": "Header image to display at the -sm breakpoint and up. Recommend size: 1600 \u00d7 600",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -212,7 +221,7 @@
                 {
                     "param": "post_type",
                     "operator": "==",
-                    "value": "person"
+                    "value": "post"
                 }
             ]
         ],
@@ -227,7 +236,7 @@
     },
     {
         "key": "group_5925a89368e73",
-        "title": "Homepage Header Copy",
+        "title": "Homepage Header",
         "fields": [
             {
                 "key": "field_5925a89e1752b",
@@ -451,7 +460,7 @@
     },
     {
         "key": "group_5925d334f18be",
-        "title": "Page Header Copy",
+        "title": "Page Header",
         "fields": [
             {
                 "key": "field_5925d33bac3e7",

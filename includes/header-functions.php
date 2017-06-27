@@ -156,9 +156,23 @@ function get_homepage_header_cta( $post, $position ) {
  * Returns the markup for page headers.
  **/
 function get_header_media_markup( $post ) {
-	$header_right_layout = get_field( 'page_header_right_layout', $post->ID );
-	$title               = get_header_title( $post );
-	$subtitle            = get_header_subtitle( $post );
+	$content_position = get_field( 'page_header_content_position', $post->ID );
+	$title            = get_header_title( $post );
+	$subtitle         = get_header_subtitle( $post );
+
+	$content_cols = '';
+	switch ( $content_position ) {
+		case 'center':
+			$content_cols = 'col-lg-8 offset-lg-2 text-center';
+			break;
+		case 'right':
+			$content_cols = 'col-lg-8 offset-lg-4 text-right';
+			break;
+		case 'left':
+		default:
+			$content_cols = 'col-lg-8';
+			break;
+	}
 
 	$homepage_button_left   = get_homepage_header_cta( $post, 'left' );
 	$homepage_button_center = get_homepage_header_cta( $post, 'center' );
@@ -173,7 +187,7 @@ function get_header_media_markup( $post ) {
 	if ( $images || $videos ) :
 		$header_height = get_field( 'page_header_height', $post->ID );
 ?>
-		<div class="header-media <?php echo $header_height; ?> <?php echo ( $header_right_layout ) ? 'header-right-layout' : ''; ?> media-background-container mb-0 d-flex flex-column">
+		<div class="header-media <?php echo ( is_front_page() ) ? 'header-media-home' : ''; ?> <?php echo $header_height ?: ''; ?> media-background-container mb-0 d-flex flex-column">
 			<?php
 			if ( $videos ) {
 				echo get_media_background_video( $videos, $video_loop );
@@ -225,27 +239,17 @@ function get_header_media_markup( $post ) {
 						</a>
 					</div>
 				</div>
-			<?php elseif ( $header_right_layout ) : ?>
-				<div class="container d-flex align-items-center">
-					<div class="row">
-						<div class="col-md-6 offset-md-6 col-sm-7 col-sm-offset-5">
-							<div class="header-right-title-wrapper">
-								<h1 class="header-right-title"><?php echo $title; ?></h1>
-								<?php if ( $subtitle ): ?>
-								<p class="header-right-subtitle"><?php echo $subtitle; ?></p>
-								<?php endif; ?>
-							</div>
-							<!-- TODO social buttons here (via plugin) -->
-						</div>
-					</div>
-				</div>
 			<?php else : ?>
 				<div class="container d-flex align-items-center">
-					<div class="header-title-wrapper">
-						<h1 class="header-title"><?php echo $title; ?></h1>
-						<?php if ( $subtitle ): ?>
-						<p class="header-subtitle"><?php echo $subtitle; ?></p>
-						<?php endif; ?>
+					<div class="row no-gutters w-100">
+						<div class="<?php echo $content_cols; ?>">
+							<div class="header-title-wrapper">
+								<h1 class="header-title"><?php echo $title; ?></h1>
+								<?php if ( $subtitle ): ?>
+								<p class="header-subtitle"><?php echo $subtitle; ?></p>
+								<?php endif; ?>
+							</div>
+						</div>
 					</div>
 				</div>
 			<?php endif; ?>
