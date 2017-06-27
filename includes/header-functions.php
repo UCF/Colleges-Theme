@@ -26,7 +26,7 @@ function get_sitename_formatted() {
 function get_nav_markup() {
 	ob_start();
 ?>
-	<nav class="navbar navbar-toggleable-md bg-default navbar-inverse" role="navigation">
+	<nav class="navbar navbar-toggleable-md bg-inverse-t-3 navbar-inverse" role="navigation">
 		<div class="container">
 			<?php if ( is_home() ): ?>
 			<h1 class="navbar-brand mb-0">
@@ -146,7 +146,7 @@ function get_homepage_header_cta( $post, $position ) {
 
 	ob_start();
 ?>
-<a class="btn btn-outline-inverse header-button" href="<?php echo $btn_href; ?>"><?php echo wptexturize( $btn_text ); ?></a>
+<a class="btn btn-outline-inverse home-header-button" href="<?php echo $btn_href; ?>"><?php echo wptexturize( $btn_text ); ?></a>
 <?php
 	return ob_get_clean();
 }
@@ -213,8 +213,8 @@ function get_header_media_markup( $post ) {
 				<div class="container d-flex flex-column justify-content-between">
 					<div class="row">
 						<div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-12">
-							<div class="home-header-title-wrapper bg-default-t-1">
-								<h2 class="h1 header-title mb-0"><?php echo $title ?></h2>
+							<div class="home-header-title-wrapper bg-inverse-t-3">
+								<h2 class="h1 home-header-title mb-0"><?php echo $title ?></h2>
 								<?php if ( $homepage_button_left || $homepage_button_center || $homepage_button_right ): ?>
 								<div class="row mt-3 mt-md-4">
 									<?php if ( $homepage_button_left ) : ?>
