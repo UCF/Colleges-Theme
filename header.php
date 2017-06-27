@@ -8,4 +8,4 @@
 		<header>
 			<?php echo get_header_markup(); ?>
 		</header>
-		<main>
+		<main id="main">

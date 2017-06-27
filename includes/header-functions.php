@@ -234,7 +234,7 @@ function get_header_media_markup( $post ) {
 						</div>
 					</div>
 					<div class="chevron-wrapper">
-						<a href="#article-home">
+						<a href="#main">
 							<span class="fa fa-chevron-down" aria-hidden="true"></span>
 						</a>
 					</div>
