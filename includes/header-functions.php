@@ -26,7 +26,7 @@ function get_sitename_formatted() {
 function get_nav_markup() {
 	ob_start();
 ?>
-	<nav class="navbar navbar-toggleable-md bg-inverse-t-3 navbar-inverse" role="navigation">
+	<nav class="navbar navbar-toggleable-md navbar-inverse site-navbar" role="navigation">
 		<div class="container">
 			<?php if ( is_home() ): ?>
 			<h1 class="navbar-brand mb-0">
@@ -212,21 +212,21 @@ function get_header_media_markup( $post ) {
 			<?php if ( is_front_page() ) : ?>
 				<div class="container d-flex flex-column justify-content-between">
 					<div class="row">
-						<div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-12">
-							<div class="home-header-title-wrapper bg-inverse-t-3">
-								<h2 class="h1 home-header-title mb-0"><?php echo $title ?></h2>
+						<div class="col-lg-10 offset-lg-1 col-12">
+							<div class="home-header-title-wrapper">
+								<h2 class="h1 home-header-title mb-0"><?php echo $title; ?></h2>
 								<?php if ( $homepage_button_left || $homepage_button_center || $homepage_button_right ): ?>
 								<div class="row mt-3 mt-md-4">
 									<?php if ( $homepage_button_left ) : ?>
-									<div class="col-md d-flex justify-content-center align-items-center"><?php echo $homepage_button_left; ?></div>
+									<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center"><?php echo $homepage_button_left; ?></div>
 									<?php endif; ?>
 
 									<?php if ( $homepage_button_center ) : ?>
-									<div class="col-md d-flex justify-content-center align-items-center"><?php echo $homepage_button_center; ?></div>
+									<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center"><?php echo $homepage_button_center; ?></div>
 									<?php endif; ?>
 
 									<?php if ( $homepage_button_right ) : ?>
-									<div class="col-md d-flex justify-content-center align-items-center"><?php echo $homepage_button_right; ?></div>
+									<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center"><?php echo $homepage_button_right; ?></div>
 									<?php endif; ?>
 								</div>
 								<?php endif;?>
