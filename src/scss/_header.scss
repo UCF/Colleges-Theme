@@ -51,13 +51,34 @@
   }
 }
 
+.header-title-align-left {
+  text-align: left;
+}
+
+.header-title-align-center {
+  text-align: center;
+}
+
+.header-title-align-right {
+  text-align: right;
+}
+
+.header-title-wrapper {
+  @include clearfix();
+  display: inline-block;
+}
+
 .header-title,
 .header-subtitle {
   clear: both;
   display: block;
   float: left;
 
-  .text-right & {
+  .header-title-align-center & {
+    text-align: left;
+  }
+
+  .header-title-align-right & {
     float: right;
   }
 }
@@ -194,7 +215,7 @@
 
   a {
     color: $brand-primary;
-    font-size: 3rem;
+    font-size: 6rem;
   }
 
   .fa {

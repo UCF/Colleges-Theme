@@ -1,5 +1,5 @@
 		</main>
-		<footer class="bg-inverse py-5">
+		<footer class="site-footer bg-inverse">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4">

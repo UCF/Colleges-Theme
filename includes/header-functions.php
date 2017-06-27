@@ -146,16 +146,18 @@ function get_homepage_header_cta( $post, $position ) {
 
 	ob_start();
 ?>
-<a class="btn btn-outline-inverse home-header-button" href="<?php echo $btn_href; ?>"><?php echo wptexturize( $btn_text ); ?></a>
+<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center">
+	<a class="btn btn-outline-inverse home-header-button" href="<?php echo $btn_href; ?>"><?php echo wptexturize( $btn_text ); ?></a>
+</div>
 <?php
 	return ob_get_clean();
 }
 
 
 /**
- * Returns the markup for page headers.
+ * Returns the markup for page headers with an image or video background.
  **/
-function get_header_media_markup( $post ) {
+function get_header_media_markup( $post, $videos=null, $images=null ) {
 	$content_position = get_field( 'page_header_content_position', $post->ID );
 	$title            = get_header_title( $post );
 	$subtitle         = get_header_subtitle( $post );
@@ -163,10 +165,10 @@ function get_header_media_markup( $post ) {
 	$content_cols = '';
 	switch ( $content_position ) {
 		case 'center':
-			$content_cols = 'col-lg-8 offset-lg-2 text-center';
+			$content_cols = 'col-lg-8 offset-lg-2 header-title-align-center';
 			break;
 		case 'right':
-			$content_cols = 'col-lg-8 offset-lg-4 text-right';
+			$content_cols = 'col-lg-8 offset-lg-4 header-title-align-right';
 			break;
 		case 'left':
 		default:
@@ -178,8 +180,8 @@ function get_header_media_markup( $post ) {
 	$homepage_button_center = get_homepage_header_cta( $post, 'center' );
 	$homepage_button_right  = get_homepage_header_cta( $post, 'right' );
 
-	$videos     = get_header_videos( $post );
-	$images     = get_header_images( $post );
+	$videos     = $videos ?: get_header_videos( $post );
+	$images     = $images ?: get_header_images( $post );
 	$video_loop = get_field( 'page_header_video_loop', $post->ID );
 
 	ob_start();
@@ -217,17 +219,9 @@ function get_header_media_markup( $post ) {
 								<h2 class="h1 home-header-title mb-0"><?php echo $title; ?></h2>
 								<?php if ( $homepage_button_left || $homepage_button_center || $homepage_button_right ): ?>
 								<div class="row mt-3 mt-md-4">
-									<?php if ( $homepage_button_left ) : ?>
-									<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center"><?php echo $homepage_button_left; ?></div>
-									<?php endif; ?>
-
-									<?php if ( $homepage_button_center ) : ?>
-									<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center"><?php echo $homepage_button_center; ?></div>
-									<?php endif; ?>
-
-									<?php if ( $homepage_button_right ) : ?>
-									<div class="col-md-10 offset-md-1 col-lg offset-lg-0 d-flex justify-content-center align-items-center"><?php echo $homepage_button_right; ?></div>
-									<?php endif; ?>
+									<?php if ( $homepage_button_left ) { echo $homepage_button_left; } ?>
+									<?php if ( $homepage_button_center ) { echo $homepage_button_center; } ?>
+									<?php if ( $homepage_button_right ) { echo $homepage_button_right; } ?>
 								</div>
 								<?php endif;?>
 							</div>
@@ -235,7 +229,8 @@ function get_header_media_markup( $post ) {
 					</div>
 					<div class="chevron-wrapper">
 						<a href="#main">
-							<span class="fa fa-chevron-down" aria-hidden="true"></span>
+							<span class="fa fa-angle-double-down"></span>
+							<span class="sr-only">Jump to page content</span>
 						</a>
 					</div>
 				</div>
@@ -262,8 +257,37 @@ function get_header_media_markup( $post ) {
 }
 
 
+/**
+ * Returns the default markup for page headers.
+ **/
+function get_header_default_markup( $post ) {
+	$title    = get_header_title( $post );
+	$subtitle = get_header_subtitle( $post );
+
+	ob_start();
+?>
+<div class="container">
+	<h1 class="mt-3 mt-sm-4 mt-md-5 mb-3"><?php echo $title; ?></h1>
+	<?php if ( $subtitle ): ?>
+	<p class="lead mb-4 mb-md-5"><?php echo $subtitle; ?></p>
+	<?php endif; ?>
+</div>
+<?php
+	return ob_get_clean();
+}
+
+
 function get_header_markup() {
 	global $post;
 	echo get_nav_markup( $post );
-	echo get_header_media_markup( $post );
+
+	$videos = get_header_videos( $post );
+	$images = get_header_images( $post );
+
+	if ( $videos || $images ) {
+		echo get_header_media_markup( $post, $videos, $images );
+	}
+	else {
+		echo get_header_default_markup( $post );
+	}
 }
