@@ -239,7 +239,15 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 					<div class="row no-gutters w-100">
 						<div class="<?php echo $content_cols; ?>">
 							<div class="header-title-wrapper">
+								<?php
+								// Don't print multiple h1's on the page for person templates
+								if ( $post->post_type == 'person' ):
+								?>
+								<strong class="h1 d-block header-title"><?php echo $title; ?></strong>
+								<?php else: ?>
 								<h1 class="header-title"><?php echo $title; ?></h1>
+								<?php endif; ?>
+
 								<?php if ( $subtitle ): ?>
 								<p class="header-subtitle"><?php echo $subtitle; ?></p>
 								<?php endif; ?>
@@ -267,7 +275,15 @@ function get_header_default_markup( $post ) {
 	ob_start();
 ?>
 <div class="container">
+	<?php
+	// Don't print multiple h1's on the page for person templates
+	if ( $post->post_type == 'person' ):
+	?>
+	<strong class="h1 d-block mt-3 mt-sm-4 mt-md-5 mb-3"><?php echo $title; ?></strong>
+	<?php else: ?>
 	<h1 class="mt-3 mt-sm-4 mt-md-5 mb-3"><?php echo $title; ?></h1>
+	<?php endif; ?>
+
 	<?php if ( $subtitle ): ?>
 	<p class="lead mb-4 mb-md-5"><?php echo $subtitle; ?></p>
 	<?php endif; ?>

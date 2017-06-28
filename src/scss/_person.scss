@@ -1,0 +1,56 @@
+.person-contact-container {
+
+  .person-photo {
+    height: 175px;
+    width: 175px;
+  }
+
+  .people-label,
+  .people-attr {
+    font-size: .9rem;
+  }
+
+  .people-attr {
+    font-weight: 500;
+
+    @include media-breakpoint-up(sm) {
+      text-align: right;
+    }
+
+    @include media-breakpoint-up(md) {
+      text-align: left;
+    }
+
+    @include media-breakpoint-up(xl) {
+      text-align: right;
+    }
+  }
+
+  .person-tel,
+  .person-email {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .office-hours {
+    width: 100%;
+
+    th {
+      font-weight: 500;
+    }
+  }
+
+  .course-schedule-title {
+    font-weight: 500;
+  }
+}
+
+.person-content {
+  .person-subheading {
+    letter-spacing: map-get($letter-spacing, 2);
+    text-transform: uppercase;
+  }
+}
