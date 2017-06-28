@@ -5,6 +5,7 @@ include_once 'includes/meta.php';
 include_once 'includes/wp-bs-navwalker.php';
 
 include_once 'includes/header-functions.php';
+include_once 'includes/person-functions.php';
 
 
 /**
