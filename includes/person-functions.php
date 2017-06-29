@@ -75,10 +75,9 @@ function get_person_contact_btns_markup( $post ) {
 			<a href="mailto:<?php echo $email; ?>" class="btn btn-primary btn-block">Email</a>
 		</div>
 		<?php endif; ?>
-
 		<?php if ( $has_phones ): ?>
 		<div class="col-md offset-md-0 col-8 offset-2 my-1">
-			<a href="tel:<?php echo preg_replace( "/\D/", '', $phones[0] ); ?>" class="btn btn-primary btn-block">Phone</a>
+			<a href="tel:<?php echo preg_replace( "/\D/", '', $phones[0]['number'] ); ?>" class="btn btn-primary btn-block">Phone</a>
 		</div>
 		<?php endif; ?>
 	</div>
@@ -111,7 +110,7 @@ function get_person_contact_info_markup( $post ) {
 			Department<?php if ( count( $departments ) > 1 ) { echo 's'; } ?>
 		</div>
 		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
-			<ul class="list-unstyled">
+			<ul class="list-unstyled mb-0">
 				<?php foreach ( $departments as $dept ): ?>
 				<li>
 					<?php if ( $website = get_term_meta( $dept->term_id, 'departments_website', true ) ): ?>
@@ -185,16 +184,22 @@ function get_person_contact_info_markup( $post ) {
 			Phone
 		</div>
 		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
+			<ul class="list-unstyled mb-0">
 			<?php
 			while ( have_rows( 'person_phones', $post->ID ) ): the_row();
-				$phone = get_sub_field( 'phone' );
+				$phone = get_sub_field( 'number' );
+				if ( $phone ):
 			?>
-				<?php if ( $phone ): ?>
-				<a href="tel:<?php echo preg_replace( "/\D/", '', $phone ); ?>" class="person-tel">
-					<?php echo $phone; ?>
-				</a>
-				<?php endif; ?>
-			<?php endwhile; ?>
+				<li>
+					<a href="tel:<?php echo preg_replace( "/\D/", '', $phone ); ?>" class="person-tel">
+						<?php echo $phone; ?>
+					</a>
+				</li>
+			<?php
+				endif;
+			endwhile;
+			?>
+			</ul>
 		</div>
 	</div>
 	<hr class="my-2">
