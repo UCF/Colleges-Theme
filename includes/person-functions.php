@@ -103,7 +103,31 @@ function get_person_contact_info_markup( $post ) {
 	ob_start();
 ?>
 	<?php
-	// TODO departments
+	// START departments
+	if ( taxonomy_exists( 'departments' ) && $departments = wp_get_post_terms( $post->ID, 'departments' ) ) :
+	?>
+	<div class="row">
+		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
+			Department<?php if ( count( $departments ) > 1 ) { echo 's'; } ?>
+		</div>
+		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
+			<ul class="list-unstyled">
+				<?php foreach ( $departments as $dept ): ?>
+				<li>
+					<?php if ( $website = get_term_meta( $dept->term_id, 'departments_website', true ) ): ?>
+					<a href="<?php echo $website; ?>"><?php echo $dept->name; ?></a>
+					<?php else: ?>
+					<?php echo $dept->name; ?>
+					<?php endif; ?>
+				</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<hr class="my-2">
+	<?php
+	endif;
+	// END departments
 	?>
 
 	<?php

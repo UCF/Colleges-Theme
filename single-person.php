@@ -21,7 +21,7 @@
 
 					<?php echo get_person_contact_btns_markup( $post ); ?>
 
-					<?php echo get_person_contact_info_markup( $post ); // TODO dept's ?>
+					<?php echo get_person_contact_info_markup( $post ); ?>
 
 					<!-- TODO office hours?? -->
 
