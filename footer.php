@@ -6,7 +6,11 @@
 						<section class="primary-footer-section-left">
 							<h2 class="h5 text-primary mb-2"><?php echo get_sitename_formatted(); ?></h2>
 							<?php echo get_contact_address_markup(); ?>
-							<!-- TODO social buttons (via plugin) -->
+							<?php
+							if ( class_exists( 'UCF_Social_Common' ) ) {
+								echo UCF_Social_Common::display_social_icons( array( 'color' => 'grey' ) );
+							}
+							?>
 						</section>
 					</div>
 					<div class="col-lg-4">

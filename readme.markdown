@@ -17,6 +17,7 @@ This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 * UCF News
 * UCF Page Assets
 * UCF Person Custom Post Type
+* UCF Social
 * UCF Spotlight
 * Varnish Dependency Purger
 * WP-Mail-SMTP
