@@ -3,8 +3,6 @@
 /**
  * Displays a person's thumbnail image.
  *
- * TODO display fallback thumbnail based on customizer option
- *
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
@@ -13,7 +11,9 @@
 function get_person_thumbnail( $post ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
-	if ( $thumbnail = get_the_post_thumbnail_url( $post ) ):
+	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
+
+	if ( $thumbnail ):
 ?>
 	<div class="media-background-container person-photo rounded-circle mx-auto">
 		<img src="<?php echo $thumbnail; ?>" alt="<?php $post->post_title; ?>" title="<?php $post->post_title; ?>" class="media-background object-fit-cover">

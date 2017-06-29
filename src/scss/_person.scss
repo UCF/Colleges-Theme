@@ -5,6 +5,11 @@
 .person-photo {
   height: 175px;
   width: 175px;
+
+  @include media-breakpoint-up(lg) {
+    height: 235px;
+    width: 235px;
+  }
 }
 
 .person-label,

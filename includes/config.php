@@ -7,10 +7,12 @@ define( 'THEME_URL', get_stylesheet_directory_uri() );
 define( 'THEME_STATIC_URL', THEME_URL . '/static' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL . '/css' );
 define( 'THEME_JS_URL', THEME_STATIC_URL . '/js' );
+define( 'THEME_IMG_URL', THEME_STATIC_URL . '/img' );
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
 define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
 	'person_header_title' => 'Faculty and Research',
-	'person_header_subtitle' => get_bloginfo( 'name' )
+	'person_header_subtitle' => get_bloginfo( 'name' ),
+	'person_thumbnail' => THEME_IMG_URL . '/no-photo.jpg'
 ) ) );
 
 
@@ -188,6 +190,24 @@ function define_customizer_fields( $wp_customize ) {
 				'label'       => 'Default Header Subtitle Text',
 				'description' => 'Subtitle text to use by default in the header in single person templates. Can be overridden per-person.',
 				'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+			)
+		);
+
+		$wp_customize->add_setting(
+			'person_thumbnail', array(
+				'default' => get_theme_mod_default( 'person_thumbnail' )
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'person_thumbnail',
+				array(
+					'label'       => 'Default Thumbnail',
+					'description' => 'Default thumbnail image to use when displaying photos of people.',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+				)
 			)
 		);
 
