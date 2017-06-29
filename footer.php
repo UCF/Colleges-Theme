@@ -5,7 +5,7 @@
 					<div class="col-lg-4">
 						<section class="primary-footer-section-left">
 							<h2 class="h5 text-primary mb-2"><?php echo get_sitename_formatted(); ?></h2>
-							<?php echo display_contact_address(); ?>
+							<?php echo get_contact_address_markup(); ?>
 							<!-- TODO social buttons (via plugin) -->
 						</section>
 					</div>

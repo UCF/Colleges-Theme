@@ -913,7 +913,7 @@
                 },
                 "collapsed": "",
                 "min": 0,
-                "max": 0,
+                "max": 4,
                 "layout": "table",
                 "button_label": "Add Video\/Media",
                 "sub_fields": [
@@ -954,10 +954,10 @@
                     },
                     {
                         "key": "field_5953cb737345e",
-                        "label": "Date",
-                        "name": "date",
-                        "type": "date_picker",
-                        "instructions": "Date the video\/media was published.",
+                        "label": "Source",
+                        "name": "source",
+                        "type": "text",
+                        "instructions": "Publisher of the video\/media.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -965,9 +965,11 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "m\/d\/Y",
-                        "return_format": "m\/d\/Y",
-                        "first_day": 0
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
                     }
                 ]
             }

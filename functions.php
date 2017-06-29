@@ -152,7 +152,7 @@ function get_media_background_video( $videos, $loop=false ) {
 /**
  * Display college address information
  **/
-function display_contact_address() {
+function get_contact_address_markup() {
 	$address = get_theme_mod( 'organization_address' );
 	if ( !empty( $address ) ) {
 		ob_start();

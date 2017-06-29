@@ -8,7 +8,7 @@
 				<aside class="person-contact-container">
 
 					<div class="mb-4">
-						<?php echo display_person_thumbnail( $post ); ?>
+						<?php echo get_person_thumbnail( $post ); ?>
 					</div>
 
 					<h1 class="h5 person-title text-center mb-2">
@@ -19,9 +19,11 @@
 					<div class="person-job-title text-center mb-4"><?php echo $job_title; ?></div>
 					<?php endif; ?>
 
-					<?php echo display_person_contact_btns( $post ); ?>
+					<?php echo get_person_contact_btns_markup( $post ); ?>
 
-					<?php echo display_person_contact_info( $post ); // TODO dept's ?>
+					<?php echo get_person_contact_info_markup( $post ); // TODO dept's ?>
+
+					<!-- TODO office hours?? -->
 
 				</aside>
 
@@ -47,25 +49,9 @@
 			</div>
 		</div>
 
-		<?php if ( $news = get_person_news( $post ) || $research = get_person_research( $post ) ): // TODO ?>
-		<div class="row">
-			<?php if ( $news ): ?>
-			<div class="col-md">
-				<h2 class="person-subheading">In The News</h2>
-				<?php echo display_person_publications( $news ); // TODO ?>
-			</div>
-			<?php endif; ?>
+		<?php echo get_person_publications_markup( $post ); ?>
 
-			<?php if ( $research ): ?>
-			<div class="col-md">
-				<h2 class="person-subheading">Research and Publications</h2>
-				<?php echo display_person_publications( $research ); // TODO ?>
-			</div>
-			<?php endif; ?>
-		</div>
-		<?php endif; ?>
-
-		<?php echo display_person_videos( $post ); // TODO ?>
+		<?php echo get_person_videos_markup( $post ); ?>
 	</div>
 </article>
 

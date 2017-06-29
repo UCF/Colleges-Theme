@@ -5,9 +5,12 @@
  *
  * TODO display fallback thumbnail based on customizer option
  *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return Mixed | thumbnail HTML or void
  **/
-function display_person_thumbnail( $post ) {
+function get_person_thumbnail( $post ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
 	if ( $thumbnail = get_the_post_thumbnail_url( $post ) ):
@@ -24,7 +27,10 @@ function display_person_thumbnail( $post ) {
 /**
  * Returns a person's name with title prefix and suffix applied.
  *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return Mixed | person's formatted name or void
  **/
 function get_person_name( $post ) {
 	if ( !$post->post_type == 'person' ) { return; }
@@ -47,9 +53,12 @@ function get_person_name( $post ) {
 /**
  * Displays contact buttons for a person. For use on single-person.php
  *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return Mixed | Grid and contact btn HTML or void
  **/
-function display_person_contact_btns( $post ) {
+function get_person_contact_btns_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	$email      = get_field( 'person_email', $post->ID );
@@ -83,9 +92,12 @@ function display_person_contact_btns( $post ) {
  * Display's a person's contact information in a condensed table-like format.
  * For use on single-person.php
  *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return Mixed | Grid and contact info HTML or void
  **/
-function display_person_contact_info( $post ) {
+function get_person_contact_info_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	ob_start();
@@ -99,10 +111,10 @@ function display_person_contact_info( $post ) {
 	if ( $room = get_field( 'person_room', $post->ID ) ):
 	?>
 	<div class="row">
-		<div class="col-xl-4 col-md-12 col-sm-4 people-label">
+		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			Office
 		</div>
-		<div class="col-xl-8 col-md-12 col-sm-8 people-attr">
+		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<?php if ( $room_url = get_field( 'person_room_url', $post->ID ) ): ?>
 			<a href="<?php echo $room_url; ?>">
 				<?php echo $room; ?>
@@ -125,10 +137,10 @@ function display_person_contact_info( $post ) {
 	if ( $email = get_field( 'person_email', $post->ID ) ):
 	?>
 	<div class="row">
-		<div class="col-xl-4 col-md-12 col-sm-4 people-label">
+		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			E-mail
 		</div>
-		<div class="col-xl-8 col-md-12 col-sm-8 people-attr">
+		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<a href="mailto:<?php echo $email; ?>" class="person-email">
 				<?php echo $email; ?>
 			</a>
@@ -142,15 +154,15 @@ function display_person_contact_info( $post ) {
 
 	<?php
 	// START Phones
-	if ( $has_phones = have_rows( 'person_phones', $post->ID ) ):
+	if ( have_rows( 'person_phones', $post->ID ) ):
 	?>
 	<div class="row">
-		<div class="col-xl-4 col-md-12 col-sm-4 people-label">
+		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			Phone
 		</div>
-		<div class="col-xl-8 col-md-12 col-sm-8 people-attr">
+		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<?php
-			while ( $has_phones ): the_row();
+			while ( have_rows( 'person_phones', $post->ID ) ): the_row();
 				$phone = get_sub_field( 'phone' );
 			?>
 				<?php if ( $phone ): ?>
@@ -175,7 +187,10 @@ function display_person_contact_info( $post ) {
  * TODO
  * Returns news publications related to a person.
  *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return array | Array of Publication post objects
  **/
 function get_person_news( $post ) {
 	return;
@@ -186,7 +201,10 @@ function get_person_news( $post ) {
  * TODO
  * Returns research publications related to a person.
  *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return array | Array of Publication post objects
  **/
 function get_person_research( $post ) {
 	return;
@@ -194,20 +212,103 @@ function get_person_research( $post ) {
 
 
 /**
- * TODO
- * Returns markup for one or more publications. For use in single-person.php
+ * Returns a styled unordered list of publications. For use in
+ * single-person.php
  *
- * @param $posts array | array of Publication objects
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $posts array | array of Publication post objects
+ * @return string | publication list HTML
  **/
-function display_person_publications( $posts ) {
-	return;
+function get_person_publication_list_markup( $posts ) {
+	ob_start();
+?>
+<?php
+	return ob_get_clean();
 }
 
 
 /**
- * TODO
+ * Displays News and Research/Publications for a person. For use in
+ * single-person.php
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
  * @param $post object | Person post object
+ * @return Mixed | Grid and person's publication list HTML or void
  **/
-function display_person_videos( $post ) {
-	return;
+function get_person_publications_markup( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	$news = get_person_news( $post ); // TODO
+	$research = get_person_research( $post ); // TODO
+
+	ob_start();
+
+	if ( $news || $research ):
+?>
+	<div class="row">
+		<?php if ( $news ): ?>
+		<div class="col-md">
+			<h2 class="person-subheading mt-5">In The News</h2>
+			<?php echo get_person_publication_list_markup( $news ); // TODO ?>
+		</div>
+		<?php endif; ?>
+
+		<?php if ( $research ): ?>
+		<div class="col-md">
+			<h2 class="person-subheading mt-5">Research and Publications</h2>
+			<?php echo get_person_publication_list_markup( $research ); // TODO ?>
+		</div>
+		<?php endif; ?>
+	</div>
+<?php
+	endif;
+	return ob_get_clean();
+}
+
+
+/**
+ * Displays videos and media assigned to a person. For use in single-person.php
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Person post object
+ * @return Mixed | Grid and person's video list HTML or void
+ **/
+function get_person_videos_markup( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	ob_start();
+
+	if ( have_rows( 'person_media', $post->ID ) ):
+?>
+	<h2 class="person-subheading mt-5">Videos and Media</h2>
+	<div class="row">
+		<?php
+		while ( have_rows( 'person_media', $post->ID ) ): the_row();
+			$video_title  = get_sub_field( 'title' );
+			$video_embed  = get_sub_field( 'link' );
+			$video_source = get_sub_field( 'source' );
+		?>
+		<div class="col-md-6 my-3">
+			<?php if ( $video_embed ): ?>
+			<div class="embed-responsive embed-responsive-16by9 mb-3">
+				<?php echo $video_embed; ?>
+			</div>
+			<?php endif; ?>
+
+			<?php if ( $video_title ): ?>
+			<h3 class="h5 text-uppercase mb-1"><?php echo $video_title; ?></h3>
+			<?php endif; ?>
+
+			<?php if ( $video_source ): ?>
+			<p><?php echo $video_source; ?></p>
+			<?php endif; ?>
+		</div>
+		<?php endwhile; ?>
+	</div>
+<?php
+	endif;
+	return ob_get_clean();
 }
