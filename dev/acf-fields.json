@@ -23,9 +23,9 @@
                 "key": "field_590ca47bf6656",
                 "label": "Header Height (sm+)",
                 "name": "page_header_height",
-                "type": "radio",
+                "type": "select",
                 "instructions": "Height of the page header at the -sm breakpoint and above.",
-                "required": 1,
+                "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
@@ -37,12 +37,15 @@
                     "header-media-default": "Default (525px)",
                     "header-media-fullscreen": "Fullscreen"
                 },
-                "allow_null": 0,
-                "other_choice": 0,
-                "save_other_choice": 0,
-                "default_value": "header-media-default",
-                "layout": "vertical",
-                "return_format": "value"
+                "default_value": [
+                    
+                ],
+                "allow_null": 1,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
             },
             {
                 "key": "field_593ab7a188cdf",

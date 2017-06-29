@@ -64,9 +64,22 @@ function get_nav_markup() {
  **/
 function get_header_images( $post ) {
 	$retval = array(
-		'header_image'    => get_field( 'page_header_image', $post->ID ),
-		'header_image_xs' => get_field( 'page_header_image_xs', $post->ID )
+		'header_image' => '',
+		'header_image_xs' => ''
 	);
+
+	if ( $post->post_type == 'person' ) {
+		$retval['header_image']    = get_theme_mod( 'person_header_image' );
+		$retval['header_image_xs'] = get_theme_mod( 'person_header_image_xs' );
+	}
+
+	if ( $post_header_image = get_field( 'page_header_image', $post->ID ) ) {
+		$retval['header_image'] = $post_header_image;
+	}
+	if ( $post_header_image_xs = get_field( 'page_header_image_xs', $post->ID ) ) {
+		$retval['header_image_xs'] = $post_header_image_xs;
+	}
+
 	if ( $retval['header_image'] ) {
 		return $retval;
 	}
@@ -101,7 +114,7 @@ function get_header_title( $post ) {
 		$title = get_field( 'homepage_header_title', $post->ID );
 	}
 	else if ( $post->post_type == 'person' ) {
-		$title = 'Faculty and Research'; // TODO make this configurable
+		$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $post->ID );
 	}
 	else {
 		$title = get_field( 'page_header_title', $post->ID );
@@ -123,13 +136,31 @@ function get_header_subtitle( $post ) {
 	$subtitle = '';
 
 	if ( $post->post_type == 'person' ) {
-		$subtitle = get_bloginfo( 'name' ); // TODO make this configurable
+		$subtitle = get_theme_mod_or_default( 'person_header_subtitle' ) ?: get_field( 'page_header_subtitle', $post->ID );
 	}
 	else {
 		$subtitle = get_field( 'page_header_subtitle', $post->ID );
 	}
 
 	return $subtitle;
+}
+
+
+/**
+ * Returns the header height meta value for the page header.
+ **/
+function get_header_height( $post ) {
+	$retval = 'header-media-default';
+
+	if ( $post->post_type == 'person' ) {
+		$retval = 'header-media-short';
+	}
+
+	if ( $post_header_height = get_field( 'page_header_height', $post->ID ) ) {
+		$retval = $post_header_height;
+	}
+
+	return $retval;
 }
 
 
@@ -161,6 +192,7 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 	$content_position = get_field( 'page_header_content_position', $post->ID );
 	$title            = get_header_title( $post );
 	$subtitle         = get_header_subtitle( $post );
+	$header_height    = get_header_height( $post );
 
 	$content_cols = '';
 	switch ( $content_position ) {
@@ -187,7 +219,6 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 	ob_start();
 
 	if ( $images || $videos ) :
-		$header_height = get_field( 'page_header_height', $post->ID );
 ?>
 		<div class="header-media <?php echo ( is_front_page() ) ? 'header-media-home' : ''; ?> <?php echo $header_height ?: ''; ?> media-background-container mb-0 d-flex flex-column">
 			<?php
@@ -198,10 +229,22 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 				$bg_image_srcs = array();
 				switch ( $header_height ) {
 					case 'header-media-fullscreen':
+						$bg_image_srcs = get_media_background_picture_srcs( null, $images['header_image'], 'bg-img' );
 						$bg_image_src_xs = get_media_background_picture_srcs( $images['header_image_xs'], null, 'header-img' );
-						$bg_image_srcs_sm = get_media_background_picture_srcs( null, $images['header_image'], 'bg-img' );
-						$bg_image_srcs = array_merge( $bg_image_src_xs, $bg_image_srcs_sm );
+
+						if ( $bg_image_src_xs['xs'] ) {
+							$bg_image_srcs['xs'] = $bg_image_src_xs['xs'];
+						}
 						break;
+					case 'header-media-short':
+						$bg_image_srcs = get_media_background_picture_srcs( null, $images['header_image'], 'header-img-short' );
+						$bg_image_src_xs = get_media_background_picture_srcs( $images['header_image_xs'], null, 'header-img' );
+
+						if ( $bg_image_src_xs['xs'] ) {
+							$bg_image_srcs['xs'] = $bg_image_src_xs['xs'];
+						}
+						break;
+					case 'header-media-default':
 					default:
 						$bg_image_srcs = get_media_background_picture_srcs( $images['header_image_xs'], $images['header_image'], 'header-img' );
 						break;

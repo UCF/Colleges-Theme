@@ -8,6 +8,10 @@ define( 'THEME_STATIC_URL', THEME_URL . '/static' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL . '/css' );
 define( 'THEME_JS_URL', THEME_STATIC_URL . '/js' );
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
+define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
+	'person_header_title' => 'Faculty and Research',
+	'person_header_subtitle' => get_bloginfo( 'name' )
+) ) );
 
 
 function __init__() {
@@ -20,7 +24,6 @@ function __init__() {
 	add_image_size( 'header-img-md', 991, 525, true );
 	add_image_size( 'header-img-lg', 1199, 525, true );
 	add_image_size( 'header-img-xl', 1600, 525, true );
-	add_image_size( 'header-img-short', 575, 575, true ); // match header-img
 	add_image_size( 'header-img-short-sm', 767, 400, true );
 	add_image_size( 'header-img-short-md', 991, 400, true );
 	add_image_size( 'header-img-short-lg', 1199, 400, true );
@@ -73,6 +76,15 @@ function define_customizer_sections( $wp_customize ) {
 			'title' => 'Web Fonts'
 		)
 	);
+
+	if ( post_type_exists( 'person' ) ) {
+		$wp_customize->add_section(
+			THEME_CUSTOMIZER_PREFIX . 'people',
+			array(
+				'title' => 'People'
+			)
+		);
+	}
 }
 
 add_action( 'customize_register', 'define_customizer_sections' );
@@ -140,6 +152,80 @@ function define_customizer_fields( $wp_customize ) {
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'webfonts'
 		)
 	);
+
+
+	// People
+	if ( post_type_exists( 'person' ) ) {
+
+		$wp_customize->add_setting(
+			'person_header_title',
+			array(
+				'default' => get_theme_mod_default( 'person_header_title' )
+			)
+		);
+
+		$wp_customize->add_control(
+			'person_header_title',
+			array(
+				'type'        => 'text',
+				'label'       => 'Default Header Title Text',
+				'description' => 'Title text to use by default in the header in single person templates. Can be overridden per-person.',
+				'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+			)
+		);
+
+		$wp_customize->add_setting(
+			'person_header_subtitle',
+			array(
+				'default' => get_theme_mod_default( 'person_header_subtitle' )
+			)
+		);
+
+		$wp_customize->add_control(
+			'person_header_subtitle',
+			array(
+				'type'        => 'text',
+				'label'       => 'Default Header Subtitle Text',
+				'description' => 'Subtitle text to use by default in the header in single person templates. Can be overridden per-person.',
+				'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+			)
+		);
+
+		$wp_customize->add_setting(
+			'person_header_image'
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'person_header_image',
+				array(
+					'label'       => 'Default Header Image (-sm+)',
+					'description' => 'Default header image at the -sm breakpoint and up for single person templates. Recommended dimensions: 1600px x 400px',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'people',
+					'mime_type'   => 'image'
+				)
+			)
+		);
+
+		$wp_customize->add_setting(
+			'person_header_image_xs'
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'person_header_image_xs',
+				array(
+					'label'       => 'Default Header Image (-xs)',
+					'description' => 'Default header image at the -xs breakpoint for single person templates. Recommended dimensions: 575px x 575px',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'people',
+					'mime_type'   => 'image'
+				)
+			)
+		);
+
+	}
 }
 
 add_action( 'customize_register', 'define_customizer_fields' );
