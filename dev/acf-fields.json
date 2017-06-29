@@ -33,7 +33,8 @@
                     "id": ""
                 },
                 "choices": {
-                    "header-media-default": "Default (600px)",
+                    "header-media-short": "Short (400px)",
+                    "header-media-default": "Default (525px)",
                     "header-media-fullscreen": "Fullscreen"
                 },
                 "allow_null": 0,
@@ -92,7 +93,7 @@
                 "label": "Header Image (-sm+)",
                 "name": "page_header_image",
                 "type": "image",
-                "instructions": "Header image to display at the -sm breakpoint and up. Recommend size: 1600 \u00d7 600",
+                "instructions": "Header image to display at the -sm breakpoint and up.  Recommended width: 1600px",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -116,7 +117,7 @@
                 "label": "Header Image (-xs)",
                 "name": "page_header_image_xs",
                 "type": "image",
-                "instructions": "Header image to display at the -xs breakpoint. Recommended size: 575 x575.",
+                "instructions": "Header image to display at the -xs breakpoint. Recommended size: 575px x 575px.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {

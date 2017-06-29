@@ -16,10 +16,10 @@
     @include media-breakpoint-only(md) {
       margin-right: 0;
     }
+  }
 
-    .nav-link {
-      font-weight: 500;
-    }
+  .nav-link {
+    font-weight: 500;
   }
 }
 
@@ -106,14 +106,20 @@
 
 .header-media-default {
   @include media-breakpoint-up(sm) {
-    min-height: 600px;
+    min-height: $header-img-sm-height;
+  }
+}
+
+.header-media-short {
+  @include media-breakpoint-up(sm) {
+    min-height: $header-img-short-sm-height;
   }
 }
 
 .header-media-fullscreen {
   @include media-breakpoint-up(sm) {
     height: calc(90vh - #{$ucf-header-height});
-    min-height: 600px;
+    min-height: $header-img-sm-height;
   }
 }
 
