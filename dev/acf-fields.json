@@ -892,7 +892,7 @@
                     "class": "",
                     "id": ""
                 },
-                "return_format": "array",
+                "return_format": "url",
                 "library": "all",
                 "min_size": "",
                 "max_size": "",
