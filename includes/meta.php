@@ -10,7 +10,7 @@
 function enqueue_frontend_assets() {
 	wp_enqueue_style( 'style', THEME_CSS_URL . '/style.min.css' );
 
-	if ( $fontkey = get_theme_mod_or_default( 'cloud_typography_key' ) ) {
+	if ( $fontkey = get_theme_mod( 'cloud_typography_key' ) ) {
 		wp_enqueue_style( 'webfont', $fontkey );
 	}
 
@@ -41,6 +41,12 @@ function add_meta_tags() {
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<?php
+$gw_verify = get_theme_mod( 'gw_verify' );
+if ( $gw_verify ):
+?>
+<meta name="google-site-verification" content="<?php echo htmlentities( $gw_verify ); ?>">
+<?php endif; ?>
 <?php
 }
 
@@ -73,6 +79,29 @@ function add_id_to_ucfhb( $url ) {
 }
 
 add_filter( 'clean_url', 'add_id_to_ucfhb', 10, 1 );
+
+
+/**
+ * Adds Google Analytics script to the document head.
+ **/
+function add_google_analytics() {
+	$ga_account = get_theme_mod( 'ga_account' );
+	if ( $ga_account ):
+?>
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', '<?php echo $ga_account; ?>', 'auto');
+	ga('send', 'pageview');
+</script>
+<?php
+	endif;
+}
+
+add_action( 'wp_head', 'add_google_analytics' );
 
 
 /**

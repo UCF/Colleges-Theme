@@ -1,0 +1,54 @@
+//
+// Contact info sidebar
+//
+
+.person-photo {
+  height: 175px;
+  width: 175px;
+
+  @include media-breakpoint-up(lg) {
+    height: 235px;
+    width: 235px;
+  }
+}
+
+.person-label,
+.person-attr {
+  font-size: .9rem;
+}
+
+.person-attr {
+  font-weight: 500;
+
+  @include media-breakpoint-up(sm) {
+    text-align: right;
+  }
+
+  @include media-breakpoint-up(md) {
+    text-align: left;
+  }
+
+  @include media-breakpoint-up(xl) {
+    text-align: right;
+  }
+}
+
+.person-tel,
+.person-email {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+//
+// Bio/news/video
+//
+
+.person-subheading {
+  letter-spacing: map-get($letter-spacing, 2);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}

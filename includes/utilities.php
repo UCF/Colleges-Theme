@@ -47,6 +47,7 @@ function get_theme_mod_or_default( $theme_mod ) {
 }
 
 
+
 /**
  * Utility function that returns an image url by its thumbnail size.
  **/

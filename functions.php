@@ -4,6 +4,9 @@ include_once 'includes/config.php';
 include_once 'includes/meta.php';
 include_once 'includes/wp-bs-navwalker.php';
 
+include_once 'includes/header-functions.php';
+include_once 'includes/person-functions.php';
+
 
 /**
  * Returns an array of src's for a media background <picture>'s <source>s by
@@ -33,6 +36,14 @@ function get_media_background_picture_srcs( $attachment_xs_id, $attachment_sm_id
 				'sm' => get_attachment_src_by_size( $attachment_sm_id, $img_size_prefix . '-sm' )
 			)
 		);
+
+		// Try to get a fallback -xs image if needed
+		if ( !$attachment_xs_id ) {
+			$bg_images = array_merge(
+				$bg_images,
+				array( 'xs' => get_attachment_src_by_size( $attachment_sm_id, $img_size_prefix ) )
+			);
+		}
 
 		// Remove duplicate image sizes, in case an old image isn't pre-cropped
 		$bg_images = array_unique( $bg_images );
@@ -135,4 +146,22 @@ function get_media_background_video( $videos, $loop=false ) {
 	</button>
 <?php
 	return ob_get_clean();
+}
+
+
+/**
+ * Display college address information
+ **/
+function get_contact_address_markup() {
+	$address = get_theme_mod( 'organization_address' );
+	if ( !empty( $address ) ) {
+		ob_start();
+	?>
+	<address class="address">
+		<?php echo wptexturize( nl2br( $address ) ); ?>
+	</address>
+	<?php
+		return ob_get_clean();
+	}
+	return;
 }

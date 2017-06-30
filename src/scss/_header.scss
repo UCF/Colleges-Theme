@@ -1,1 +1,236 @@
-// TODO
+//
+// Navbar
+//
+
+.site-navbar {
+  background-color: $colleges-gray;
+
+  .navbar-brand {
+    font-size: 1rem;
+    font-weight: 500;
+    padding-bottom: .7rem;
+    padding-top: .7rem;
+  }
+
+  .navbar-nav {
+    @include media-breakpoint-only(md) {
+      margin-right: 0;
+    }
+  }
+
+  .nav-link {
+    font-weight: 500;
+  }
+
+  .dropdown-item {
+    @include media-breakpoint-down(md) {
+      white-space: normal;
+    }
+  }
+}
+
+
+//
+// Header (base styles)
+//
+
+.header-media {
+  @include media-breakpoint-down(xs) {
+    min-height: ($header-img-xs-height / $header-img-xs-width) * 100vw;
+  }
+}
+
+.header-content {
+  align-items: stretch;
+  display: flex;
+  flex: 1 1 auto;
+  padding: 0;
+
+  @include media-breakpoint-up(sm) {
+    padding: 3rem 0;
+  }
+
+  > .container {
+    @include media-breakpoint-down(xs) {
+      width: 100%;
+    }
+  }
+}
+
+.header-title-align-left {
+  text-align: left;
+}
+
+.header-title-align-center {
+  text-align: center;
+}
+
+.header-title-align-right {
+  text-align: right;
+}
+
+.header-title-wrapper {
+  @include clearfix();
+  display: inline-block;
+}
+
+.header-title,
+.header-subtitle {
+  clear: both;
+  display: block;
+  float: left;
+
+  .header-title-align-center & {
+    text-align: left;
+  }
+
+  .header-title-align-right & {
+    float: right;
+  }
+}
+
+.header-title {
+  background-color: transparentize($brand-primary, .05);
+  font-family: $font-family-slab-serif;
+  font-weight: normal;
+  margin-bottom: 0;
+  padding: 1.3rem 1.5rem;
+}
+
+.header-subtitle {
+  background-color: transparentize($black, .05);
+  color: $white;
+  font-family: $font-family-slab-serif;
+  font-size: 1.3rem;
+  padding: .8rem 1.5rem;
+}
+
+
+//
+// Header sizes
+//
+
+.header-media-default {
+  @include media-breakpoint-up(sm) {
+    min-height: $header-img-sm-height;
+  }
+}
+
+.header-media-short {
+  @include media-breakpoint-up(sm) {
+    min-height: $header-img-short-sm-height;
+  }
+}
+
+.header-media-fullscreen {
+  @include media-breakpoint-up(sm) {
+    height: calc(90vh - #{$ucf-header-height});
+    min-height: $header-img-sm-height;
+  }
+}
+
+
+//
+// Homepage-specific header styles
+//
+
+.header-media-home {
+  .media-background,
+  .media-background-picture {
+    @include media-breakpoint-down(xs) {
+      height: 300px;
+      position: static;
+    }
+  }
+
+  .header-content > .container {
+    @include media-breakpoint-down(xs) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+.home-header-title-wrapper {
+  background-color: transparentize($colleges-gray, .1);
+  padding: 1rem;
+  text-align: center;
+
+  @include media-breakpoint-up(sm) {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+.home-header-title {
+  background-color: transparent;
+  color: $white;
+  float: none;
+  font-family: $font-family-sans-serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0;
+  text-transform: uppercase;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 3.5rem;
+    padding: 0 .8rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 3.25rem;
+    padding: 0 5rem;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: 4rem;
+    padding: 0 6rem;
+  }
+}
+
+.home-header-button {
+  margin: .4rem 0;
+  width: 100%;
+
+  @include media-breakpoint-up(lg) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+  }
+
+  @include media-breakpoint-only(lg) {
+    font-size: .8rem;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: .9rem;
+  }
+}
+
+
+//
+// Jump to content chevron icon
+//
+
+.chevron-wrapper {
+  text-align: center;
+
+  @include media-breakpoint-down(xs) {
+    display: none;
+  }
+
+  a {
+    color: $brand-primary;
+    font-size: 6rem;
+  }
+
+  .fa {
+    text-shadow: 0 2px 0 transparentize($black, .5);
+  }
+}
