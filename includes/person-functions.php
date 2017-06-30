@@ -13,6 +13,7 @@ function get_person_thumbnail( $post ) {
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
 
+	ob_start();
 	if ( $thumbnail ):
 ?>
 	<div class="media-background-container person-photo rounded-circle mx-auto">
