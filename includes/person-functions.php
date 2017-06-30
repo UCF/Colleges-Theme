@@ -13,6 +13,7 @@ function get_person_thumbnail( $post ) {
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
 
+	ob_start();
 	if ( $thumbnail ):
 ?>
 	<div class="media-background-container person-photo rounded-circle mx-auto">
@@ -88,7 +89,7 @@ function get_person_contact_btns_markup( $post ) {
 
 
 /**
- * Display's a person's contact information in a condensed table-like format.
+ * Display's a person's department(s) in a condensed table-like format.
  * For use on single-person.php
  *
  * @author Jo Dickson
@@ -96,15 +97,12 @@ function get_person_contact_btns_markup( $post ) {
  * @param $post object | Person post object
  * @return Mixed | Grid and contact info HTML or void
  **/
-function get_person_contact_info_markup( $post ) {
+function get_person_dept_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	ob_start();
-?>
-	<?php
-	// START departments
 	if ( taxonomy_exists( 'departments' ) && $departments = wp_get_post_terms( $post->ID, 'departments' ) ) :
-	?>
+?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			Department<?php if ( count( $departments ) > 1 ) { echo 's'; } ?>
@@ -124,15 +122,27 @@ function get_person_contact_info_markup( $post ) {
 		</div>
 	</div>
 	<hr class="my-2">
-	<?php
+<?php
 	endif;
-	// END departments
-	?>
+	return ob_get_clean();
+}
 
-	<?php
-	// START room
+
+/**
+ * Display's a person's office location in a condensed table-like format.
+ * For use on single-person.php
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Person post object
+ * @return Mixed | Grid and contact info HTML or void
+ **/
+function get_person_office_markup( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	ob_start();
 	if ( $room = get_field( 'person_room', $post->ID ) ):
-	?>
+?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			Office
@@ -150,15 +160,27 @@ function get_person_contact_info_markup( $post ) {
 		</div>
 	</div>
 	<hr class="my-2">
-	<?php
+<?php
 	endif;
-	// END room
-	?>
+	return ob_get_clean();
+}
 
-	<?php
-	// START email
+
+/**
+ * Display's a person's email in a condensed table-like format.
+ * For use on single-person.php
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Person post object
+ * @return Mixed | Grid and contact info HTML or void
+ **/
+function get_person_email_markup( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	ob_start();
 	if ( $email = get_field( 'person_email', $post->ID ) ):
-	?>
+?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			E-mail
@@ -170,15 +192,27 @@ function get_person_contact_info_markup( $post ) {
 		</div>
 	</div>
 	<hr class="my-2">
-	<?php
+<?php
 	endif;
-	// END email
-	?>
+	return ob_get_clean();
+}
 
-	<?php
-	// START Phones
+
+/**
+ * Display's a person's phone numbers in a condensed table-like format.
+ * For use on single-person.php
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Person post object
+ * @return Mixed | Grid and contact info HTML or void
+ **/
+function get_person_phones_markup( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	ob_start();
 	if ( have_rows( 'person_phones', $post->ID ) ):
-	?>
+?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
 			Phone
@@ -203,11 +237,8 @@ function get_person_contact_info_markup( $post ) {
 		</div>
 	</div>
 	<hr class="my-2">
-	<?php
-	endif;
-	// END phones
-	?>
 <?php
+	endif;
 	return ob_get_clean();
 }
 
