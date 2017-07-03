@@ -624,7 +624,7 @@
             {
                 "key": "field_5953aa7625c15",
                 "label": "Phone Numbers",
-                "name": "person_phones",
+                "name": "person_phone_numbers",
                 "type": "repeater",
                 "instructions": "One or more phone numbers at which the person can be contacted.",
                 "required": 0,
