@@ -901,7 +901,7 @@
             {
                 "key": "field_5953ca9f7345b",
                 "label": "Video and Media",
-                "name": "person_media",
+                "name": "person_medias",
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
