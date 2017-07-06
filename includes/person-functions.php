@@ -89,7 +89,7 @@ function get_person_contact_btns_markup( $post ) {
 
 
 /**
- * Display's a person's department(s) in a condensed table-like format.
+ * Displays a person's department(s) in a condensed table-like format.
  * For use on single-person.php
  *
  * @author Jo Dickson
@@ -100,23 +100,20 @@ function get_person_contact_btns_markup( $post ) {
 function get_person_dept_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
+	$depts = wp_get_post_terms( $post->ID, 'departments' );
+	$depts = !is_wp_error( $depts ) && !empty( $depts ) && class_exists( 'UCF_Departments_Common' ) ? $depts : false;
+
 	ob_start();
-	if ( taxonomy_exists( 'departments' ) && $departments = wp_get_post_terms( $post->ID, 'departments' ) ) :
+	if ( $depts ) :
 ?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
-			Department<?php if ( count( $departments ) > 1 ) { echo 's'; } ?>
+			Department<?php if ( count( $depts ) > 1 ) { echo 's'; } ?>
 		</div>
 		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<ul class="list-unstyled mb-0">
-				<?php foreach ( $departments as $dept ): ?>
-				<li>
-					<?php if ( $website = get_term_meta( $dept->term_id, 'departments_website', true ) ): ?>
-					<a href="<?php echo $website; ?>"><?php echo $dept->name; ?></a>
-					<?php else: ?>
-					<?php echo $dept->name; ?>
-					<?php endif; ?>
-				</li>
+				<?php foreach ( $depts as $dept ): ?>
+				<li><?php echo UCF_Departments_Common::get_website_link( $dept ); ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
