@@ -63,8 +63,8 @@ function get_person_contact_btns_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	$email      = get_field( 'person_email', $post->ID );
-	$has_phones = have_rows( 'person_phones', $post->ID );
-	$phones     = get_field( 'person_phones', $post->ID );
+	$has_phones = have_rows( 'person_phone_numbers', $post->ID );
+	$phones     = get_field( 'person_phone_numbers', $post->ID );
 
 	ob_start();
 
@@ -211,7 +211,7 @@ function get_person_phones_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	ob_start();
-	if ( have_rows( 'person_phones', $post->ID ) ):
+	if ( have_rows( 'person_phone_numbers', $post->ID ) ):
 ?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
@@ -220,7 +220,7 @@ function get_person_phones_markup( $post ) {
 		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<ul class="list-unstyled mb-0">
 			<?php
-			while ( have_rows( 'person_phones', $post->ID ) ): the_row();
+			while ( have_rows( 'person_phone_numbers', $post->ID ) ): the_row();
 				$phone = get_sub_field( 'number' );
 				if ( $phone ):
 			?>
@@ -341,12 +341,12 @@ function get_person_videos_markup( $post ) {
 
 	ob_start();
 
-	if ( have_rows( 'person_media', $post->ID ) ):
+	if ( have_rows( 'person_medias', $post->ID ) ):
 ?>
 	<h2 class="person-subheading mt-5">Videos and Media</h2>
 	<div class="row">
 		<?php
-		while ( have_rows( 'person_media', $post->ID ) ): the_row();
+		while ( have_rows( 'person_medias', $post->ID ) ): the_row();
 			$video_title  = get_sub_field( 'title' );
 			$video_embed  = get_sub_field( 'link' );
 			$video_source = get_sub_field( 'source' );
