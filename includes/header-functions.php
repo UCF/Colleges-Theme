@@ -232,7 +232,7 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 						$bg_image_srcs = get_media_background_picture_srcs( null, $images['header_image'], 'bg-img' );
 						$bg_image_src_xs = get_media_background_picture_srcs( $images['header_image_xs'], null, 'header-img' );
 
-						if ( $bg_image_src_xs['xs'] ) {
+						if ( isset( $bg_image_src_xs['xs'] ) ) {
 							$bg_image_srcs['xs'] = $bg_image_src_xs['xs'];
 						}
 						break;
@@ -240,7 +240,7 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 						$bg_image_srcs = get_media_background_picture_srcs( null, $images['header_image'], 'header-img-short' );
 						$bg_image_src_xs = get_media_background_picture_srcs( $images['header_image_xs'], null, 'header-img' );
 
-						if ( $bg_image_src_xs['xs'] ) {
+						if ( isset( $bg_image_src_xs['xs'] ) ) {
 							$bg_image_srcs['xs'] = $bg_image_src_xs['xs'];
 						}
 						break;
