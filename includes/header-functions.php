@@ -68,9 +68,9 @@ function get_header_images( $post ) {
 		'header_image_xs' => ''
 	);
 
-	if ( $post->post_type == 'person' ) {
-		$retval['header_image']    = get_theme_mod( 'person_header_image' );
-		$retval['header_image_xs'] = get_theme_mod( 'person_header_image_xs' );
+	if ( $post->post_type == 'person' || $post->post_type == 'degree' ) {
+		$retval['header_image']    = get_theme_mod( $post->post_type . '_header_image' );
+		$retval['header_image_xs'] = get_theme_mod( $post->post_type . '_header_image_xs' );
 	}
 
 	if ( $post_header_image = get_field( 'page_header_image', $post->ID ) ) {
@@ -152,7 +152,7 @@ function get_header_subtitle( $post ) {
 function get_header_height( $post ) {
 	$retval = 'header-media-default';
 
-	if ( $post->post_type == 'person' ) {
+	if ( $post->post_type == 'person' || $post->post_type == 'degree' ) {
 		$retval = 'header-media-short';
 	}
 

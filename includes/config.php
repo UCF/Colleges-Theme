@@ -87,6 +87,15 @@ function define_customizer_sections( $wp_customize ) {
 			)
 		);
 	}
+
+	if ( post_type_exists( 'degree' ) ) {
+		$wp_customize->add_section(
+			THEME_CUSTOMIZER_PREFIX . 'degrees',
+			array(
+				'title' => 'Degrees'
+			)
+		);
+	}
 }
 
 add_action( 'customize_register', 'define_customizer_sections' );
@@ -240,6 +249,45 @@ function define_customizer_fields( $wp_customize ) {
 					'label'       => 'Default Header Image (-xs)',
 					'description' => 'Default header image at the -xs breakpoint for single person templates. Recommended dimensions: 575px x 575px',
 					'section'     => THEME_CUSTOMIZER_PREFIX . 'people',
+					'mime_type'   => 'image'
+				)
+			)
+		);
+
+	}
+
+	// Degrees
+	if ( post_type_exists( 'degree' ) ) {
+
+		$wp_customize->add_setting(
+			'degree_header_image'
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'degree_header_image',
+				array(
+					'label'       => 'Default Header Image (-sm+)',
+					'description' => 'Default header image at the -sm breakpoint and up for single degree templates. Recommended dimensions: 1600px x 400px',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'degrees',
+					'mime_type'   => 'image'
+				)
+			)
+		);
+
+		$wp_customize->add_setting(
+			'degree_header_image_xs'
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'degree_header_image_xs',
+				array(
+					'label'       => 'Default Header Image (-xs)',
+					'description' => 'Default header image at the -xs breakpoint for single degree templates. Recommended dimensions: 575px x 575px',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'degrees',
 					'mime_type'   => 'image'
 				)
 			)
