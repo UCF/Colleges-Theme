@@ -10,9 +10,11 @@ define( 'THEME_JS_URL', THEME_STATIC_URL . '/js' );
 define( 'THEME_IMG_URL', THEME_STATIC_URL . '/img' );
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
 define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
-	'person_header_title' => 'Faculty and Research',
-	'person_header_subtitle' => get_bloginfo( 'name' ),
-	'person_thumbnail' => THEME_IMG_URL . '/no-photo.jpg'
+	'apply_undergraduate_url' => 'https://apply.ucf.edu/application/',
+	'apply_graduate_url'      => 'https://application.graduate.ucf.edu/',
+	'person_header_title'     => 'Faculty and Research',
+	'person_header_subtitle'  => get_bloginfo( 'name' ),
+	'person_thumbnail'        => THEME_IMG_URL . '/no-photo.jpg'
 ) ) );
 
 
@@ -76,6 +78,13 @@ function define_customizer_sections( $wp_customize ) {
 		THEME_CUSTOMIZER_PREFIX . 'webfonts',
 		array(
 			'title' => 'Web Fonts'
+		)
+	);
+
+	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'admissions',
+		array(
+			'title' => 'UCF Admissions'
 		)
 	);
 
@@ -164,6 +173,40 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	// Admissions
+	$wp_customize->add_setting(
+		'apply_undergraduate_url',
+		array(
+			'default' => get_theme_mod_default( 'apply_undergraduate_url' )
+		)
+	);
+
+	$wp_customize->add_control(
+		'apply_undergraduate_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Undergraduate Application URL',
+			'description' => 'URL that points to the undergraduate student application.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'apply_graduate_url',
+		array(
+			'default' => get_theme_mod_default( 'apply_graduate_url' )
+		)
+	);
+
+	$wp_customize->add_control(
+		'apply_graduate_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Graduate Application URL',
+			'description' => 'URL that points to the graduate student application.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+		)
+	);
 
 	// People
 	if ( post_type_exists( 'person' ) ) {

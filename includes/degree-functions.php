@@ -18,12 +18,12 @@ function get_degree_meta_markup( $post ) {
 	ob_start();
 	if ( $program_types || $depts ):
 ?>
-	<div class="card card-faded">
+	<div class="card card-faded mb-3 mb-lg-4">
 		<div class="card-block">
 			<dl class="row mb-0">
 				<?php if ( $program_types ): ?>
-				<dt class="col-lg-4">Degree</dt>
-				<dd class="col-lg-8">
+				<dt class="col-sm-4">Degree</dt>
+				<dd class="col-sm-8">
 					<ul class="list-unstyled mb-0">
 						<?php foreach ( $program_types as $program_type ): ?>
 						<li><?php echo UCF_Degree_Program_Types_Common::get_name_or_alias( $program_type ); ?></li>
@@ -33,8 +33,8 @@ function get_degree_meta_markup( $post ) {
 				<?php endif; ?>
 
 				<?php if ( $depts ): ?>
-				<dt class="col-lg-4">Department<?php if ( count( $depts ) > 1 ) { ?>s<?php } ?></dt>
-				<dd class="col-lg-8">
+				<dt class="col-sm-4">Department<?php if ( count( $depts ) > 1 ) { ?>s<?php } ?></dt>
+				<dd class="col-sm-8">
 					<ul class="list-unstyled mb-0">
 						<?php foreach ( $depts as $dept ): ?>
 						<li><?php echo UCF_Departments_Common::get_website_link( $dept ); ?></li>
@@ -52,6 +52,8 @@ function get_degree_meta_markup( $post ) {
 
 
 /**
+ * TODO - actually return the description
+ *
  * Returns markup for a degree's description from the academic catalog.
  *
  * @author Jo Dickson
@@ -72,6 +74,66 @@ function get_degree_desc_markup( $post ) {
 
 
 /**
+ * TODO - actually determine the program type
+ *
+ * Returns whether or not a given degree is an undergraduate degree.
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Degree post object
+ * @return Boolean
+ **/
+function is_undergraduate_degree( $post ) {
+	if ( !$post->post_type == 'degree' ) { return false; }
+
+	return true;
+}
+
+
+/**
+ * TODO - actually determine the program type
+ *
+ * Returns whether or not a given degree is a graduate degree.
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Degree post object
+ * @return Boolean
+ **/
+function is_graduate_degree( $post ) {
+	if ( !$post->post_type == 'degree' ) { return false; }
+
+	return true;
+}
+
+
+/**
+ * Returns the UCF application URL for a given degree.
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Degree post object
+ * @return Mixed | url string or void
+ **/
+function get_degree_apply_url( $post ) {
+	if ( !$post->post_type == 'degree' ) { return; }
+
+	$apply_url = '';
+
+	// Determine whether degree is undergraduate or graduate.  Note that
+	// some degrees may not have an undergraduate or graduate program type.
+	if ( is_undergraduate_degree( $post ) ) {
+		$apply_url = get_theme_mod_or_default( 'apply_undergraduate_url' );
+	}
+	elseif ( is_graduate_degree( $post ) ) {
+		$apply_url = get_theme_mod_or_default( 'apply_graduate_url' );
+	}
+
+	return $apply_url;
+}
+
+
+/**
  * Returns markup for a degree's call-to-action buttons.
  *
  * @author Jo Dickson
@@ -82,8 +144,18 @@ function get_degree_desc_markup( $post ) {
 function get_degree_cta_btns_markup( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
+	$apply_url = get_degree_apply_url( $post );
+	$catalog_url = 'http://catalog.ucf.edu'; // TODO fetch the actual catalog url
+
 	ob_start();
 ?>
+	<?php if ( $apply_url ): ?>
+	<a class="btn btn-block btn-primary" href="<?php echo $apply_url; ?>">Apply Now</a>
+	<?php endif; ?>
+
+	<?php if ( $catalog_url ): ?>
+	<a class="btn btn-block btn-primary" href="<?php echo $catalog_url; ?>">Download Catalog PDF</a>
+	<?php endif; ?>
 <?php
 	return ob_get_clean();
 }
