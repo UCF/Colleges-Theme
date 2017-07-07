@@ -55,6 +55,7 @@ function get_degree_meta_markup( $post ) {
  * TODO - actually return the description
  *
  * Returns markup for a degree's description from the academic catalog.
+ * If a post excerpt is available, it will be returned instead.
  *
  * @author Jo Dickson
  * @since 1.0.0
@@ -64,11 +65,16 @@ function get_degree_meta_markup( $post ) {
 function get_degree_desc_markup( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
+	$desc = has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true ); // TODO field name
+
 	ob_start();
-	// if (  ):
+	if ( $desc ):
 ?>
+	<div class="lead font-slab-serif">
+		<?php echo apply_filters( 'the_content', $desc ); ?>
+	</div>
 <?php
-	// endif;
+	endif;
 	return ob_get_clean();
 }
 
