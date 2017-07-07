@@ -1,6 +1,7 @@
 <?php
 /**
- * Template Name: Full Width Page
+ * Template Name: Full Width
+ * Template Post Type: page, degree
  */
 ?>
 <?php get_header(); the_post(); ?>
