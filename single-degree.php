@@ -9,7 +9,7 @@
 			<div class="col-lg-4 mb-3 mb-lg-4">
 				<?php echo get_degree_cta_btns_markup( $post ); ?>
 			</div>
-			<div class="col-lg-8">
+			<div class="col-lg-8 mt-3">
 				<?php echo get_degree_desc_markup( $post ); ?>
 				<?php the_content(); ?>
 			</div>
