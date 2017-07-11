@@ -1025,35 +1025,6 @@
                 "min": "",
                 "max": "",
                 "return_format": "id"
-            },
-            {
-                "key": "field_595ff05fbb5a5",
-                "label": "test",
-                "name": "test",
-                "type": "relationship",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "post_type": [
-                    
-                ],
-                "taxonomy": [
-                    
-                ],
-                "filters": [
-                    "search",
-                    "post_type",
-                    "taxonomy"
-                ],
-                "elements": "",
-                "min": "",
-                "max": "",
-                "return_format": "object"
             }
         ],
         "location": [
