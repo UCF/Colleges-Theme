@@ -19,6 +19,7 @@ This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 * UCF Events
 * UCF News
 * UCF Page Assets
+* UCF Post List Shortcode
 * UCF People Custom Post Type
 * UCF Social
 * UCF Spotlight
