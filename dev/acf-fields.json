@@ -991,5 +991,87 @@
         "hide_on_screen": "",
         "active": 1,
         "description": ""
+    },
+    {
+        "key": "group_595fd2b9efda6",
+        "title": "Post Fields",
+        "fields": [
+            {
+                "key": "field_595fd2c3f4891",
+                "label": "Associated People",
+                "name": "post_associated_people",
+                "type": "relationship",
+                "instructions": "Select one or more existing people that this article is related to.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "person"
+                ],
+                "taxonomy": [
+                    
+                ],
+                "filters": [
+                    "search",
+                    "taxonomy"
+                ],
+                "elements": [
+                    "featured_image"
+                ],
+                "min": "",
+                "max": "",
+                "return_format": "id"
+            },
+            {
+                "key": "field_595ff05fbb5a5",
+                "label": "test",
+                "name": "test",
+                "type": "relationship",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    
+                ],
+                "taxonomy": [
+                    
+                ],
+                "filters": [
+                    "search",
+                    "post_type",
+                    "taxonomy"
+                ],
+                "elements": "",
+                "min": "",
+                "max": "",
+                "return_format": "object"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
     }
 ]
