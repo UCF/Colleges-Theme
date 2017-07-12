@@ -241,46 +241,90 @@ function get_person_phones_markup( $post ) {
 
 
 /**
- * TODO
  * Returns news publications related to a person.
  *
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
- * @return array | Array of Publication post objects
+ * @return array | Array of Post objects
  **/
-function get_person_news( $post ) {
-	return;
+function get_person_news( $post, $limit=4, $start=0 ) {
+	return get_posts( array(
+		'post_type' => 'post',
+		'posts_per_page' => $limit,
+		'offset' => $start,
+		'category_name' => 'faculty-news',
+		'meta_query' => array(
+			array(
+				'key' => 'post_associated_people',
+				'value' => '"' . $post->ID . '"',
+				'compare' => 'LIKE'
+			)
+		)
+	) );
 }
 
 
 /**
- * TODO
  * Returns research publications related to a person.
  *
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
- * @return array | Array of Publication post objects
+ * @return array | Array of Post objects
  **/
-function get_person_research( $post ) {
-	return;
+function get_person_publications( $post, $limit=4, $start=0 ) {
+	return get_posts( array(
+		'post_type' => 'post',
+		'posts_per_page' => $limit,
+		'offset' => $start,
+		'category_name' => 'publication',
+		'meta_query' => array(
+			array(
+				'key' => 'post_associated_people',
+				'value' => '"' . $post->ID . '"',
+				'compare' => 'LIKE'
+			)
+		)
+	) );
 }
 
 
 /**
- * Returns a styled unordered list of publications. For use in
- * single-person.php
+ * Returns a styled unordered list of posts associated with a person. For use
+ * in single-person.php
  *
  * @author Jo Dickson
  * @since 1.0.0
- * @param $posts array | array of Publication post objects
+ * @param $posts array | array of Post objects
  * @return string | publication list HTML
  **/
-function get_person_publication_list_markup( $posts ) {
+function get_person_post_list_markup( $posts ) {
 	ob_start();
+	if ( $posts ):
 ?>
+	<ul class="list-unstyled">
+		<?php foreach ( $posts as $post ): ?>
+		<li class="mb-md-4">
+			<h3 class="h5">
+				<?php if ( get_post_meta( $post->ID, '_links_to', true ) || $post->post_content ): ?>
+				<a href="<?php echo get_permalink( $post ); ?>">
+					<?php echo wptexturize( $post->post_title ); ?>
+				</a>
+				<?php else: ?>
+				<?php echo wptexturize( $post->post_title ); ?>
+				<?php endif; ?>
+			</h3>
+			<?php if ( has_excerpt( $post ) ): ?>
+			<div>
+				<?php echo apply_filters( 'the_content', get_the_excerpt( $post ) ); ?>
+			</div>
+			<?php endif; ?>
+		</li>
+		<?php endforeach; ?>
+	</ul>
 <?php
+	endif;
 	return ob_get_clean();
 }
 
@@ -294,28 +338,28 @@ function get_person_publication_list_markup( $posts ) {
  * @param $post object | Person post object
  * @return Mixed | Grid and person's publication list HTML or void
  **/
-function get_person_publications_markup( $post ) {
+function get_person_news_publications_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
-	$news = get_person_news( $post ); // TODO
-	$research = get_person_research( $post ); // TODO
+	$news = get_person_news( $post );
+	$pubs = get_person_publications( $post );
 
 	ob_start();
 
-	if ( $news || $research ):
+	if ( $news || $pubs ):
 ?>
 	<div class="row">
 		<?php if ( $news ): ?>
-		<div class="col-md">
+		<div class="col-lg">
 			<h2 class="person-subheading mt-5">In The News</h2>
-			<?php echo get_person_publication_list_markup( $news ); // TODO ?>
+			<?php echo get_person_post_list_markup( $news ); ?>
 		</div>
 		<?php endif; ?>
 
-		<?php if ( $research ): ?>
-		<div class="col-md">
+		<?php if ( $pubs ): ?>
+		<div class="col-lg">
 			<h2 class="person-subheading mt-5">Research and Publications</h2>
-			<?php echo get_person_publication_list_markup( $research ); // TODO ?>
+			<?php echo get_person_post_list_markup( $pubs ); ?>
 		</div>
 		<?php endif; ?>
 	</div>
