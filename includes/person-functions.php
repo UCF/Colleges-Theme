@@ -388,19 +388,32 @@ function get_person_videos_markup( $post ) {
 	<div class="row">
 		<?php
 		while ( have_rows( 'person_medias', $post->ID ) ): the_row();
-			$video_title  = get_sub_field( 'title' );
-			$video_embed  = get_sub_field( 'link' );
-			$video_source = get_sub_field( 'source' );
+			$video_title     = get_sub_field( 'title' );
+			$video_embed     = get_sub_field( 'link' );
+			$video_embed_url = get_sub_field( 'link', false );
+			$video_source    = get_sub_field( 'source' );
+
+			// Lazy check for whether or not WordPress returned a fallback link
+			// for the embed
+			$oembed_is_valid = ( substr( $video_embed, 0, 2 ) !== '<a ' && substr( $video_embed, -4 ) !== '</a>' );
 		?>
 		<div class="col-md-6 my-3">
-			<?php if ( $video_embed ): ?>
+			<?php if ( $video_embed && $oembed_is_valid ): ?>
 			<div class="embed-responsive embed-responsive-16by9 mb-3">
 				<?php echo $video_embed; ?>
 			</div>
 			<?php endif; ?>
 
 			<?php if ( $video_title ): ?>
-			<h3 class="h5 text-uppercase mb-1"><?php echo $video_title; ?></h3>
+			<h3 class="h5 text-uppercase mb-1">
+				<?php if ( !$oembed_is_valid && $video_embed_url ): ?>
+				<a href="<?php echo $video_embed_url; ?>">
+					<?php echo $video_title; ?>
+				</a>
+				<?php else: ?>
+				<?php echo $video_title; ?>
+				<?php endif; ?>
+			</h3>
 			<?php endif; ?>
 
 			<?php if ( $video_source ): ?>
