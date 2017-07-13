@@ -8,7 +8,7 @@
  * @param $post object | Person post object
  * @return Mixed | thumbnail HTML or void
  **/
-function get_person_thumbnail( $post ) {
+function get_person_thumbnail( $post, $rounded=true ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
@@ -16,7 +16,7 @@ function get_person_thumbnail( $post ) {
 	ob_start();
 	if ( $thumbnail ):
 ?>
-	<div class="media-background-container person-photo rounded-circle mx-auto">
+	<div class="media-background-container person-photo <?php if ( $rounded ): ?>rounded-circle<?php endif; ?> mx-auto">
 		<img src="<?php echo $thumbnail; ?>" alt="<?php $post->post_title; ?>" title="<?php $post->post_title; ?>" class="media-background object-fit-cover">
 	</div>
 <?php
@@ -426,3 +426,72 @@ function get_person_videos_markup( $post ) {
 	endif;
 	return ob_get_clean();
 }
+
+
+/**
+ * Add custom people list layout for UCF Post List shortcode
+ **/
+
+function ucf_post_list_display_people_before( $items, $title ) {
+	ob_start();
+?>
+<div class="ucf-post-list ucf-post-list-people">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_people_before', 'ucf_post_list_display_people_before', 10, 2 );
+
+
+function ucf_post_list_display_people_title( $items, $title ) {
+	$formatted_title = '';
+
+	if ( $title ) {
+		$formatted_title = '<h2 class="ucf-post-list-title">' . $title . '</h2>';
+	}
+
+	echo $formatted_title;
+}
+
+add_action( 'ucf_post_list_display_people_title', 'ucf_post_list_display_people_title', 10, 2 );
+
+
+function ucf_post_list_display_people( $items, $title ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+	ob_start();
+?>
+	<?php if ( $items ): ?>
+	<ul class="list-unstyled row ucf-post-list-items">
+		<?php foreach ( $items as $item ): ?>
+		<li class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mb-2 ucf-post-list-item">
+			<a class="person-link" href="<?php echo get_permalink( $item->ID ); ?>">
+				<?php echo get_person_thumbnail( $item, false ); ?>
+				<h3 class="mt-2 mb-1 person-name"><?php echo get_person_name( $item ); ?></h3>
+				<?php if ( $job_title = get_field( 'person_jobtitle', $item->ID ) ): ?>
+				<div class="font-italic person-job-title">
+					<?php echo $job_title; ?>
+				</div>
+				<?php endif; ?>
+			</a>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php else: ?>
+	<div class="ucf-post-list-error">No results found.</div>
+	<?php endif; ?>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_people', 'ucf_post_list_display_people', 10, 2 );
+
+
+function ucf_post_list_display_people_after( $items, $title ) {
+	ob_start();
+?>
+</div>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_people_after', 'ucf_post_list_display_people_after', 10, 2 );
