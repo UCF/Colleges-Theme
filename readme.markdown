@@ -13,11 +13,13 @@ This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 ### Recommended Plugins
 * Athena Shortcodes
 * Page Links To
+* UCF Degree Custom Post Type
 * UCF Departments Taxonomy
+* UCF Employee Types Taxonomy
 * UCF Events
 * UCF News
 * UCF Page Assets
-* UCF Person Custom Post Type
+* UCF People Custom Post Type
 * UCF Social
 * UCF Spotlight
 * Varnish Dependency Purger

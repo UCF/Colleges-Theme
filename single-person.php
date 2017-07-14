@@ -43,7 +43,6 @@
 						echo '<p>No biography available.</p>';
 					}
 					?>
-
 					<?php if ( $cv_url = get_field( 'person_cv' ) ): ?>
 					<p>
 						<a class="btn btn-primary mt-3" href="<?php echo $cv_url; ?>">Download CV</a>

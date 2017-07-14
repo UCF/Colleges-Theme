@@ -10,9 +10,11 @@ define( 'THEME_JS_URL', THEME_STATIC_URL . '/js' );
 define( 'THEME_IMG_URL', THEME_STATIC_URL . '/img' );
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
 define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
-	'person_header_title' => 'Faculty and Research',
-	'person_header_subtitle' => get_bloginfo( 'name' ),
-	'person_thumbnail' => THEME_IMG_URL . '/no-photo.jpg'
+	'apply_undergraduate_url' => 'https://apply.ucf.edu/application/',
+	'apply_graduate_url'      => 'https://application.graduate.ucf.edu/',
+	'person_header_title'     => 'Faculty and Research',
+	'person_header_subtitle'  => get_bloginfo( 'name' ),
+	'person_thumbnail'        => THEME_IMG_URL . '/no-photo.jpg'
 ) ) );
 
 
@@ -79,11 +81,27 @@ function define_customizer_sections( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'admissions',
+		array(
+			'title' => 'UCF Admissions'
+		)
+	);
+
 	if ( post_type_exists( 'person' ) ) {
 		$wp_customize->add_section(
 			THEME_CUSTOMIZER_PREFIX . 'people',
 			array(
 				'title' => 'People'
+			)
+		);
+	}
+
+	if ( post_type_exists( 'degree' ) ) {
+		$wp_customize->add_section(
+			THEME_CUSTOMIZER_PREFIX . 'degrees',
+			array(
+				'title' => 'Degrees'
 			)
 		);
 	}
@@ -155,6 +173,40 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	// Admissions
+	$wp_customize->add_setting(
+		'apply_undergraduate_url',
+		array(
+			'default' => get_theme_mod_default( 'apply_undergraduate_url' )
+		)
+	);
+
+	$wp_customize->add_control(
+		'apply_undergraduate_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Undergraduate Application URL',
+			'description' => 'URL that points to the undergraduate student application.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'apply_graduate_url',
+		array(
+			'default' => get_theme_mod_default( 'apply_graduate_url' )
+		)
+	);
+
+	$wp_customize->add_control(
+		'apply_graduate_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Graduate Application URL',
+			'description' => 'URL that points to the graduate student application.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+		)
+	);
 
 	// People
 	if ( post_type_exists( 'person' ) ) {
@@ -240,6 +292,45 @@ function define_customizer_fields( $wp_customize ) {
 					'label'       => 'Default Header Image (-xs)',
 					'description' => 'Default header image at the -xs breakpoint for single person templates. Recommended dimensions: 575px x 575px',
 					'section'     => THEME_CUSTOMIZER_PREFIX . 'people',
+					'mime_type'   => 'image'
+				)
+			)
+		);
+
+	}
+
+	// Degrees
+	if ( post_type_exists( 'degree' ) ) {
+
+		$wp_customize->add_setting(
+			'degree_header_image'
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'degree_header_image',
+				array(
+					'label'       => 'Default Header Image (-sm+)',
+					'description' => 'Default header image at the -sm breakpoint and up for single degree templates. Recommended dimensions: 1600px x 400px',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'degrees',
+					'mime_type'   => 'image'
+				)
+			)
+		);
+
+		$wp_customize->add_setting(
+			'degree_header_image_xs'
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'degree_header_image_xs',
+				array(
+					'label'       => 'Default Header Image (-xs)',
+					'description' => 'Default header image at the -xs breakpoint for single degree templates. Recommended dimensions: 575px x 575px',
+					'section'     => THEME_CUSTOMIZER_PREFIX . 'degrees',
 					'mime_type'   => 'image'
 				)
 			)

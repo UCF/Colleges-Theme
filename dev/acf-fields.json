@@ -1,5 +1,52 @@
 [
     {
+        "key": "group_596773ca3713a",
+        "title": "Degree Fields - Default Template",
+        "fields": [
+            {
+                "key": "field_596773d77642a",
+                "label": "Custom Sidebar Content",
+                "name": "degree_sidebar_content",
+                "type": "wysiwyg",
+                "instructions": "Custom content to display in the degree template sidebar.  Is displayed underneath the degree's call-to-action buttons on desktop and tablet screen sizes, and beneath the degree description on mobile screen sizes.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "degree"
+                },
+                {
+                    "param": "post_template",
+                    "operator": "==",
+                    "value": "default"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    },
+    {
         "key": "group_58f7a73f5fecc",
         "title": "Header Media Fields",
         "fields": [
@@ -38,7 +85,7 @@
                     "header-media-fullscreen": "Fullscreen"
                 },
                 "default_value": [
-                    
+
                 ],
                 "allow_null": 1,
                 "multiple": 0,
@@ -402,67 +449,6 @@
         "description": ""
     },
     {
-        "key": "group_593afe53a4a76",
-        "title": "News Article",
-        "fields": [
-            {
-                "key": "field_593afe5cbed57",
-                "label": "News Lead Paragraph",
-                "name": "news_lead_paragraph",
-                "type": "textarea",
-                "instructions": "Lead paragraph displayed below the title on a news article.",
-                "required": 1,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "maxlength": "",
-                "rows": "",
-                "new_lines": "wpautop"
-            },
-            {
-                "key": "field_593b025ebb1ce",
-                "label": "News Byline",
-                "name": "news_byline",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "John Doe",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            }
-        ],
-        "location": [
-            [
-                {
-                    "param": "post_type",
-                    "operator": "==",
-                    "value": "publication"
-                }
-            ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "default",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": 1,
-        "description": ""
-    },
-    {
         "key": "group_5925d334f18be",
         "title": "Page Header",
         "fields": [
@@ -624,7 +610,7 @@
             {
                 "key": "field_5953aa7625c15",
                 "label": "Phone Numbers",
-                "name": "person_phones",
+                "name": "person_phone_numbers",
                 "type": "repeater",
                 "instructions": "One or more phone numbers at which the person can be contacted.",
                 "required": 0,
@@ -901,7 +887,7 @@
             {
                 "key": "field_5953ca9f7345b",
                 "label": "Video and Media",
-                "name": "person_media",
+                "name": "person_medias",
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
@@ -980,6 +966,59 @@
                     "param": "post_type",
                     "operator": "==",
                     "value": "person"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    },
+    {
+        "key": "group_595fd2b9efda6",
+        "title": "Post Fields",
+        "fields": [
+            {
+                "key": "field_595fd2c3f4891",
+                "label": "Associated People",
+                "name": "post_associated_people",
+                "type": "relationship",
+                "instructions": "Select one or more existing people that this article is related to.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "person"
+                ],
+                "taxonomy": [
+
+                ],
+                "filters": [
+                    "search",
+                    "taxonomy"
+                ],
+                "elements": [
+                    "featured_image"
+                ],
+                "min": "",
+                "max": "",
+                "return_format": "id"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
                 }
             ]
         ],

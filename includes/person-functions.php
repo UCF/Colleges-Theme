@@ -63,8 +63,8 @@ function get_person_contact_btns_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	$email      = get_field( 'person_email', $post->ID );
-	$has_phones = have_rows( 'person_phones', $post->ID );
-	$phones     = get_field( 'person_phones', $post->ID );
+	$has_phones = have_rows( 'person_phone_numbers', $post->ID );
+	$phones     = get_field( 'person_phone_numbers', $post->ID );
 
 	ob_start();
 
@@ -89,7 +89,7 @@ function get_person_contact_btns_markup( $post ) {
 
 
 /**
- * Display's a person's department(s) in a condensed table-like format.
+ * Displays a person's department(s) in a condensed table-like format.
  * For use on single-person.php
  *
  * @author Jo Dickson
@@ -100,23 +100,20 @@ function get_person_contact_btns_markup( $post ) {
 function get_person_dept_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
+	$depts = wp_get_post_terms( $post->ID, 'departments' );
+	$depts = !is_wp_error( $depts ) && !empty( $depts ) && class_exists( 'UCF_Departments_Common' ) ? $depts : false;
+
 	ob_start();
-	if ( taxonomy_exists( 'departments' ) && $departments = wp_get_post_terms( $post->ID, 'departments' ) ) :
+	if ( $depts ) :
 ?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
-			Department<?php if ( count( $departments ) > 1 ) { echo 's'; } ?>
+			Department<?php if ( count( $depts ) > 1 ) { echo 's'; } ?>
 		</div>
 		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<ul class="list-unstyled mb-0">
-				<?php foreach ( $departments as $dept ): ?>
-				<li>
-					<?php if ( $website = get_term_meta( $dept->term_id, 'departments_website', true ) ): ?>
-					<a href="<?php echo $website; ?>"><?php echo $dept->name; ?></a>
-					<?php else: ?>
-					<?php echo $dept->name; ?>
-					<?php endif; ?>
-				</li>
+				<?php foreach ( $depts as $dept ): ?>
+				<li><?php echo UCF_Departments_Common::get_website_link( $dept ); ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
@@ -211,7 +208,7 @@ function get_person_phones_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
 	ob_start();
-	if ( have_rows( 'person_phones', $post->ID ) ):
+	if ( have_rows( 'person_phone_numbers', $post->ID ) ):
 ?>
 	<div class="row">
 		<div class="col-xl-4 col-md-12 col-sm-4 person-label">
@@ -220,7 +217,7 @@ function get_person_phones_markup( $post ) {
 		<div class="col-xl-8 col-md-12 col-sm-8 person-attr">
 			<ul class="list-unstyled mb-0">
 			<?php
-			while ( have_rows( 'person_phones', $post->ID ) ): the_row();
+			while ( have_rows( 'person_phone_numbers', $post->ID ) ): the_row();
 				$phone = get_sub_field( 'number' );
 				if ( $phone ):
 			?>
@@ -341,12 +338,12 @@ function get_person_videos_markup( $post ) {
 
 	ob_start();
 
-	if ( have_rows( 'person_media', $post->ID ) ):
+	if ( have_rows( 'person_medias', $post->ID ) ):
 ?>
 	<h2 class="person-subheading mt-5">Videos and Media</h2>
 	<div class="row">
 		<?php
-		while ( have_rows( 'person_media', $post->ID ) ): the_row();
+		while ( have_rows( 'person_medias', $post->ID ) ): the_row();
 			$video_title  = get_sub_field( 'title' );
 			$video_embed  = get_sub_field( 'link' );
 			$video_source = get_sub_field( 'source' );
