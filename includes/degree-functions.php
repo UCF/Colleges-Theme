@@ -52,7 +52,7 @@ function get_degree_meta_markup( $post ) {
 
 
 /**
- * TODO - actually return the description
+ * TODO - actually return a description from search service data
  *
  * Returns markup for a degree's description from the academic catalog.
  * If a post excerpt is available, it will be returned instead.
@@ -65,7 +65,7 @@ function get_degree_meta_markup( $post ) {
 function get_degree_desc_markup( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
-	$desc = has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true ); // TODO field name
+	$desc = has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true ); // TODO field name for imported degree data?
 
 	ob_start();
 	if ( $desc ):
@@ -140,6 +140,24 @@ function get_degree_apply_url( $post ) {
 
 
 /**
+ * TODO
+ * Returns the catalog URL for a given degree.
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Degree post object
+ * @return Mixed | url string or void
+ **/
+function get_degree_catalog_url( $post ) {
+	if ( !$post->post_type == 'degree' ) { return; }
+
+	$apply_url = 'http://catalog.ucf.edu';  // TODO
+
+	return $apply_url;
+}
+
+
+/**
  * Returns markup for a degree's call-to-action buttons.
  *
  * @author Jo Dickson
@@ -151,7 +169,7 @@ function get_degree_cta_btns_markup( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
 	$apply_url = get_degree_apply_url( $post );
-	$catalog_url = 'http://catalog.ucf.edu'; // TODO fetch the actual catalog url
+	$catalog_url = get_degree_catalog_url( $post );
 
 	ob_start();
 ?>
