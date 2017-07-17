@@ -478,7 +478,7 @@ function ucf_post_list_display_people( $items, $title ) {
 		<?php endforeach; ?>
 	</ul>
 	<?php else: ?>
-	<div class="ucf-post-list-error">No results found.</div>
+	<div class="ucf-post-list-error mb-4">No results found.</div>
 	<?php endif; ?>
 <?php
 	echo ob_get_clean();
