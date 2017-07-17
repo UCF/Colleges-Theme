@@ -6,9 +6,10 @@
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
+ * @param $css_classes str | Additional classes to add to the thumbnail wrapper
  * @return Mixed | thumbnail HTML or void
  **/
-function get_person_thumbnail( $post, $rounded=true ) {
+function get_person_thumbnail( $post, $css_classes='' ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
@@ -16,7 +17,7 @@ function get_person_thumbnail( $post, $rounded=true ) {
 	ob_start();
 	if ( $thumbnail ):
 ?>
-	<div class="media-background-container person-photo <?php if ( $rounded ): ?>rounded-circle<?php endif; ?> mx-auto">
+	<div class="media-background-container person-photo mx-auto <?php echo $css_classes; ?>">
 		<img src="<?php echo $thumbnail; ?>" alt="<?php $post->post_title; ?>" title="<?php $post->post_title; ?>" class="media-background object-fit-cover">
 	</div>
 <?php
@@ -465,7 +466,7 @@ function ucf_post_list_display_people( $items, $title ) {
 		<?php foreach ( $items as $item ): ?>
 		<li class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mb-2 ucf-post-list-item">
 			<a class="person-link" href="<?php echo get_permalink( $item->ID ); ?>">
-				<?php echo get_person_thumbnail( $item, false ); ?>
+				<?php echo get_person_thumbnail( $item ); ?>
 				<h3 class="mt-2 mb-1 person-name"><?php echo get_person_name( $item ); ?></h3>
 				<?php if ( $job_title = get_field( 'person_jobtitle', $item->ID ) ): ?>
 				<div class="font-italic person-job-title">
