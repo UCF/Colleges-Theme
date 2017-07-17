@@ -592,6 +592,25 @@
                 "maxlength": ""
             },
             {
+                "key": "field_59669002f433d",
+                "label": "Order By Name",
+                "name": "person_orderby_name",
+                "type": "text",
+                "instructions": "Name by which this person should be sorted when people are displayed in alphabetical lists.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
                 "key": "field_5953adbeb95ba",
                 "label": "Contact Info",
                 "name": "",

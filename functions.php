@@ -166,3 +166,16 @@ function get_contact_address_markup() {
 	}
 	return;
 }
+
+
+/**
+ * Add custom layouts for the UCF Post List shortcode
+ **/
+
+function colleges_post_list_layouts( $layouts ) {
+	return array_merge( $layouts, array(
+		'people' => 'People Layout'
+	) );
+}
+
+add_filter( 'ucf_post_list_get_layouts', 'colleges_post_list_layouts', 10, 1 );

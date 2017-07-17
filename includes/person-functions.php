@@ -6,9 +6,10 @@
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
+ * @param $css_classes str | Additional classes to add to the thumbnail wrapper
  * @return Mixed | thumbnail HTML or void
  **/
-function get_person_thumbnail( $post ) {
+function get_person_thumbnail( $post, $css_classes='' ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
@@ -16,7 +17,7 @@ function get_person_thumbnail( $post ) {
 	ob_start();
 	if ( $thumbnail ):
 ?>
-	<div class="media-background-container person-photo rounded-circle mx-auto">
+	<div class="media-background-container person-photo mx-auto <?php echo $css_classes; ?>">
 		<img src="<?php echo $thumbnail; ?>" alt="<?php $post->post_title; ?>" title="<?php $post->post_title; ?>" class="media-background object-fit-cover">
 	</div>
 <?php
@@ -241,46 +242,90 @@ function get_person_phones_markup( $post ) {
 
 
 /**
- * TODO
  * Returns news publications related to a person.
  *
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
- * @return array | Array of Publication post objects
+ * @return array | Array of Post objects
  **/
-function get_person_news( $post ) {
-	return;
+function get_person_news( $post, $limit=4, $start=0 ) {
+	return get_posts( array(
+		'post_type' => 'post',
+		'posts_per_page' => $limit,
+		'offset' => $start,
+		'category_name' => 'faculty-news',
+		'meta_query' => array(
+			array(
+				'key' => 'post_associated_people',
+				'value' => '"' . $post->ID . '"',
+				'compare' => 'LIKE'
+			)
+		)
+	) );
 }
 
 
 /**
- * TODO
  * Returns research publications related to a person.
  *
  * @author Jo Dickson
  * @since 1.0.0
  * @param $post object | Person post object
- * @return array | Array of Publication post objects
+ * @return array | Array of Post objects
  **/
-function get_person_research( $post ) {
-	return;
+function get_person_publications( $post, $limit=4, $start=0 ) {
+	return get_posts( array(
+		'post_type' => 'post',
+		'posts_per_page' => $limit,
+		'offset' => $start,
+		'category_name' => 'publication',
+		'meta_query' => array(
+			array(
+				'key' => 'post_associated_people',
+				'value' => '"' . $post->ID . '"',
+				'compare' => 'LIKE'
+			)
+		)
+	) );
 }
 
 
 /**
- * Returns a styled unordered list of publications. For use in
- * single-person.php
+ * Returns a styled unordered list of posts associated with a person. For use
+ * in single-person.php
  *
  * @author Jo Dickson
  * @since 1.0.0
- * @param $posts array | array of Publication post objects
+ * @param $posts array | array of Post objects
  * @return string | publication list HTML
  **/
-function get_person_publication_list_markup( $posts ) {
+function get_person_post_list_markup( $posts ) {
 	ob_start();
+	if ( $posts ):
 ?>
+	<ul class="list-unstyled">
+		<?php foreach ( $posts as $post ): ?>
+		<li class="mb-md-4">
+			<h3 class="h5">
+				<?php if ( get_post_meta( $post->ID, '_links_to', true ) || $post->post_content ): ?>
+				<a href="<?php echo get_permalink( $post ); ?>">
+					<?php echo wptexturize( $post->post_title ); ?>
+				</a>
+				<?php else: ?>
+				<?php echo wptexturize( $post->post_title ); ?>
+				<?php endif; ?>
+			</h3>
+			<?php if ( has_excerpt( $post ) ): ?>
+			<div>
+				<?php echo apply_filters( 'the_content', get_the_excerpt( $post ) ); ?>
+			</div>
+			<?php endif; ?>
+		</li>
+		<?php endforeach; ?>
+	</ul>
 <?php
+	endif;
 	return ob_get_clean();
 }
 
@@ -294,28 +339,28 @@ function get_person_publication_list_markup( $posts ) {
  * @param $post object | Person post object
  * @return Mixed | Grid and person's publication list HTML or void
  **/
-function get_person_publications_markup( $post ) {
+function get_person_news_publications_markup( $post ) {
 	if ( $post->post_type !== 'person' ) { return; }
 
-	$news = get_person_news( $post ); // TODO
-	$research = get_person_research( $post ); // TODO
+	$news = get_person_news( $post );
+	$pubs = get_person_publications( $post );
 
 	ob_start();
 
-	if ( $news || $research ):
+	if ( $news || $pubs ):
 ?>
 	<div class="row">
 		<?php if ( $news ): ?>
-		<div class="col-md">
+		<div class="col-lg">
 			<h2 class="person-subheading mt-5">In The News</h2>
-			<?php echo get_person_publication_list_markup( $news ); // TODO ?>
+			<?php echo get_person_post_list_markup( $news ); ?>
 		</div>
 		<?php endif; ?>
 
-		<?php if ( $research ): ?>
-		<div class="col-md">
+		<?php if ( $pubs ): ?>
+		<div class="col-lg">
 			<h2 class="person-subheading mt-5">Research and Publications</h2>
-			<?php echo get_person_publication_list_markup( $research ); // TODO ?>
+			<?php echo get_person_post_list_markup( $pubs ); ?>
 		</div>
 		<?php endif; ?>
 	</div>
@@ -344,19 +389,32 @@ function get_person_videos_markup( $post ) {
 	<div class="row">
 		<?php
 		while ( have_rows( 'person_medias', $post->ID ) ): the_row();
-			$video_title  = get_sub_field( 'title' );
-			$video_embed  = get_sub_field( 'link' );
-			$video_source = get_sub_field( 'source' );
+			$video_title     = get_sub_field( 'title' );
+			$video_embed     = get_sub_field( 'link' );
+			$video_embed_url = get_sub_field( 'link', false );
+			$video_source    = get_sub_field( 'source' );
+
+			// Lazy check for whether or not WordPress returned a fallback link
+			// for the embed
+			$oembed_is_valid = ( substr( $video_embed, 0, 2 ) !== '<a ' && substr( $video_embed, -4 ) !== '</a>' );
 		?>
 		<div class="col-md-6 my-3">
-			<?php if ( $video_embed ): ?>
+			<?php if ( $video_embed && $oembed_is_valid ): ?>
 			<div class="embed-responsive embed-responsive-16by9 mb-3">
 				<?php echo $video_embed; ?>
 			</div>
 			<?php endif; ?>
 
 			<?php if ( $video_title ): ?>
-			<h3 class="h5 text-uppercase mb-1"><?php echo $video_title; ?></h3>
+			<h3 class="h5 text-uppercase mb-1">
+				<?php if ( !$oembed_is_valid && $video_embed_url ): ?>
+				<a href="<?php echo $video_embed_url; ?>">
+					<?php echo $video_title; ?>
+				</a>
+				<?php else: ?>
+				<?php echo $video_title; ?>
+				<?php endif; ?>
+			</h3>
 			<?php endif; ?>
 
 			<?php if ( $video_source ): ?>
@@ -369,3 +427,72 @@ function get_person_videos_markup( $post ) {
 	endif;
 	return ob_get_clean();
 }
+
+
+/**
+ * Add custom people list layout for UCF Post List shortcode
+ **/
+
+function ucf_post_list_display_people_before( $items, $title ) {
+	ob_start();
+?>
+<div class="ucf-post-list ucf-post-list-people">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_people_before', 'ucf_post_list_display_people_before', 10, 2 );
+
+
+function ucf_post_list_display_people_title( $items, $title ) {
+	$formatted_title = '';
+
+	if ( $title ) {
+		$formatted_title = '<h2 class="ucf-post-list-title">' . $title . '</h2>';
+	}
+
+	echo $formatted_title;
+}
+
+add_action( 'ucf_post_list_display_people_title', 'ucf_post_list_display_people_title', 10, 2 );
+
+
+function ucf_post_list_display_people( $items, $title ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+	ob_start();
+?>
+	<?php if ( $items ): ?>
+	<ul class="list-unstyled row ucf-post-list-items">
+		<?php foreach ( $items as $item ): ?>
+		<li class="col-6 col-sm-4 col-md-3 col-xl-2 mt-3 mb-2 ucf-post-list-item">
+			<a class="person-link" href="<?php echo get_permalink( $item->ID ); ?>">
+				<?php echo get_person_thumbnail( $item ); ?>
+				<h3 class="mt-2 mb-1 person-name"><?php echo get_person_name( $item ); ?></h3>
+				<?php if ( $job_title = get_field( 'person_jobtitle', $item->ID ) ): ?>
+				<div class="font-italic person-job-title">
+					<?php echo $job_title; ?>
+				</div>
+				<?php endif; ?>
+			</a>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php else: ?>
+	<div class="ucf-post-list-error">No results found.</div>
+	<?php endif; ?>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_people', 'ucf_post_list_display_people', 10, 2 );
+
+
+function ucf_post_list_display_people_after( $items, $title ) {
+	ob_start();
+?>
+</div>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_people_after', 'ucf_post_list_display_people_after', 10, 2 );
