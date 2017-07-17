@@ -267,7 +267,7 @@ function get_header_media_content_markup( $post ) {
 					<?php endif; ?>
 
 					<?php if ( $extra_content ): ?>
-					<div class="header-extra mb-4 mb-sm-0"><?php echo $extra_content; ?></div>
+					<div class="header-extra mt-3 mb-4 mb-sm-0"><?php echo $extra_content; ?></div>
 					<?php endif; ?>
 				</div>
 			</div>
