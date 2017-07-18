@@ -68,7 +68,7 @@ function get_header_images( $post ) {
 		'header_image_xs' => ''
 	);
 
-	if ( $post->post_type == 'person' || $post->post_type == 'degree' ) {
+	if ( $post->post_type === 'person' || $post->post_type === 'degree' ) {
 		$retval['header_image']    = get_theme_mod( $post->post_type . '_header_image' );
 		$retval['header_image_xs'] = get_theme_mod( $post->post_type . '_header_image_xs' );
 	}
@@ -113,7 +113,7 @@ function get_header_title( $post ) {
 	if ( is_front_page() ) {
 		$title = get_field( 'homepage_header_title', $post->ID );
 	}
-	else if ( $post->post_type == 'person' ) {
+	else if ( $post->post_type === 'person' ) {
 		$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $post->ID );
 	}
 	else {
@@ -135,7 +135,7 @@ function get_header_title( $post ) {
 function get_header_subtitle( $post ) {
 	$subtitle = '';
 
-	if ( $post->post_type == 'person' ) {
+	if ( $post->post_type === 'person' ) {
 		$subtitle = get_theme_mod_or_default( 'person_header_subtitle' ) ?: get_field( 'page_header_subtitle', $post->ID );
 	}
 	else {
@@ -152,7 +152,7 @@ function get_header_subtitle( $post ) {
 function get_header_height( $post ) {
 	$retval = 'header-media-default';
 
-	if ( $post->post_type == 'person' || $post->post_type == 'degree' ) {
+	if ( $post->post_type === 'person' || $post->post_type === 'degree' ) {
 		$retval = 'header-media-short';
 	}
 
@@ -255,7 +255,7 @@ function get_header_media_content_markup( $post ) {
 				<div class="header-title-wrapper">
 					<?php
 					// Don't print multiple h1's on the page for person templates
-					if ( $post->post_type == 'person' ):
+					if ( $post->post_type === 'person' ):
 					?>
 					<strong class="h1 d-block header-title"><?php echo $title; ?></strong>
 					<?php else: ?>
@@ -357,7 +357,7 @@ function get_header_default_markup( $post ) {
 <div class="container">
 	<?php
 	// Don't print multiple h1's on the page for person templates
-	if ( $post->post_type == 'person' ):
+	if ( $post->post_type === 'person' ):
 	?>
 	<strong class="h1 d-block mt-3 mt-sm-4 mt-md-5 mb-3"><?php echo $title; ?></strong>
 	<?php else: ?>
