@@ -52,7 +52,7 @@
         "fields": [
             {
                 "key": "field_590ca453f6655",
-                "label": "Header Size",
+                "label": "Header Styling",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -85,7 +85,7 @@
                     "header-media-fullscreen": "Fullscreen"
                 },
                 "default_value": [
-
+                    
                 ],
                 "allow_null": 1,
                 "multiple": 0,
@@ -114,6 +114,33 @@
                 },
                 "default_value": [
                     "left"
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
+            },
+            {
+                "key": "field_596d05f6eb9e4",
+                "label": "Header Title\/Subtitle Display Type",
+                "name": "page_header_content_display",
+                "type": "select",
+                "instructions": "Style to use for the header title and subtitle.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "inline-block": "Inline-Block (default)",
+                    "block": "Block"
+                },
+                "default_value": [
+                    "block"
                 ],
                 "allow_null": 0,
                 "multiple": 0,
@@ -489,6 +516,25 @@
                 "prepend": "",
                 "append": "",
                 "maxlength": ""
+            },
+            {
+                "key": "field_596d0ba29e5c9",
+                "label": "Page Header Extra Content",
+                "name": "page_header_extra_content",
+                "type": "wysiwyg",
+                "instructions": "Extra content to display immediately below the page title\/subtitle.  Note that this content will be displayed underneath a header image (if available) on mobile devices--if you're using a header image\/video, make sure you provide adequate contrast for the content against both the header media AND a plain white background!",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0
             }
         ],
         "location": [
@@ -1018,7 +1064,7 @@
                     "person"
                 ],
                 "taxonomy": [
-
+                    
                 ],
                 "filters": [
                     "search",

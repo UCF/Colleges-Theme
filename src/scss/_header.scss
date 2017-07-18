@@ -131,14 +131,17 @@
 
 
 //
-// Homepage-specific header styles
+// Block-style header titles (including homepage)
 //
+.header-media-content-block {
+  @include media-breakpoint-down(xs) {
+    min-height: 0;
+  }
 
-.header-media-home {
   .media-background,
   .media-background-picture {
     @include media-breakpoint-down(xs) {
-      height: 300px;
+      height: 300px; // Intentionally shorten header img to help push pg title/subtitle up
       position: static;
     }
   }
@@ -149,7 +152,27 @@
       padding-right: 0;
     }
   }
+
+  .header-title-wrapper {
+    @include media-breakpoint-down(xs) {
+      display: block;
+    }
+  }
+
+  .header-title,
+  .header-subtitle {
+    float: none;
+    text-align: center;
+  }
+
+  .header-extra {
+    @include media-breakpoint-down(xs) {
+      padding-left: $grid-gutter-width-base / 2;
+      padding-right: $grid-gutter-width-base / 2;
+    }
+  }
 }
+
 
 .home-header-title-wrapper {
   background-color: transparentize($colleges-gray, .1);

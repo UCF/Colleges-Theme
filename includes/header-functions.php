@@ -68,7 +68,7 @@ function get_header_images( $post ) {
 		'header_image_xs' => ''
 	);
 
-	if ( $post->post_type == 'person' || $post->post_type == 'degree' ) {
+	if ( $post->post_type === 'person' || $post->post_type === 'degree' ) {
 		$retval['header_image']    = get_theme_mod( $post->post_type . '_header_image' );
 		$retval['header_image_xs'] = get_theme_mod( $post->post_type . '_header_image_xs' );
 	}
@@ -113,7 +113,7 @@ function get_header_title( $post ) {
 	if ( is_front_page() ) {
 		$title = get_field( 'homepage_header_title', $post->ID );
 	}
-	else if ( $post->post_type == 'person' ) {
+	else if ( $post->post_type === 'person' ) {
 		$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $post->ID );
 	}
 	else {
@@ -135,7 +135,7 @@ function get_header_title( $post ) {
 function get_header_subtitle( $post ) {
 	$subtitle = '';
 
-	if ( $post->post_type == 'person' ) {
+	if ( $post->post_type === 'person' ) {
 		$subtitle = get_theme_mod_or_default( 'person_header_subtitle' ) ?: get_field( 'page_header_subtitle', $post->ID );
 	}
 	else {
@@ -152,7 +152,7 @@ function get_header_subtitle( $post ) {
 function get_header_height( $post ) {
 	$retval = 'header-media-default';
 
-	if ( $post->post_type == 'person' || $post->post_type == 'degree' ) {
+	if ( $post->post_type === 'person' || $post->post_type === 'degree' ) {
 		$retval = 'header-media-short';
 	}
 
@@ -186,13 +186,52 @@ function get_homepage_header_cta( $post, $position ) {
 
 
 /**
- * Returns the markup for page headers with an image or video background.
+ * Returns markup for inner header contents on the homepage.
  **/
-function get_header_media_markup( $post, $videos=null, $images=null ) {
-	$content_position = get_field( 'page_header_content_position', $post->ID );
+function get_homepage_header_markup( $post ) {
+	$title                  = get_header_title( $post );
+	$homepage_button_left   = get_homepage_header_cta( $post, 'left' );
+	$homepage_button_center = get_homepage_header_cta( $post, 'center' );
+	$homepage_button_right  = get_homepage_header_cta( $post, 'right' );
+
+	ob_start();
+?>
+	<div class="container d-flex flex-column justify-content-between">
+		<div class="row">
+			<div class="col-lg-10 offset-lg-1 col-12">
+				<div class="home-header-title-wrapper">
+					<h2 class="h1 home-header-title mb-0"><?php echo $title; ?></h2>
+					<?php if ( $homepage_button_left || $homepage_button_center || $homepage_button_right ): ?>
+					<div class="row mt-3 mt-md-4">
+						<?php if ( $homepage_button_left ) { echo $homepage_button_left; } ?>
+						<?php if ( $homepage_button_center ) { echo $homepage_button_center; } ?>
+						<?php if ( $homepage_button_right ) { echo $homepage_button_right; } ?>
+					</div>
+					<?php endif;?>
+				</div>
+			</div>
+		</div>
+		<div class="chevron-wrapper">
+			<a href="#main">
+				<span class="fa fa-angle-double-down"></span>
+				<span class="sr-only">Jump to page content</span>
+			</a>
+		</div>
+	</div>
+<?php
+	return ob_get_clean();
+}
+
+
+/**
+ * Returns markup for inner header contents for pages using the 'inline-block'
+ * or 'block' content display type.
+ **/
+function get_header_media_content_markup( $post ) {
 	$title            = get_header_title( $post );
 	$subtitle         = get_header_subtitle( $post );
-	$header_height    = get_header_height( $post );
+	$extra_content    = get_field( 'page_header_extra_content', $post->ID );
+	$content_position = get_field( 'page_header_content_position', $post->ID );
 
 	$content_cols = '';
 	switch ( $content_position ) {
@@ -208,9 +247,43 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 			break;
 	}
 
-	$homepage_button_left   = get_homepage_header_cta( $post, 'left' );
-	$homepage_button_center = get_homepage_header_cta( $post, 'center' );
-	$homepage_button_right  = get_homepage_header_cta( $post, 'right' );
+	ob_start();
+?>
+	<div class="container d-flex align-items-center">
+		<div class="row no-gutters w-100">
+			<div class="<?php echo $content_cols; ?>">
+				<div class="header-title-wrapper">
+					<?php
+					// Don't print multiple h1's on the page for person templates
+					if ( $post->post_type === 'person' ):
+					?>
+					<strong class="h1 d-block header-title"><?php echo $title; ?></strong>
+					<?php else: ?>
+					<h1 class="header-title"><?php echo $title; ?></h1>
+					<?php endif; ?>
+
+					<?php if ( $subtitle ): ?>
+					<p class="header-subtitle"><?php echo $subtitle; ?></p>
+					<?php endif; ?>
+
+					<?php if ( $extra_content ): ?>
+					<div class="header-extra mt-3 mb-4 mb-sm-0"><?php echo $extra_content; ?></div>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+	return ob_get_clean();
+}
+
+
+/**
+ * Returns the markup for page headers with an image or video background.
+ **/
+function get_header_media_markup( $post, $videos=null, $images=null ) {
+	$header_height          = get_header_height( $post );
+	$header_content_display = get_field( 'page_header_content_display', $post->ID );
 
 	$videos     = $videos ?: get_header_videos( $post );
 	$images     = $images ?: get_header_images( $post );
@@ -220,7 +293,7 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 
 	if ( $images || $videos ) :
 ?>
-		<div class="header-media <?php echo ( is_front_page() ) ? 'header-media-home' : ''; ?> <?php echo $header_height ?: ''; ?> media-background-container mb-0 d-flex flex-column">
+		<div class="header-media <?php echo ( is_front_page() || $header_content_display === 'block' ) ? 'header-media-content-block' : ''; ?> <?php echo $header_height ?: ''; ?> media-background-container mb-0 d-flex flex-column">
 			<?php
 			if ( $videos ) {
 				echo get_media_background_video( $videos, $video_loop );
@@ -254,51 +327,14 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 			?>
 			<div class="header-content">
 
-			<?php if ( is_front_page() ) : ?>
-				<div class="container d-flex flex-column justify-content-between">
-					<div class="row">
-						<div class="col-lg-10 offset-lg-1 col-12">
-							<div class="home-header-title-wrapper">
-								<h2 class="h1 home-header-title mb-0"><?php echo $title; ?></h2>
-								<?php if ( $homepage_button_left || $homepage_button_center || $homepage_button_right ): ?>
-								<div class="row mt-3 mt-md-4">
-									<?php if ( $homepage_button_left ) { echo $homepage_button_left; } ?>
-									<?php if ( $homepage_button_center ) { echo $homepage_button_center; } ?>
-									<?php if ( $homepage_button_right ) { echo $homepage_button_right; } ?>
-								</div>
-								<?php endif;?>
-							</div>
-						</div>
-					</div>
-					<div class="chevron-wrapper">
-						<a href="#main">
-							<span class="fa fa-angle-double-down"></span>
-							<span class="sr-only">Jump to page content</span>
-						</a>
-					</div>
-				</div>
-			<?php else : ?>
-				<div class="container d-flex align-items-center">
-					<div class="row no-gutters w-100">
-						<div class="<?php echo $content_cols; ?>">
-							<div class="header-title-wrapper">
-								<?php
-								// Don't print multiple h1's on the page for person templates
-								if ( $post->post_type == 'person' ):
-								?>
-								<strong class="h1 d-block header-title"><?php echo $title; ?></strong>
-								<?php else: ?>
-								<h1 class="header-title"><?php echo $title; ?></h1>
-								<?php endif; ?>
-
-								<?php if ( $subtitle ): ?>
-								<p class="header-subtitle"><?php echo $subtitle; ?></p>
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php endif; ?>
+			<?php
+			if ( is_front_page() ) {
+				echo get_homepage_header_markup( $post );
+			}
+			else {
+				echo get_header_media_content_markup( $post );
+			}
+			?>
 
 			</div>
 		</div>
@@ -312,15 +348,16 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
  * Returns the default markup for page headers.
  **/
 function get_header_default_markup( $post ) {
-	$title    = get_header_title( $post );
-	$subtitle = get_header_subtitle( $post );
+	$title         = get_header_title( $post );
+	$subtitle      = get_header_subtitle( $post );
+	$extra_content = get_field( 'page_header_extra_content', $post->ID );
 
 	ob_start();
 ?>
 <div class="container">
 	<?php
 	// Don't print multiple h1's on the page for person templates
-	if ( $post->post_type == 'person' ):
+	if ( $post->post_type === 'person' ):
 	?>
 	<strong class="h1 d-block mt-3 mt-sm-4 mt-md-5 mb-3"><?php echo $title; ?></strong>
 	<?php else: ?>
@@ -329,6 +366,10 @@ function get_header_default_markup( $post ) {
 
 	<?php if ( $subtitle ): ?>
 	<p class="lead mb-4 mb-md-5"><?php echo $subtitle; ?></p>
+	<?php endif; ?>
+
+	<?php if ( $extra_content ): ?>
+	<div class="mb-4 mb-md-5"><?php echo $extra_content; ?></div>
 	<?php endif; ?>
 </div>
 <?php
