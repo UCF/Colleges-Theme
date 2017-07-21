@@ -80,7 +80,9 @@ function get_degree_desc_markup( $post ) {
 
 
 /**
- * TODO - actually determine the program type
+ * TODO - actually determine the program type based on search service degree
+ * data.  This function assumes all undergraduate degrees have the term
+ * "Undergraduate Programs".
  *
  * Returns whether or not a given degree is an undergraduate degree.
  *
@@ -92,12 +94,20 @@ function get_degree_desc_markup( $post ) {
 function is_undergraduate_degree( $post ) {
 	if ( !$post->post_type == 'degree' ) { return false; }
 
-	return true;
+	$program_types = wp_get_post_terms( $post->ID, 'program_types', array( 'fields' => 'names' ) );
+
+	if ( is_array( $program_types ) && in_array( 'Undergraduate Programs', $program_types ) ) {
+		return true;
+	}
+
+	return false;
 }
 
 
 /**
- * TODO - actually determine the program type
+ * TODO - actually determine the program type based on search service degree
+ * data.  This function assumes all graduate degrees have the term
+ * "Graduate Programs".
  *
  * Returns whether or not a given degree is a graduate degree.
  *
@@ -109,7 +119,13 @@ function is_undergraduate_degree( $post ) {
 function is_graduate_degree( $post ) {
 	if ( !$post->post_type == 'degree' ) { return false; }
 
-	return true;
+	$program_types = wp_get_post_terms( $post->ID, 'program_types', array( 'fields' => 'names' ) );
+
+	if ( is_array( $program_types ) && in_array( 'Graduate Programs', $program_types ) ) {
+		return true;
+	}
+
+	return false;
 }
 
 
@@ -178,7 +194,7 @@ function get_degree_cta_btns_markup( $post ) {
 	<?php endif; ?>
 
 	<?php if ( $catalog_url ): ?>
-	<a class="btn btn-block btn-primary" href="<?php echo $catalog_url; ?>">Download Catalog PDF</a>
+	<a class="btn btn-block btn-primary" href="<?php echo $catalog_url; ?>">View Course Catalog</a>
 	<?php endif; ?>
 <?php
 	return ob_get_clean();
