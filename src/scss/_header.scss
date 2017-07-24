@@ -92,17 +92,44 @@
 .header-title {
   background-color: transparentize($brand-primary, .05);
   font-family: $font-family-slab-serif;
+  font-size: 7.25vw;
   font-weight: normal;
+  line-height: 1;
   margin-bottom: 0;
-  padding: 1.3rem 1.5rem;
+  padding: 1.1rem 1.5rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2.5rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 2.75rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 3.5rem;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: 3.8rem;
+  }
 }
 
 .header-subtitle {
   background-color: transparentize($black, .05);
   color: $white;
   font-family: $font-family-slab-serif;
-  font-size: 1.3rem;
-  padding: .8rem 1.5rem;
+  font-size: 4.25vw;
+  padding: .5rem 1.5rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 1.05rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.3rem;
+    padding: .65rem 1.5rem;
+  }
 }
 
 

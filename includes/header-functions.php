@@ -236,14 +236,14 @@ function get_header_media_content_markup( $post ) {
 	$content_cols = '';
 	switch ( $content_position ) {
 		case 'center':
-			$content_cols = 'col-lg-8 offset-lg-2 header-title-align-center';
+			$content_cols = 'col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 header-title-align-center';
 			break;
 		case 'right':
-			$content_cols = 'col-lg-8 offset-lg-4 header-title-align-right';
+			$content_cols = 'col-xl-6 xl-offset-6 col-lg-8 offset-lg-4 header-title-align-right';
 			break;
 		case 'left':
 		default:
-			$content_cols = 'col-lg-8';
+			$content_cols = 'col-xl-6 col-lg-8';
 			break;
 	}
 
