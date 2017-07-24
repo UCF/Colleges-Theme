@@ -1,0 +1,10 @@
+.ucf-rss-feed-thumbnail {
+  .ucf-rss-item-title {
+    font-size: $font-size-h5;
+    text-transform: uppercase;
+
+    @include media-breakpoint-up(md) {
+      font-size: $font-size-h5-md;
+    }
+  }
+}
