@@ -229,17 +229,17 @@
   }
 
   @include media-breakpoint-up(md) {
-    font-size: 3.5rem;
+    font-size: 2.75rem;
     padding: 0 .8rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 3.25rem;
+    font-size: 3rem;
     padding: 0 5rem;
   }
 
   @include media-breakpoint-up(xl) {
-    font-size: 4rem;
+    font-size: 3.25rem;
     padding: 0 6rem;
   }
 }
