@@ -249,7 +249,7 @@ function get_header_media_content_markup( $post ) {
 
 	ob_start();
 ?>
-	<div class="container d-flex align-items-center">
+	<div class="container d-flex align-items-end">
 		<div class="row no-gutters w-100">
 			<div class="<?php echo $content_cols; ?>">
 				<div class="header-title-wrapper">
