@@ -44,7 +44,7 @@
   align-items: stretch;
   display: flex;
   flex: 1 1 auto;
-  padding: 0;
+  padding: 0 0 10vw;
 
   @include media-breakpoint-up(sm) {
     padding: 3rem 0 5rem;
@@ -107,11 +107,11 @@
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
 
   @include media-breakpoint-up(xl) {
-    font-size: 3.8rem;
+    font-size: 3.25rem;
   }
 }
 
@@ -173,10 +173,14 @@
     }
   }
 
-  .header-content > .container {
-    @include media-breakpoint-down(xs) {
-      padding-left: 0;
-      padding-right: 0;
+  .header-content {
+    padding-bottom: 0;
+
+    > .container {
+      @include media-breakpoint-down(xs) {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
   }
 
@@ -229,17 +233,17 @@
   }
 
   @include media-breakpoint-up(md) {
-    font-size: 2.75rem;
+    font-size: 3.5rem;
     padding: 0 .8rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 3rem;
+    font-size: 3.25rem;
     padding: 0 5rem;
   }
 
   @include media-breakpoint-up(xl) {
-    font-size: 3.25rem;
+    font-size: 4rem;
     padding: 0 6rem;
   }
 }

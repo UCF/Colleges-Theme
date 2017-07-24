@@ -227,29 +227,50 @@ function get_homepage_header_markup( $post ) {
  * Returns markup for inner header contents for pages using the 'inline-block'
  * or 'block' content display type.
  **/
-function get_header_media_content_markup( $post ) {
+function get_header_media_content_markup( $post, $header_height, $header_content_display ) {
 	$title            = get_header_title( $post );
 	$subtitle         = get_header_subtitle( $post );
 	$extra_content    = get_field( 'page_header_extra_content', $post->ID );
 	$content_position = get_field( 'page_header_content_position', $post->ID );
 
 	$content_cols = '';
-	switch ( $content_position ) {
-		case 'center':
-			$content_cols = 'col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 header-title-align-center';
-			break;
-		case 'right':
-			$content_cols = 'col-xl-6 xl-offset-6 col-lg-8 offset-lg-4 header-title-align-right';
-			break;
-		case 'left':
-		default:
-			$content_cols = 'col-xl-6 col-lg-8';
-			break;
+	if ( $header_content_display === 'block' ) {
+		switch ( $content_position ) {
+			case 'center':
+				$content_cols = 'col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 header-title-align-center';
+				break;
+			case 'right':
+				$content_cols = 'col-xl-6 offset-xl-6 col-lg-8 offset-lg-4 header-title-align-right';
+				break;
+			case 'left':
+			default:
+				$content_cols = 'col-xl-6 col-lg-8';
+				break;
+		}
+	}
+	else {
+		switch ( $content_position ) {
+			case 'center':
+				$content_cols = 'col-xl-10 offset-xl-1 header-title-align-center';
+				break;
+			case 'right':
+				$content_cols = 'col-xl-10 offset-xl-2 header-title-align-right';
+				break;
+			case 'left':
+			default:
+				$content_cols = 'col-xl-10';
+				break;
+		}
+	}
+
+	$align_classes = 'align-items-center';
+	if ( $header_height !== 'header-media-fullscreen' ) {
+		$align_classes .= ' align-items-sm-end';
 	}
 
 	ob_start();
 ?>
-	<div class="container d-flex align-items-end">
+	<div class="container d-flex <?php echo $align_classes; ?>">
 		<div class="row no-gutters w-100">
 			<div class="<?php echo $content_cols; ?>">
 				<div class="header-title-wrapper">
@@ -332,7 +353,7 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 				echo get_homepage_header_markup( $post );
 			}
 			else {
-				echo get_header_media_content_markup( $post );
+				echo get_header_media_content_markup( $post, $header_height, $header_content_display );
 			}
 			?>
 
