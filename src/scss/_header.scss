@@ -174,7 +174,9 @@
   }
 
   .header-content {
-    padding-bottom: 0;
+    @include media-breakpoint-down(xs) {
+      padding-bottom: 0;
+    }
 
     > .container {
       @include media-breakpoint-down(xs) {
