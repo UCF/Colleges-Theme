@@ -213,7 +213,7 @@
   text-align: center;
 
   @include media-breakpoint-up(sm) {
-    background-color: transparentize($colleges-gray, .25);
+    background-color: transparentize($colleges-gray, .20);
     padding: 2.5rem 1.5rem;
   }
 }
