@@ -1,0 +1,23 @@
+.ucf-post-list-degree-block {
+  .card-deck {
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+  }
+
+  .card {
+    border-top: 2px solid $brand-primary;
+
+    &:not(:first-child) {
+      @include media-breakpoint-down(md) {
+        margin-left: 0;
+      }
+    }
+
+    &:not(:last-child) {
+      @include media-breakpoint-down(md) {
+        margin-right: 0;
+      }
+    }
+  }
+}

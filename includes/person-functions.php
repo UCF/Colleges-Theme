@@ -457,8 +457,8 @@ function ucf_post_list_display_people_title( $items, $title ) {
 add_action( 'ucf_post_list_display_people_title', 'ucf_post_list_display_people_title', 10, 2 );
 
 
-function ucf_post_list_display_people( $items, $title ) {
-	if ( ! is_array( $items ) ) { $items = array( $items ); }
+function ucf_post_list_display_people( $items, $atts ) {
+	if ( ! is_array( $items ) && $items !== false ) { $items = array( $items ); }
 	ob_start();
 ?>
 	<?php if ( $items ): ?>
