@@ -44,10 +44,10 @@
   align-items: stretch;
   display: flex;
   flex: 1 1 auto;
-  padding: 0;
+  padding: 0 0 10vw;
 
   @include media-breakpoint-up(sm) {
-    padding: 3rem 0;
+    padding: 3rem 0 5rem;
   }
 
   > .container {
@@ -92,17 +92,45 @@
 .header-title {
   background-color: transparentize($brand-primary, .05);
   font-family: $font-family-slab-serif;
+  font-size: 7.25vw;
   font-weight: normal;
+  line-height: 1;
   margin-bottom: 0;
-  padding: 1.3rem 1.5rem;
+  padding: 1.1rem 1.5rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2.5rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 2.75rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 3rem;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: 3.25rem;
+  }
 }
 
 .header-subtitle {
   background-color: transparentize($black, .05);
   color: $white;
   font-family: $font-family-slab-serif;
-  font-size: 1.3rem;
-  padding: .8rem 1.5rem;
+  font-size: 4.25vw;
+  line-height: 1.2;
+  padding: .5rem 1.5rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 1.05rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.3rem;
+    padding: .65rem 1.5rem;
+  }
 }
 
 
@@ -146,10 +174,16 @@
     }
   }
 
-  .header-content > .container {
+  .header-content {
     @include media-breakpoint-down(xs) {
-      padding-left: 0;
-      padding-right: 0;
+      padding-bottom: 0;
+    }
+
+    > .container {
+      @include media-breakpoint-down(xs) {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
   }
 
@@ -180,7 +214,7 @@
   text-align: center;
 
   @include media-breakpoint-up(sm) {
-    background-color: transparentize($colleges-gray, .25);
+    background-color: transparentize($colleges-gray, .20);
     padding: 2.5rem 1.5rem;
   }
 }

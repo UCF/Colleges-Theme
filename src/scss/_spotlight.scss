@@ -1,0 +1,29 @@
+.spotlight-horizontal,
+.spotlight-vertical,
+.spotlight-square {
+
+  .spotlight-copy,
+  .spotlight-link {
+    font-family: $font-family-sans-serif;
+  }
+}
+
+.spotlight-vertical,
+.spotlight-square {
+  .spotlight-header {
+    font-family: $font-family-sans-serif;
+  }
+}
+
+.spotlight-horizontal {
+  .spotlight-header {
+    font-family: $font-family-condensed;
+  }
+}
+
+.spotlight-vertical {
+  .spotlight-header {
+    font-style: italic;
+    font-weight: 700;
+  }
+}
