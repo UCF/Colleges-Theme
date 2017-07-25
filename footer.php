@@ -4,7 +4,7 @@
 				<div class="row">
 					<div class="col-lg-4">
 						<section class="primary-footer-section-left">
-							<h2 class="h5 text-primary mb-2"><?php echo get_sitename_formatted(); ?></h2>
+							<h2 class="h5 text-primary mb-2 text-transform-none"><?php echo get_sitename_formatted(); ?></h2>
 							<?php echo get_contact_address_markup(); ?>
 							<?php
 							if ( class_exists( 'UCF_Social_Common' ) ) {

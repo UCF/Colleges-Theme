@@ -237,14 +237,14 @@ function get_header_media_content_markup( $post, $header_height, $header_content
 	if ( $header_content_display === 'block' ) {
 		switch ( $content_position ) {
 			case 'center':
-				$content_cols = 'col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 header-title-align-center';
+				$content_cols = 'col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1 header-title-align-center';
 				break;
 			case 'right':
-				$content_cols = 'col-xl-6 offset-xl-6 col-lg-8 offset-lg-4 header-title-align-right';
+				$content_cols = 'col-xl-6 offset-xl-6 col-lg-8 offset-lg-4 col-md-10 offset-md-2 header-title-align-right';
 				break;
 			case 'left':
 			default:
-				$content_cols = 'col-xl-6 col-lg-8';
+				$content_cols = 'col-xl-6 col-lg-8 col-md-10';
 				break;
 		}
 	}

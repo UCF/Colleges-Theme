@@ -120,6 +120,7 @@
   color: $white;
   font-family: $font-family-slab-serif;
   font-size: 4.25vw;
+  line-height: 1.2;
   padding: .5rem 1.5rem;
 
   @include media-breakpoint-up(sm) {
