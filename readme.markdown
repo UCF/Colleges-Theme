@@ -12,6 +12,8 @@ This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 
 ### Recommended Plugins
 * Athena Shortcodes
+* Automatic Sections Menu Shortcode
+* Gravity Forms
 * Page Links To
 * UCF Degree Custom Post Type
 * UCF Departments Taxonomy
@@ -21,11 +23,12 @@ This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 * UCF Page Assets
 * UCF Post List Shortcode
 * UCF People Custom Post Type
+* UCF Section
 * UCF Social
 * UCF Spotlight
-* Varnish Dependency Purger
-* WP-Mail-SMTP
+* Varnish Dependency Purger or UCF WordPress Varnish as a Service
 * WP Allowed Hosts
+* WP Mail SMTP
 * WP Shortcode Interface
 * Yoast SEO
 
