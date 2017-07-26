@@ -174,7 +174,8 @@ function get_contact_address_markup() {
 
 function colleges_post_list_layouts( $layouts ) {
 	return array_merge( $layouts, array(
-		'people' => 'People Layout'
+		'people' => 'People Layout',
+		'degree_block' => 'Degree Block Layout'
 	) );
 }
 

@@ -54,8 +54,23 @@ function get_degree_meta_markup( $post ) {
 /**
  * TODO - actually return a description from search service data
  *
- * Returns markup for a degree's description from the academic catalog.
+ * Returns a degree's description (unformatted) from the academic catalog.
  * If a post excerpt is available, it will be returned instead.
+ *
+ * @author Jo Dickson
+ * @since 1.0.0
+ * @param $post object | Degree post object
+ * @return Mixed | description string or void
+ **/
+function get_degree_desc( $post ) {
+	if ( !$post->post_type == 'degree' ) { return; }
+
+	return has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true ); // TODO field name for imported degree data?
+}
+
+
+/**
+ * Returns markup for a degree's description.  For use in single-degree.php
  *
  * @author Jo Dickson
  * @since 1.0.0
@@ -65,7 +80,7 @@ function get_degree_meta_markup( $post ) {
 function get_degree_desc_markup( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
-	$desc = has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true ); // TODO field name for imported degree data?
+	$desc = get_degree_desc( $post );
 
 	ob_start();
 	if ( $desc ):
@@ -199,3 +214,83 @@ function get_degree_cta_btns_markup( $post ) {
 <?php
 	return ob_get_clean();
 }
+
+
+/**
+ * Add custom degree block list layout for UCF Post List shortcode
+ **/
+
+function ucf_post_list_display_degree_block_before( $posts, $title ) {
+	ob_start();
+?>
+<div class="ucf-post-list ucf-post-list-degree-block">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_degree_block_before', 'ucf_post_list_display_degree_block_before', 10, 2 );
+
+
+function ucf_post_list_display_degree_block_title( $posts, $title ) {
+	$formatted_title = '';
+
+	if ( $title ) {
+		$formatted_title = '<h2 class="ucf-post-list-title">' . $title . '</h2>';
+	}
+
+	echo $formatted_title;
+}
+
+add_action( 'ucf_post_list_display_degree_block_title', 'ucf_post_list_display_degree_block_title', 10, 2 );
+
+
+function ucf_post_list_display_degree_block( $posts, $atts ) {
+	if ( ! is_array( $posts ) && $posts !== false ) { $posts = array( $posts ); }
+	ob_start();
+?>
+	<?php if ( $posts ): ?>
+	<div class="card-deck">
+
+	<?php foreach( $posts as $index=>$item ) :
+		$desc = wp_trim_words( get_degree_desc( $item ), 55, '&hellip;' );
+
+		if( $atts['posts_per_row'] > 0 && $index !== 0 && ( $index % $atts['posts_per_row'] ) === 0 ) {
+			echo '</div><div class="card-deck">';
+		}
+	?>
+	<div class="card card-faded mb-4">
+		<div class="card-block py-4">
+			<h3 class="card-title h5">
+				<a class="text-secondary" href="<?php echo get_permalink( $item->ID ); ?>">
+					<?php echo $item->post_title; ?>
+				</a>
+			</h3>
+			<div class="card-text">
+				<?php echo $desc; ?>
+				<a class="d-inline-block font-italic" href="<?php echo get_permalink( $item->ID ); ?>">
+					Learn More &rsaquo;
+				</a>
+			</div>
+		</div>
+	</div>
+	<?php endforeach; ?>
+
+	<?php else: ?>
+	<div class="ucf-post-list-error">No results found.</div>
+	<?php endif; ?>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_degree_block', 'ucf_post_list_display_degree_block', 10, 2 );
+
+
+function ucf_post_list_display_degree_block_after( $posts, $title ) {
+	ob_start();
+?>
+</div>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_post_list_display_degree_block_after', 'ucf_post_list_display_degree_block_after', 10, 2 );
