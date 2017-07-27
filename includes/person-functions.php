@@ -433,7 +433,7 @@ function get_person_videos_markup( $post ) {
  * Add custom people list layout for UCF Post List shortcode
  **/
 
-function ucf_post_list_display_people_before( $items, $title ) {
+function ucf_post_list_display_people_before( $items, $atts ) {
 	ob_start();
 ?>
 <div class="ucf-post-list ucf-post-list-people">
@@ -444,11 +444,11 @@ function ucf_post_list_display_people_before( $items, $title ) {
 add_action( 'ucf_post_list_display_people_before', 'ucf_post_list_display_people_before', 10, 2 );
 
 
-function ucf_post_list_display_people_title( $items, $title ) {
+function ucf_post_list_display_people_title( $items, $atts ) {
 	$formatted_title = '';
 
-	if ( $title ) {
-		$formatted_title = '<h2 class="ucf-post-list-title">' . $title . '</h2>';
+	if ( $atts['title'] ) {
+		$formatted_title = '<h2 class="ucf-post-list-title">' . $atts['title'] . '</h2>';
 	}
 
 	echo $formatted_title;
@@ -487,7 +487,7 @@ function ucf_post_list_display_people( $items, $atts ) {
 add_action( 'ucf_post_list_display_people', 'ucf_post_list_display_people', 10, 2 );
 
 
-function ucf_post_list_display_people_after( $items, $title ) {
+function ucf_post_list_display_people_after( $items, $atts ) {
 	ob_start();
 ?>
 </div>
