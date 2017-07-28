@@ -231,22 +231,22 @@
   text-transform: uppercase;
 
   @include media-breakpoint-up(sm) {
-    font-size: 2.5rem;
+    font-size: 2rem;
     padding: 0 1rem;
   }
 
   @include media-breakpoint-up(md) {
-    font-size: 3.5rem;
+    font-size: 3rem;
     padding: 0 .8rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 3.25rem;
+    font-size: 2.75rem;
     padding: 0 5rem;
   }
 
   @include media-breakpoint-up(xl) {
-    font-size: 4rem;
+    font-size: 3.4rem;
     padding: 0 6rem;
   }
 }
@@ -285,7 +285,7 @@
 
   a {
     color: $brand-primary;
-    font-size: 6rem;
+    font-size: 5rem;
   }
 
   .fa {
