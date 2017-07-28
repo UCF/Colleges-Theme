@@ -105,7 +105,16 @@ function is_undergraduate_degree( $post ) {
 
 	$program_types = wp_get_post_terms( $post->ID, 'program_types', array( 'fields' => 'names' ) );
 
-	if ( is_array( $program_types ) && in_array( 'Undergraduate Program', $program_types ) ) {
+	if (
+		is_array( $program_types )
+		&& (
+			in_array( 'Undergraduate Program', $program_types )
+			|| in_array( 'Undergraduate Degree', $program_types )
+			|| in_array( 'Minor', $program_types )
+			|| in_array( 'Articulated Program', $program_types )
+			|| in_array( 'Accelerated Program', $program_types )
+		)
+	) {
 		return true;
 	}
 
@@ -126,7 +135,15 @@ function is_graduate_degree( $post ) {
 
 	$program_types = wp_get_post_terms( $post->ID, 'program_types', array( 'fields' => 'names' ) );
 
-	if ( is_array( $program_types ) && in_array( 'Graduate Program', $program_types ) ) {
+	if (
+		is_array( $program_types )
+		&& (
+			in_array( 'Graduate Program', $program_types )
+			|| in_array( 'Master', $program_types )
+			|| in_array( 'Doctorate', $program_types )
+			|| in_array( 'Certificate', $program_types )
+		)
+	) {
 		return true;
 	}
 
