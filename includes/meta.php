@@ -19,6 +19,11 @@ function enqueue_frontend_assets() {
 	wp_register_script( 'jquery', '//code.jquery.com/jquery-3.2.1.min.js', null, null, false );
 	wp_enqueue_script( 'jquery' );
 
+	// Add other header scripts
+	wp_register_script( 'typeaheadjs', 'https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.0.1/typeahead.bundle.min.js', array( 'jquery' ), null, false );
+	wp_register_script( 'handlebars', 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js', null, null, false );
+
+	// Add footer scripts
 	wp_enqueue_script( 'ucf-header', '//universityheader.ucf.edu/bar/js/university-header.js?use-1200-breakpoint=1', null, null, true );
 	wp_enqueue_script( 'tether', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', null, null, true );
 	wp_enqueue_script( 'script', THEME_JS_URL . '/script.min.js', array( 'jquery', 'tether' ), null, true );
@@ -166,3 +171,18 @@ function header_title( $title, $separator ) {
 }
 
 add_filter( 'wp_title', 'header_title', 10, 2 );
+
+
+/**
+ * Modify settings for supported plugins to prevent duplicate registration and
+ * enqueuing of assets.
+ **/
+
+function colleges_post_list_js_deps( $deps ) {
+	return array( 'jquery', 'typeaheadjs', 'handlebars' );
+}
+
+add_filter( 'ucf_post_list_js_deps', 'colleges_post_list_js_deps', 10, 1 );
+
+update_option( 'ucf_post_list_include_js_libs', false );
+update_option( 'ucf_degree_search_include_typeahead', false );
