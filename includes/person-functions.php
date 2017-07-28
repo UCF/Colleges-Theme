@@ -447,8 +447,8 @@ add_action( 'ucf_post_list_display_people_before', 'colleges_post_list_display_p
 function colleges_post_list_display_people_title( $items, $atts ) {
 	$formatted_title = '';
 
-	if ( $atts['title'] ) {
-		$formatted_title = '<h2 class="ucf-post-list-title">' . $atts['title'] . '</h2>';
+	if ( $atts['list_title'] ) {
+		$formatted_title = '<h2 class="ucf-post-list-title">' . $atts['list_title'] . '</h2>';
 	}
 
 	echo $formatted_title;
