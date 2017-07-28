@@ -113,6 +113,9 @@ function get_header_title( $post ) {
 	if ( is_front_page() ) {
 		$title = get_field( 'homepage_header_title', $post->ID );
 	}
+	else if ( is_404() ) {
+		$title = '404 Not Found';
+	}
 	else if ( $post->post_type === 'person' ) {
 		$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $post->ID );
 	}
