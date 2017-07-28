@@ -188,8 +188,8 @@ function colleges_post_list_search( $posts, $atts ) {
 	ob_start();
 
 	if ( $atts['layout'] === 'people' ):
-		if ( $posts ):
 	?>
+		<?php if ( $posts ): ?>
 		<div class="row mb-4">
 			<div class="col-md-10 offset-md-1">
 				<div class="ucf-post-search-form" id="post-list-search-<?php echo $atts['list_id']; ?>" data-id="post-list-<?php echo $atts['list_id']; ?>">
@@ -198,6 +198,7 @@ function colleges_post_list_search( $posts, $atts ) {
 				</div>
 			</div>
 		</div>
+		<?php endif; ?>
 	<?php else: ?>
 		<?php
 		if ( function_exists( 'ucf_post_list_search' ) ) {
@@ -205,7 +206,6 @@ function colleges_post_list_search( $posts, $atts ) {
 		}
 		?>
 	<?php
-		endif;
 	endif;
 
 	echo ob_get_clean();
