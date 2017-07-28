@@ -433,18 +433,18 @@ function get_person_videos_markup( $post ) {
  * Add custom people list layout for UCF Post List shortcode
  **/
 
-function ucf_post_list_display_people_before( $items, $atts ) {
+function colleges_post_list_display_people_before( $items, $atts ) {
 	ob_start();
 ?>
-<div class="ucf-post-list ucf-post-list-people">
+<div class="ucf-post-list colleges-post-list-people">
 <?php
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_people_before', 'ucf_post_list_display_people_before', 10, 2 );
+add_action( 'ucf_post_list_display_people_before', 'colleges_post_list_display_people_before', 10, 2 );
 
 
-function ucf_post_list_display_people_title( $items, $atts ) {
+function colleges_post_list_display_people_title( $items, $atts ) {
 	$formatted_title = '';
 
 	if ( $atts['title'] ) {
@@ -454,10 +454,10 @@ function ucf_post_list_display_people_title( $items, $atts ) {
 	echo $formatted_title;
 }
 
-add_action( 'ucf_post_list_display_people_title', 'ucf_post_list_display_people_title', 10, 2 );
+add_action( 'ucf_post_list_display_people_title', 'colleges_post_list_display_people_title', 10, 2 );
 
 
-function ucf_post_list_display_people( $items, $atts ) {
+function colleges_post_list_display_people( $items, $atts ) {
 	if ( ! is_array( $items ) && $items !== false ) { $items = array( $items ); }
 	ob_start();
 ?>
@@ -484,10 +484,10 @@ function ucf_post_list_display_people( $items, $atts ) {
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_people', 'ucf_post_list_display_people', 10, 2 );
+add_action( 'ucf_post_list_display_people', 'colleges_post_list_display_people', 10, 2 );
 
 
-function ucf_post_list_display_people_after( $items, $atts ) {
+function colleges_post_list_display_people_after( $items, $atts ) {
 	ob_start();
 ?>
 </div>
@@ -495,4 +495,81 @@ function ucf_post_list_display_people_after( $items, $atts ) {
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_people_after', 'ucf_post_list_display_people_after', 10, 2 );
+add_action( 'ucf_post_list_display_people_after', 'colleges_post_list_display_people_after', 10, 2 );
+
+
+/**
+ * Modifies searchable values for each person in a 'people' post list search.
+ **/
+
+function colleges_search_people_localdata( $localdata, $posts, $atts ) {
+	$data = json_decode( $localdata, true ) ?: array();
+
+	if ( !empty( $data ) && $atts['layout'] === 'people' ) {
+		foreach ( $data as $index => $item ) {
+			if ( isset( $item['id'] ) && get_post_type( $item['id'] ) === 'person' ) {
+				$person = get_post( $item['id'] );
+				$name = get_person_name( $person );
+				$job_title = get_field( 'person_jobtitle', $person->ID );
+				$job_title = $job_title ? strip_tags( $job_title ) : false; // Fix stupid job title hackery
+
+				// Update person datum matches
+				$matches = array( $name );
+				if ( $job_title ) {
+					$matches[] = $job_title;
+				}
+
+				$data[$index]['matches'] = array_merge( $item['matches'], $matches );
+
+				// Update displayKey for each person
+				$display = $name;
+				if ( $job_title ) {
+					$display .= ' ' . $job_title;
+				}
+
+				$data[$index]['display'] = $display;
+
+				// Add extra template data
+				ob_start();
+	?>
+				<div class="media">
+					<?php echo get_person_thumbnail( $person ); ?>
+					<div class="media-body ml-4">
+						<?php echo $name; ?>
+						<?php if ( $job_title ): ?>
+						<div class="small font-italic">
+							<?php echo $job_title; ?>
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+	<?php
+				$tmpl_suggestion = ob_get_clean();
+				$data[$index]['template']['suggestion'] = $tmpl_suggestion;
+			}
+		}
+	}
+
+	return json_encode( $data );
+}
+
+add_filter( 'ucf_post_list_search_localdata', 'colleges_search_people_localdata', 10, 3 );
+
+
+/**
+ * Modifies templates for the 'people' post list layout typeahead results.
+ **/
+
+function colleges_search_people_templates( $templates, $posts, $atts ) {
+	if ( $atts['layout'] !== 'people' ) { return $templates; }
+
+	ob_start();
+?>
+	{
+		suggestion: Handlebars.compile('<div>{{{template.suggestion}}}</div>')
+	}
+<?php
+	return ob_get_clean();
+}
+
+add_filter( 'ucf_post_list_search_templates', 'colleges_search_people_templates', 10, 3 );

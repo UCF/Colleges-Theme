@@ -57,7 +57,7 @@
 //
 // Person lists
 //
-.ucf-post-list-people {
+.colleges-post-list-people {
   .person-link {
     color: $black;
   }
@@ -80,5 +80,11 @@
   .person-job-title {
     font-size: $font-size-xs;
     line-height: 1.1;
+  }
+
+  .ucf-post-search .person-photo {
+    height: 4rem;
+    padding-bottom: 0;
+    width: 4rem;
   }
 }
