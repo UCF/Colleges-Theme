@@ -171,6 +171,7 @@ function get_contact_address_markup() {
 /**
  * Add custom layouts for the UCF Post List shortcode
  **/
+
 function colleges_post_list_layouts( $layouts ) {
 	return array_merge( $layouts, array(
 		'people' => 'People Layout',
@@ -192,6 +193,7 @@ function colleges_post_list_search( $posts, $atts ) {
 		<div class="row mb-4">
 			<div class="col-md-10 offset-md-1">
 				<div class="ucf-post-search-form" id="post-list-search-<?php echo $atts['list_id']; ?>" data-id="post-list-<?php echo $atts['list_id']; ?>">
+					<label class="sr-only"><?php echo $atts['search_placeholder']; ?></label>
 					<input class="typeahead" type="text" placeholder="<?php echo $atts['search_placeholder']; ?>">
 				</div>
 			</div>
