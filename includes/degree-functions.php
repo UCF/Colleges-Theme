@@ -52,8 +52,6 @@ function get_degree_meta_markup( $post ) {
 
 
 /**
- * TODO - actually return a description from search service data
- *
  * Returns a degree's description (unformatted) from the academic catalog.
  * If a post excerpt is available, it will be returned instead.
  *
@@ -65,7 +63,7 @@ function get_degree_meta_markup( $post ) {
 function get_degree_desc( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
-	return has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true ); // TODO field name for imported degree data?
+	return has_excerpt( $post->ID ) ? get_the_excerpt( $post->ID ) : get_post_meta( 'degree_description', $post->ID, true );
 }
 
 
@@ -95,10 +93,6 @@ function get_degree_desc_markup( $post ) {
 
 
 /**
- * TODO - actually determine the program type based on search service degree
- * data.  This function assumes all undergraduate degrees have the term
- * "Undergraduate Programs".
- *
  * Returns whether or not a given degree is an undergraduate degree.
  *
  * @author Jo Dickson
@@ -111,7 +105,7 @@ function is_undergraduate_degree( $post ) {
 
 	$program_types = wp_get_post_terms( $post->ID, 'program_types', array( 'fields' => 'names' ) );
 
-	if ( is_array( $program_types ) && in_array( 'Undergraduate Programs', $program_types ) ) {
+	if ( is_array( $program_types ) && in_array( 'Undergraduate Program', $program_types ) ) {
 		return true;
 	}
 
@@ -120,10 +114,6 @@ function is_undergraduate_degree( $post ) {
 
 
 /**
- * TODO - actually determine the program type based on search service degree
- * data.  This function assumes all graduate degrees have the term
- * "Graduate Programs".
- *
  * Returns whether or not a given degree is a graduate degree.
  *
  * @author Jo Dickson
@@ -136,7 +126,7 @@ function is_graduate_degree( $post ) {
 
 	$program_types = wp_get_post_terms( $post->ID, 'program_types', array( 'fields' => 'names' ) );
 
-	if ( is_array( $program_types ) && in_array( 'Graduate Programs', $program_types ) ) {
+	if ( is_array( $program_types ) && in_array( 'Graduate Program', $program_types ) ) {
 		return true;
 	}
 
@@ -171,7 +161,6 @@ function get_degree_apply_url( $post ) {
 
 
 /**
- * TODO
  * Returns the catalog URL for a given degree.
  *
  * @author Jo Dickson
@@ -182,7 +171,7 @@ function get_degree_apply_url( $post ) {
 function get_degree_catalog_url( $post ) {
 	if ( !$post->post_type == 'degree' ) { return; }
 
-	$apply_url = 'http://catalog.ucf.edu';  // TODO
+	$apply_url = get_post_meta( $post->ID, 'degree_pdf', true ) ?: '';
 
 	return $apply_url;
 }
