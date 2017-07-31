@@ -226,7 +226,7 @@ function get_degree_cta_btns_markup( $post ) {
  * Add custom degree block list layout for UCF Post List shortcode
  **/
 
-function ucf_post_list_display_degree_block_before( $posts, $title ) {
+function ucf_post_list_display_degree_block_before( $posts, $atts ) {
 	ob_start();
 ?>
 <div class="ucf-post-list ucf-post-list-degree-block">
@@ -237,11 +237,11 @@ function ucf_post_list_display_degree_block_before( $posts, $title ) {
 add_action( 'ucf_post_list_display_degree_block_before', 'ucf_post_list_display_degree_block_before', 10, 2 );
 
 
-function ucf_post_list_display_degree_block_title( $posts, $title ) {
+function ucf_post_list_display_degree_block_title( $posts, $atts ) {
 	$formatted_title = '';
 
-	if ( $title ) {
-		$formatted_title = '<h2 class="ucf-post-list-title">' . $title . '</h2>';
+	if ( $atts['list_title'] ) {
+		$formatted_title = '<h2 class="ucf-post-list-title">' . $atts['list_title'] . '</h2>';
 	}
 
 	echo $formatted_title;
@@ -291,7 +291,7 @@ function ucf_post_list_display_degree_block( $posts, $atts ) {
 add_action( 'ucf_post_list_display_degree_block', 'ucf_post_list_display_degree_block', 10, 2 );
 
 
-function ucf_post_list_display_degree_block_after( $posts, $title ) {
+function ucf_post_list_display_degree_block_after( $posts, $atts ) {
 	ob_start();
 ?>
 </div>

@@ -180,3 +180,54 @@ function colleges_post_list_layouts( $layouts ) {
 }
 
 add_filter( 'ucf_post_list_get_layouts', 'colleges_post_list_layouts', 10, 1 );
+
+
+function colleges_post_list_search( $posts, $atts ) {
+	if ( ! is_array( $posts ) && $posts !== false ) { $posts = array( $posts ); }
+
+	ob_start();
+
+	if ( $atts['layout'] === 'people' ):
+	?>
+		<?php if ( $posts ): ?>
+		<div class="row mb-4">
+			<div class="col-md-10 offset-md-1">
+				<div class="ucf-post-search-form" id="post-list-search-<?php echo $atts['list_id']; ?>" data-id="post-list-<?php echo $atts['list_id']; ?>">
+					<label class="sr-only"><?php echo $atts['search_placeholder']; ?></label>
+					<input class="typeahead" type="text" placeholder="<?php echo $atts['search_placeholder']; ?>">
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+	<?php else: ?>
+		<?php
+		if ( function_exists( 'ucf_post_list_search' ) ) {
+			ucf_post_list_search( $posts, $atts );
+		}
+		?>
+	<?php
+	endif;
+
+	echo ob_get_clean();
+}
+
+remove_action( 'ucf_post_list_search', 'ucf_post_list_search' );
+add_action( 'ucf_post_list_search', 'colleges_post_list_search', 10, 2 );
+
+
+/**
+ * Update post list search typeaheads to use Athena dropdown classes in this
+ * theme.
+ **/
+function colleges_post_list_search_classnames( $classnames, $posts, $atts ) {
+	return json_encode( array(
+		'input'      => 'form-control',
+		'menu'       => 'dropdown',
+		'dataset'    => 'dropdown-menu',
+		'open'       => 'show',
+		'suggestion' => 'dropdown-item',
+		'cursor'     => 'active'
+	) );
+}
+
+add_filter( 'ucf_post_list_search_classnames', 'colleges_post_list_search_classnames', 10, 3 );
