@@ -226,18 +226,18 @@ function get_degree_cta_btns_markup( $post ) {
  * Add custom degree block list layout for UCF Post List shortcode
  **/
 
-function ucf_post_list_display_degree_block_before( $posts, $atts ) {
+function colleges_post_list_display_degree_block_before( $posts, $atts ) {
 	ob_start();
 ?>
-<div class="ucf-post-list ucf-post-list-degree-block">
+<div class="ucf-post-list colleges-post-list-degree-block">
 <?php
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_degree_block_before', 'ucf_post_list_display_degree_block_before', 10, 2 );
+add_action( 'ucf_post_list_display_degree_block_before', 'colleges_post_list_display_degree_block_before', 10, 2 );
 
 
-function ucf_post_list_display_degree_block_title( $posts, $atts ) {
+function colleges_post_list_display_degree_block_title( $posts, $atts ) {
 	$formatted_title = '';
 
 	if ( $atts['list_title'] ) {
@@ -247,10 +247,10 @@ function ucf_post_list_display_degree_block_title( $posts, $atts ) {
 	echo $formatted_title;
 }
 
-add_action( 'ucf_post_list_display_degree_block_title', 'ucf_post_list_display_degree_block_title', 10, 2 );
+add_action( 'ucf_post_list_display_degree_block_title', 'colleges_post_list_display_degree_block_title', 10, 2 );
 
 
-function ucf_post_list_display_degree_block( $posts, $atts ) {
+function colleges_post_list_display_degree_block( $posts, $atts ) {
 	if ( ! is_array( $posts ) && $posts !== false ) { $posts = array( $posts ); }
 	ob_start();
 ?>
@@ -288,10 +288,10 @@ function ucf_post_list_display_degree_block( $posts, $atts ) {
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_degree_block', 'ucf_post_list_display_degree_block', 10, 2 );
+add_action( 'ucf_post_list_display_degree_block', 'colleges_post_list_display_degree_block', 10, 2 );
 
 
-function ucf_post_list_display_degree_block_after( $posts, $atts ) {
+function colleges_post_list_display_degree_block_after( $posts, $atts ) {
 	ob_start();
 ?>
 </div>
@@ -299,4 +299,20 @@ function ucf_post_list_display_degree_block_after( $posts, $atts ) {
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_degree_block_after', 'ucf_post_list_display_degree_block_after', 10, 2 );
+add_action( 'ucf_post_list_display_degree_block_after', 'colleges_post_list_display_degree_block_after', 10, 2 );
+
+
+/**
+ * Modify the list of valid taxonomies for Degree posts used by the Degree
+ * Search plugin.
+ **/
+function colleges_degree_taxonomies() {
+	return array(
+		'post_tag',
+		'program_types',
+		'departments',
+		'career_paths'
+	);
+}
+
+add_filter( 'ucf_degree_taxonomies', 'colleges_degree_taxonomies' );

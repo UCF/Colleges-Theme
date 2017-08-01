@@ -213,21 +213,3 @@ function colleges_post_list_search( $posts, $atts ) {
 
 remove_action( 'ucf_post_list_search', 'ucf_post_list_search' );
 add_action( 'ucf_post_list_search', 'colleges_post_list_search', 10, 2 );
-
-
-/**
- * Update post list search typeaheads to use Athena dropdown classes in this
- * theme.
- **/
-function colleges_post_list_search_classnames( $classnames, $posts, $atts ) {
-	return json_encode( array(
-		'input'      => 'form-control',
-		'menu'       => 'dropdown',
-		'dataset'    => 'dropdown-menu',
-		'open'       => 'show',
-		'suggestion' => 'dropdown-item',
-		'cursor'     => 'active'
-	) );
-}
-
-add_filter( 'ucf_post_list_search_classnames', 'colleges_post_list_search_classnames', 10, 3 );
