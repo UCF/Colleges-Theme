@@ -140,6 +140,20 @@ function define_customizer_fields( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'gtm_id'
+	);
+
+	$wp_customize->add_control(
+		'gtm_id',
+		array(
+			'type'        => 'text',
+			'label'       => 'Google Tag Manager Container ID',
+			'description' => 'The ID for the container in Google Tag Manager that represents this site. Takes precedence over a Google Analytics Account value below if both are provided.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'analytics'
+		)
+	);
+
+	$wp_customize->add_setting(
 		'ga_account'
 	);
 
