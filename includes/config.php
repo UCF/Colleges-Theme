@@ -39,8 +39,6 @@ function __init__() {
 	add_image_size( 'bg-img-xl', 1600, 2000, true );
 
 	register_nav_menu( 'header-menu', __( 'Header Menu' ) );
-	register_nav_menu( 'footer-menu-1', __( 'Footer Menu 1' ) );
-	register_nav_menu( 'footer-menu-2', __( 'Footer Menu 2' ) );
 
 	register_sidebar( array(
 		'name' => __( 'Footer - Column 1' ),
