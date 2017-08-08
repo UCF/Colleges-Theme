@@ -433,31 +433,31 @@ function get_person_videos_markup( $post ) {
  * Add custom people list layout for UCF Post List shortcode
  **/
 
-function colleges_post_list_display_people_before( $items, $atts ) {
+function colleges_post_list_display_people_before( $content, $items, $atts ) {
 	ob_start();
 ?>
 <div class="ucf-post-list colleges-post-list-people">
 <?php
-	echo ob_get_clean();
+	return ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_people_before', 'colleges_post_list_display_people_before', 10, 2 );
+add_filter( 'ucf_post_list_display_people_before', 'colleges_post_list_display_people_before', 10, 3 );
 
 
-function colleges_post_list_display_people_title( $items, $atts ) {
+function colleges_post_list_display_people_title( $content, $items, $atts ) {
 	$formatted_title = '';
 
 	if ( $atts['list_title'] ) {
 		$formatted_title = '<h2 class="ucf-post-list-title">' . $atts['list_title'] . '</h2>';
 	}
 
-	echo $formatted_title;
+	return $formatted_title;
 }
 
-add_action( 'ucf_post_list_display_people_title', 'colleges_post_list_display_people_title', 10, 2 );
+add_filter( 'ucf_post_list_display_people_title', 'colleges_post_list_display_people_title', 10, 3 );
 
 
-function colleges_post_list_display_people( $items, $atts ) {
+function colleges_post_list_display_people( $content, $items, $atts ) {
 	if ( ! is_array( $items ) && $items !== false ) { $items = array( $items ); }
 	ob_start();
 ?>
@@ -481,21 +481,21 @@ function colleges_post_list_display_people( $items, $atts ) {
 	<div class="ucf-post-list-error mb-4">No results found.</div>
 	<?php endif; ?>
 <?php
-	echo ob_get_clean();
+	return ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_people', 'colleges_post_list_display_people', 10, 2 );
+add_filter( 'ucf_post_list_display_people', 'colleges_post_list_display_people', 10, 3 );
 
 
-function colleges_post_list_display_people_after( $items, $atts ) {
+function colleges_post_list_display_people_after( $content, $items, $atts ) {
 	ob_start();
 ?>
 </div>
 <?php
-	echo ob_get_clean();
+	return ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_people_after', 'colleges_post_list_display_people_after', 10, 2 );
+add_filter( 'ucf_post_list_display_people_after', 'colleges_post_list_display_people_after', 10, 3 );
 
 
 /**

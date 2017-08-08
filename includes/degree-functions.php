@@ -226,18 +226,18 @@ function get_degree_cta_btns_markup( $post ) {
  * Add custom degree block list layout for UCF Post List shortcode
  **/
 
-function colleges_post_list_display_degree_block_before( $posts, $atts ) {
+function colleges_post_list_display_degree_block_before( $content, $posts, $atts ) {
 	ob_start();
 ?>
 <div class="ucf-post-list colleges-post-list-degree-block">
 <?php
-	echo ob_get_clean();
+	return ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_degree_block_before', 'colleges_post_list_display_degree_block_before', 10, 2 );
+add_filter( 'ucf_post_list_display_degree_block_before', 'colleges_post_list_display_degree_block_before', 10, 3 );
 
 
-function colleges_post_list_display_degree_block_title( $posts, $atts ) {
+function colleges_post_list_display_degree_block_title( $content, $posts, $atts ) {
 	$formatted_title = '';
 
 	if ( $atts['list_title'] ) {
@@ -247,10 +247,10 @@ function colleges_post_list_display_degree_block_title( $posts, $atts ) {
 	echo $formatted_title;
 }
 
-add_action( 'ucf_post_list_display_degree_block_title', 'colleges_post_list_display_degree_block_title', 10, 2 );
+add_filter( 'ucf_post_list_display_degree_block_title', 'colleges_post_list_display_degree_block_title', 10, 3 );
 
 
-function colleges_post_list_display_degree_block( $posts, $atts ) {
+function colleges_post_list_display_degree_block( $content, $posts, $atts ) {
 	if ( ! is_array( $posts ) && $posts !== false ) { $posts = array( $posts ); }
 	ob_start();
 ?>
@@ -288,10 +288,10 @@ function colleges_post_list_display_degree_block( $posts, $atts ) {
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_degree_block', 'colleges_post_list_display_degree_block', 10, 2 );
+add_filter( 'ucf_post_list_display_degree_block', 'colleges_post_list_display_degree_block', 10, 3 );
 
 
-function colleges_post_list_display_degree_block_after( $posts, $atts ) {
+function colleges_post_list_display_degree_block_after( $content, $posts, $atts ) {
 	ob_start();
 ?>
 </div>
@@ -299,7 +299,7 @@ function colleges_post_list_display_degree_block_after( $posts, $atts ) {
 	echo ob_get_clean();
 }
 
-add_action( 'ucf_post_list_display_degree_block_after', 'colleges_post_list_display_degree_block_after', 10, 2 );
+add_filter( 'ucf_post_list_display_degree_block_after', 'colleges_post_list_display_degree_block_after', 10, 3 );
 
 
 /**
