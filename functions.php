@@ -182,7 +182,7 @@ function colleges_post_list_layouts( $layouts ) {
 add_filter( 'ucf_post_list_get_layouts', 'colleges_post_list_layouts', 10, 1 );
 
 
-function colleges_post_list_search( $posts, $atts ) {
+function colleges_post_list_search( $content, $posts, $atts ) {
 	if ( ! is_array( $posts ) && $posts !== false ) { $posts = array( $posts ); }
 
 	ob_start();
@@ -199,17 +199,12 @@ function colleges_post_list_search( $posts, $atts ) {
 			</div>
 		</div>
 		<?php endif; ?>
-	<?php else: ?>
-		<?php
-		if ( function_exists( 'ucf_post_list_search' ) ) {
-			ucf_post_list_search( $posts, $atts );
-		}
-		?>
 	<?php
+	else:
+		echo $content;
 	endif;
 
-	echo ob_get_clean();
+	return ob_get_clean();
 }
 
-remove_action( 'ucf_post_list_search', 'ucf_post_list_search' );
-add_action( 'ucf_post_list_search', 'colleges_post_list_search', 10, 2 );
+add_filter( 'ucf_post_list_search', 'colleges_post_list_search', 10, 3 );
