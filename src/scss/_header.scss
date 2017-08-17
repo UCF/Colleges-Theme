@@ -22,9 +22,9 @@
     font-weight: 500;
   }
 
-  .dropdown-item {
-    @include media-breakpoint-down(md) {
-      white-space: normal;
+  .dropdown-menu {
+    @include media-breakpoint-up(lg) {
+      min-width: 20rem;
     }
   }
 }
@@ -256,9 +256,9 @@
   width: 100%;
 
   @include media-breakpoint-up(lg) {
+    align-self: stretch;
     display: flex;
     flex-direction: column;
-    height: 100%;
     justify-content: center;
   }
 
