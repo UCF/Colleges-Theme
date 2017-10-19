@@ -12,9 +12,6 @@ function get_sitename_formatted() {
 	if ( strpos( $sitename, '&' ) !== false ) {
 		$sitename_formatted = str_replace( '&', '&amp;<br>', $sitename );
 	}
-	else {
-		$sitename_formatted = str_replace( 'of', 'of<br>', $sitename );
-	}
 
 	return $sitename_formatted;
 }
