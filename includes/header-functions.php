@@ -104,25 +104,48 @@ function get_header_videos( $post ) {
 /**
  * Returns title text for use in the page header.
  **/
-function get_header_title( $post ) {
+function get_header_title( $obj ) {
 	$title = '';
 
-	if ( is_front_page() ) {
-		$title = get_field( 'homepage_header_title', $post->ID );
-	}
-	else if ( is_404() ) {
-		$title = '404 Not Found';
-	}
-	else if ( $post->post_type === 'person' ) {
-		$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $post->ID );
-	}
-	else {
-		$title = get_field( 'page_header_title', $post->ID );
-	}
+	if ( is_home() || is_front_page() ) {
+		$title = get_field( 'homepage_header_title', $obj->ID );
 
-	if ( !$title ) {
-		// Fall back to the post title
-		$title = $post->post_title;
+		if ( ! $title ) {
+			$title = get_bloginfo( 'name' );
+		}
+	}
+	elseif ( is_search() ) {
+		$title = __( 'Search Results for:' );
+		$title .= ' ' . esc_html( stripslashes( get_search_query() ) );
+	}
+	elseif ( is_404() ) {
+		$title = __( '404 Not Found' );
+	}
+	elseif ( is_single() || is_page() ) {
+		if ( $obj->post_type === 'person' ) {
+			$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $obj->ID );
+		}
+
+		if ( ! $title ) {
+			$title = single_post_title( '', false );
+		}
+	}
+	elseif ( is_category() ) {
+		$title = __( 'Category Archives:' );
+		$title .= ' ' . single_term_title( '', false );
+	}
+	elseif ( is_tag() ) {
+		$title = __( 'Tag Archives:' );
+		$title .= ' ' . single_term_title( '', false );
+	}
+	elseif ( is_tax() ) {
+		$tax_name = '';
+		$tax = get_taxonomy( $obj->taxonomy );
+		if ( $tax ) {
+			$tax_name = $tax->labels->singular_name . ' ';
+		}
+		$title = __( $tax_name . 'Archives:' );
+		$title .= ' ' . single_term_title( '', false );
 	}
 
 	return $title;
@@ -132,14 +155,16 @@ function get_header_title( $post ) {
 /**
  * Returns subtitle text for use in the page header.
  **/
-function get_header_subtitle( $post ) {
+function get_header_subtitle( $obj ) {
 	$subtitle = '';
 
-	if ( $post->post_type === 'person' ) {
-		$subtitle = get_theme_mod_or_default( 'person_header_subtitle' ) ?: get_field( 'page_header_subtitle', $post->ID );
-	}
-	else {
-		$subtitle = get_field( 'page_header_subtitle', $post->ID );
+	if ( is_single() || is_page() ) {
+		if ( $obj->post_type === 'person' ) {
+			$subtitle = get_theme_mod_or_default( 'person_header_subtitle' ) ?: get_field( 'page_header_subtitle', $obj->ID );
+		}
+		else {
+			$subtitle = get_field( 'page_header_subtitle', $obj->ID );
+		}
 	}
 
 	return $subtitle;
@@ -368,17 +393,21 @@ function get_header_media_markup( $post, $videos=null, $images=null ) {
 /**
  * Returns the default markup for page headers.
  **/
-function get_header_default_markup( $post ) {
-	$title         = get_header_title( $post );
-	$subtitle      = get_header_subtitle( $post );
-	$extra_content = get_field( 'page_header_extra_content', $post->ID );
+function get_header_default_markup( $obj ) {
+	$title         = get_header_title( $obj );
+	$subtitle      = get_header_subtitle( $obj );
+	$extra_content = '';
+
+	if ( is_single() || is_page() ) {
+		$extra_content = get_field( 'page_header_extra_content', $obj->ID );
+	}
 
 	ob_start();
 ?>
 <div class="container">
 	<?php
 	// Don't print multiple h1's on the page for person templates
-	if ( $post->post_type === 'person' ):
+	if ( is_single() && $obj->post_type === 'person' ):
 	?>
 	<strong class="h1 d-block mt-3 mt-sm-4 mt-md-5 mb-3"><?php echo $title; ?></strong>
 	<?php else: ?>
@@ -399,16 +428,20 @@ function get_header_default_markup( $post ) {
 
 
 function get_header_markup() {
-	global $post;
-	echo get_nav_markup( $post );
+	$videos = $images = null;
+	$obj = get_queried_object();
 
-	$videos = get_header_videos( $post );
-	$images = get_header_images( $post );
+	if ( is_single() || is_page() ) {
+		$videos = get_header_videos( $obj );
+		$images = get_header_images( $obj );
+	}
+
+	echo get_nav_markup();
 
 	if ( $videos || $images ) {
-		echo get_header_media_markup( $post, $videos, $images );
+		echo get_header_media_markup( $obj, $videos, $images );
 	}
 	else {
-		echo get_header_default_markup( $post );
+		echo get_header_default_markup( $obj );
 	}
 }
