@@ -246,6 +246,30 @@ function get_person_phones_markup( $post ) {
 
 
 /**
+ * Display's a person's description/biography heading.
+ *
+ * @author Jo Dickson
+ * @since 1.0.2
+ * @param $post object | Person post object
+ * @return Mixed | Description heading HTML or void
+ */
+function get_person_desc_heading( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	$show_heading = get_field( 'person_display_desc_heading', $post->ID );
+	$heading_text = trim( get_field( 'person_desc_heading', $post->ID ) );
+
+	ob_start();
+	if ( $show_heading && ! empty( $heading_text ) ):
+?>
+	<h2 class="person-subheading"><?php echo wptexturize( $heading_text ); ?></h2>
+<?php
+	endif;
+	return ob_get_clean();
+}
+
+
+/**
  * Returns news publications related to a person.
  *
  * @author Jo Dickson

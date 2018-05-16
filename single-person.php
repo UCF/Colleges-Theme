@@ -26,8 +26,6 @@
 					<?php echo get_person_email_markup( $post ); ?>
 					<?php echo get_person_phones_markup( $post ); ?>
 
-					<!-- TODO office hours?? -->
-
 				</aside>
 
 			</div>
@@ -35,14 +33,17 @@
 			<div class="col-md-8 col-lg-7 pl-md-5">
 
 				<section class="person-content">
-					<h2 class="person-subheading">Biography</h2>
-					<?php if ( $post->post_content ) {
+					<?php echo get_person_desc_heading( $post ); ?>
+
+					<?php
+					if ( $post->post_content ) {
 						the_content();
 					}
 					else {
-						echo '<p>No biography available.</p>';
+						echo '<p>No description available.</p>';
 					}
 					?>
+
 					<?php if ( $cv_url = get_field( 'person_cv' ) ): ?>
 					<p>
 						<a class="btn btn-primary mt-3" href="<?php echo $cv_url; ?>">Download CV</a>
