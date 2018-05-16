@@ -259,6 +259,12 @@ function get_person_desc_heading( $post ) {
 	$show_heading = get_field( 'person_display_desc_heading', $post->ID );
 	$heading_text = trim( get_field( 'person_desc_heading', $post->ID ) );
 
+	// Account for existing Person posts created before v1.0.2 field updates
+	if ( $show_heading === null ) {
+		$show_heading = true;
+		$heading_text = 'Biography';
+	}
+
 	ob_start();
 	if ( $show_heading && ! empty( $heading_text ) ):
 ?>
