@@ -13,6 +13,10 @@ function get_person_thumbnail( $post, $css_classes='' ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
+	// Account for attachment ID being returned by get_theme_mod_or_default():
+	if ( is_numeric( $thumbnail ) ) {
+		$thumbnail = wp_get_attachment_url( $thumbnail );
+	}
 
 	ob_start();
 	if ( $thumbnail ):
