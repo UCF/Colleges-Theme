@@ -13,6 +13,10 @@ function get_person_thumbnail( $post, $css_classes='' ) {
 	if ( !$post->post_type == 'person' ) { return; }
 
 	$thumbnail = get_the_post_thumbnail_url( $post ) ?: get_theme_mod_or_default( 'person_thumbnail' );
+	// Account for attachment ID being returned by get_theme_mod_or_default():
+	if ( is_numeric( $thumbnail ) ) {
+		$thumbnail = wp_get_attachment_url( $thumbnail );
+	}
 
 	ob_start();
 	if ( $thumbnail ):
@@ -235,6 +239,36 @@ function get_person_phones_markup( $post ) {
 		</div>
 	</div>
 	<hr class="my-2">
+<?php
+	endif;
+	return ob_get_clean();
+}
+
+
+/**
+ * Display's a person's description/biography heading.
+ *
+ * @author Jo Dickson
+ * @since 1.0.2
+ * @param $post object | Person post object
+ * @return Mixed | Description heading HTML or void
+ */
+function get_person_desc_heading( $post ) {
+	if ( $post->post_type !== 'person' ) { return; }
+
+	$show_heading = get_field( 'person_display_desc_heading', $post->ID );
+	$heading_text = trim( get_field( 'person_desc_heading', $post->ID ) );
+
+	// Account for existing Person posts created before v1.0.2 field updates
+	if ( $show_heading === null ) {
+		$show_heading = true;
+		$heading_text = 'Biography';
+	}
+
+	ob_start();
+	if ( $show_heading && ! empty( $heading_text ) ):
+?>
+	<h2 class="person-subheading"><?php echo wptexturize( $heading_text ); ?></h2>
 <?php
 	endif;
 	return ob_get_clean();

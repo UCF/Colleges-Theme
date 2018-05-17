@@ -84,9 +84,7 @@
                     "header-media-default": "Default (525px)",
                     "header-media-fullscreen": "Fullscreen"
                 },
-                "default_value": [
-                    
-                ],
+                "default_value": [],
                 "allow_null": 1,
                 "multiple": 0,
                 "ui": 0,
@@ -766,8 +764,8 @@
                 "placeholder": ""
             },
             {
-                "key": "field_5953ae3fb95bc",
-                "label": "Office Hours",
+                "key": "field_5afc3edf979e3",
+                "label": "About\/Description",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -782,133 +780,46 @@
                 "endpoint": 0
             },
             {
-                "key": "field_5953ae5bb95bd",
-                "label": "Monday",
-                "name": "person_office_hours_m",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
+                "key": "field_5afc3f63979e5",
+                "label": "Show Description Heading",
+                "name": "person_display_desc_heading",
+                "type": "true_false",
+                "instructions": "When enabled, a heading (<code>h2<\/code>) will be displayed above this person's description (post content).",
+                "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
+                "message": "",
+                "default_value": 1,
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": ""
             },
             {
-                "key": "field_5953ae80b95be",
-                "label": "Tuesday",
-                "name": "person_office_hours_tu",
+                "key": "field_5afc3f00979e4",
+                "label": "Description Heading Text",
+                "name": "person_desc_heading",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Text to display in the heading immediately above this person's description (post content).  If the \"Show Description Heading\" checkbox is disabled, this text will not be displayed.",
                 "required": 0,
-                "conditional_logic": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5afc3f63979e5",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
                 "wrapper": {
                     "width": "",
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5953ae9eb95bf",
-                "label": "Wednesday",
-                "name": "person_office_hours_w",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5953aea9b95c0",
-                "label": "Thursday",
-                "name": "person_office_hours_th",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5953aeb6b95c1",
-                "label": "Friday",
-                "name": "person_office_hours_f",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5953aec7b95c2",
-                "label": "Saturday",
-                "name": "person_office_hours_sa",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5953aed7b95c3",
-                "label": "Sunday",
-                "name": "person_office_hours_su",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
+                "default_value": "Biography",
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
@@ -1063,9 +974,7 @@
                 "post_type": [
                     "person"
                 ],
-                "taxonomy": [
-                    
-                ],
+                "taxonomy": [],
                 "filters": [
                     "search",
                     "taxonomy"
