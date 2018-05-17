@@ -89,23 +89,23 @@ function get_media_background_picture( $srcs ) {
 	?>
 	<picture class="<?php echo $picture_classes; ?>">
 		<?php if ( isset( $srcs['xl'] ) ) : ?>
-		<source class="media-background object-fit-cover" srcset="<?php echo $srcs['xl']; ?>" media="(min-width: 1200px)">
+		<source srcset="<?php echo $srcs['xl']; ?>" media="(min-width: 1200px)">
 		<?php endif; ?>
 
 		<?php if ( isset( $srcs['lg'] ) ) : ?>
-		<source class="media-background object-fit-cover" srcset="<?php echo $srcs['lg']; ?>" media="(min-width: 992px)">
+		<source srcset="<?php echo $srcs['lg']; ?>" media="(min-width: 992px)">
 		<?php endif; ?>
 
 		<?php if ( isset( $srcs['md'] ) ) : ?>
-		<source class="media-background object-fit-cover" srcset="<?php echo $srcs['md']; ?>" media="(min-width: 768px)">
+		<source srcset="<?php echo $srcs['md']; ?>" media="(min-width: 768px)">
 		<?php endif; ?>
 
 		<?php if ( isset( $srcs['sm'] ) ) : ?>
-		<source class="media-background object-fit-cover" srcset="<?php echo $srcs['sm']; ?>" media="(min-width: 576px)">
+		<source srcset="<?php echo $srcs['sm']; ?>" media="(min-width: 576px)">
 		<?php endif; ?>
 
 		<?php if ( isset( $srcs['xs'] ) ) : ?>
-		<source class="media-background object-fit-cover" srcset="<?php echo $srcs['xs']; ?>" media="(max-width: 575px)">
+		<source srcset="<?php echo $srcs['xs']; ?>" media="(max-width: 575px)">
 		<?php endif; ?>
 
 		<img class="media-background object-fit-cover" src="<?php echo $srcs['fallback']; ?>" alt="">
@@ -132,7 +132,7 @@ function get_media_background_picture( $srcs ) {
 function get_media_background_video( $videos, $loop=false ) {
 	ob_start();
 ?>
-	<video class="hidden-xs-down media-background media-background-video object-fit-cover" autoplay muted <?php if ( $loop ) { ?>loop<?php } ?>>
+	<video class="hidden-xs-down media-background media-background-video object-fit-cover" autoplay muted playsinline <?php if ( $loop ) { ?>loop<?php } ?>>
 		<?php if ( isset( $videos['webm'] ) ) : ?>
 		<source src="<?php echo $videos['webm']; ?>" type="video/webm">
 		<?php endif; ?>

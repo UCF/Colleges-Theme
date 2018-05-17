@@ -7,8 +7,8 @@
 							<h2 class="h5 text-primary mb-2 text-transform-none"><?php echo get_sitename_formatted(); ?></h2>
 							<?php echo get_contact_address_markup(); ?>
 							<?php
-							if ( class_exists( 'UCF_Social_Common' ) ) {
-								echo UCF_Social_Common::display_social_icons( array( 'color' => 'grey' ) );
+							if ( shortcode_exists( 'ucf-social-icons' ) ) {
+								echo do_shortcode( '[ucf-social-icons color="grey"]' );
 							}
 							?>
 						</section>
