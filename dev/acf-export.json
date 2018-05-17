@@ -785,7 +785,7 @@
                 "name": "person_display_desc_heading",
                 "type": "true_false",
                 "instructions": "When enabled, a heading (<code>h2<\/code>) will be displayed above this person's description (post content).",
-                "required": 1,
+                "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
