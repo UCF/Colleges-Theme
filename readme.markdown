@@ -36,6 +36,7 @@ This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 ## Configuration
 * Ensure that menus have been created and assigned to the Header Menu and Footer Menu locations.
 * Import field groups (`dev/acf-fields.json`) using the ACF importer under Custom Fields > Tools.
+* Set the homepage to a static page in Settings > Reading
 * If you have a [Cloud.Typography](https://www.typography.com/cloud/welcome/) account, ensure that webfonts have been properly configured to a CSS Key that [allows access to your environment](https://dashboard.typography.com/user-guide/managing-domains).
 
 
