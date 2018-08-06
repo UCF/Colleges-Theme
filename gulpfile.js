@@ -52,7 +52,7 @@ gulp.task('move-components-font-sans-serif', function(done) {
 });
 
 gulp.task('move-components-font-condensed', function(done) {
-  return gulp.src([
+  gulp.src([
     config.packagesPath + config.athena.fontPath + '/ucf-condensed-alt/*',
     '!' + config.athena.fontPath + '/ucf-condensed-alt/generator_config.txt'
   ])
@@ -62,7 +62,7 @@ gulp.task('move-components-font-condensed', function(done) {
 });
 
 gulp.task('move-components-font-slab-serif', function(done) {
-  return gulp.src([
+  gulp.src([
     config.packagesPath + config.athena.fontPath + '/tulia/*',
     '!' + config.athena.fontPath + '/tulia/generator_config.txt'
   ])
