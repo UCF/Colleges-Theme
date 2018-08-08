@@ -14,9 +14,9 @@ These plugins *must* be activated for the theme to function properly.
 ### Supported Plugins
 The plugins listed below are extended upon in this theme--this may include custom layouts for feeds, style modifications, etc. These plugins are not technically required on sites running this theme, and shouldn't be activated on sites that don't require their features. A plugin does not have to be listed here to be compatible with this theme.
 * [Athena Shortcodes](https://github.com/UCF/Athena-Shortcodes-Plugin)
+* [Automatic Sections Menus Shortcode](https://github.com/UCF/Section-Menus-Shortcode)
 * [Gravity Forms](https://www.gravityforms.com/)
 * [Page Links To](https://wordpress.org/plugins/page-links-to/)
-* [Sections Menus Shortcode](https://github.com/UCF/Section-Menus-Shortcode)
 * [UCF Degree Custom Post Type](https://github.com/UCF/UCF-Degree-CPT-Plugin)
 * [UCF Departments Taxonomy](https://github.com/UCF/UCF-Departments-Tax-Plugin)
 * [UCF Employee Type Taxonomy](https://github.com/UCF/UCF-Employee-Type-Tax-Plugin)
@@ -28,7 +28,6 @@ The plugins listed below are extended upon in this theme--this may include custo
 * [UCF Section](https://github.com/UCF/UCF-Section-Plugin)
 * [UCF Social](https://github.com/UCF/UCF-Social-Plugin)
 * [UCF Spotlights](https://github.com/UCF/UCF-Spotlights-Plugin)
-* [Varnish Dependency Purger](https://github.com/UCF/VarnishDependencyPurge) or [UCF WordPress Varnish as a Service](https://github.com/UCF/UCF-WordPress-Varnish-as-a-Service)
 * [WP Allowed Hosts](https://github.com/UCF/WP-Allowed-Hosts)
 * [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/)
 * [WP Shortcode Interface](https://github.com/UCF/WP-Shortcode-Interface)
