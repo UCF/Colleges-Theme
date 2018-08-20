@@ -3,6 +3,11 @@
  * Handle all theme configuration here
  **/
 
+ /**
+  * The following constants are deprecated.
+  * They will be removed from the theme in version 1.2.0
+  * #TODO: Remove these constants prior to releasing v1.2.0
+  */
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_STATIC_URL', THEME_URL . '/static' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL . '/css' );
@@ -16,6 +21,24 @@ define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
 	'person_header_title'     => 'Faculty and Research',
 	'person_header_subtitle'  => get_bloginfo( 'name' ),
 	'person_thumbnail'        => THEME_IMG_URL . '/no-photo.jpg'
+) ) );
+
+/**
+ * Updated Constant Names
+ */
+define( 'COLLEGES_THEME_URL', get_template_directory_uri() );
+define( 'COLLEGES_THEME_STATIC_URL', COLLEGES_THEME_URL . '/static' );
+define( 'COLLEGES_THEME_CSS_URL', COLLEGES_THEME_STATIC_URL . '/css' );
+define( 'COLLEGES_THEME_JS_URL', COLLEGES_THEME_STATIC_URL . '/js' );
+define( 'COLLEGES_THEME_IMG_URL', COLLEGES_THEME_STATIC_URL . '/img' );
+define( 'COLLEGES_THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
+define( 'COLLEGES_THEME_CUSTOMIZER_DEFAULTS', serialize( array(
+	'apply_undergraduate_url' => 'https://apply.ucf.edu/application/',
+	'apply_graduate_url'      => 'https://application.graduate.ucf.edu/',
+	'enable_feeds'            => false,
+	'person_header_title'     => 'Faculty and Research',
+	'person_header_subtitle'  => get_bloginfo( 'name' ),
+	'person_thumbnail'        => COLLEGES_THEME_IMG_URL . '/no-photo.jpg'
 ) ) );
 
 
@@ -67,28 +90,28 @@ add_action( 'after_setup_theme', '__init__' );
 
 function define_customizer_sections( $wp_customize ) {
 	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'analytics',
+		COLLEGES_THEME_CUSTOMIZER_PREFIX . 'analytics',
 		array(
 			'title' => 'Analytics'
 		)
 	);
 
 	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'webfonts',
+		COLLEGES_THEME_CUSTOMIZER_PREFIX . 'webfonts',
 		array(
 			'title' => 'Web Fonts'
 		)
 	);
 
 	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'admissions',
+		COLLEGES_THEME_CUSTOMIZER_PREFIX . 'admissions',
 		array(
 			'title' => 'UCF Admissions'
 		)
 	);
 
 	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'feeds',
+		COLLEGES_THEME_CUSTOMIZER_PREFIX . 'feeds',
 		array(
 			'title' => 'Feeds'
 		)
@@ -96,7 +119,7 @@ function define_customizer_sections( $wp_customize ) {
 
 	if ( post_type_exists( 'person' ) ) {
 		$wp_customize->add_section(
-			THEME_CUSTOMIZER_PREFIX . 'people',
+			COLLEGES_THEME_CUSTOMIZER_PREFIX . 'people',
 			array(
 				'title' => 'People'
 			)
@@ -105,7 +128,7 @@ function define_customizer_sections( $wp_customize ) {
 
 	if ( post_type_exists( 'degree' ) ) {
 		$wp_customize->add_section(
-			THEME_CUSTOMIZER_PREFIX . 'degrees',
+			COLLEGES_THEME_CUSTOMIZER_PREFIX . 'degrees',
 			array(
 				'title' => 'Degrees'
 			)
@@ -143,7 +166,7 @@ function define_customizer_fields( $wp_customize ) {
 			'type'        => 'text',
 			'label'       => 'Google WebMaster Verification',
 			'description' => 'Example: <em>9Wsa3fspoaoRE8zx8COo48-GCMdi5Kd-1qFpQTTXSIw</em>',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'analytics'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'analytics'
 		)
 	);
 
@@ -157,7 +180,7 @@ function define_customizer_fields( $wp_customize ) {
 			'type'        => 'text',
 			'label'       => 'Google Tag Manager Container ID',
 			'description' => 'The ID for the container in Google Tag Manager that represents this site. Takes precedence over a Google Analytics Account value below if both are provided.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'analytics'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'analytics'
 		)
 	);
 
@@ -171,7 +194,7 @@ function define_customizer_fields( $wp_customize ) {
 			'type'        => 'text',
 			'label'       => 'Google Analytics Account',
 			'description' => 'Example: <em>UA-9876543-21</em>. Leave blank for development.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'analytics'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'analytics'
 		)
 	);
 
@@ -189,7 +212,7 @@ function define_customizer_fields( $wp_customize ) {
 								tag provided; e.g. "//cloud.typography.com/000000/000000/css/fonts.css".</strong><br><br>NOTE: Make sure the Cloud.Typography
 								project has been configured to deliver fonts to this site\'s domain.<br>
 								See the <a target="_blank" href="http://www.typography.com/cloud/user-guide/managing-domains">Cloud.Typography docs on managing domains</a> for more info.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'webfonts'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'webfonts'
 		)
 	);
 
@@ -207,7 +230,7 @@ function define_customizer_fields( $wp_customize ) {
 			'type'        => 'text',
 			'label'       => 'Undergraduate Application URL',
 			'description' => 'URL that points to the undergraduate student application.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'admissions'
 		)
 	);
 
@@ -224,7 +247,7 @@ function define_customizer_fields( $wp_customize ) {
 			'type'        => 'text',
 			'label'       => 'Graduate Application URL',
 			'description' => 'URL that points to the graduate student application.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'admissions'
 		)
 	);
 
@@ -242,7 +265,7 @@ function define_customizer_fields( $wp_customize ) {
 			'type'        => 'checkbox',
 			'label'       => 'Enable feeds',
 			'description' => 'This theme disables <a target="_blank" href="https://codex.wordpress.org/WordPress_Feeds">built-in RSS and Atom feeds</a> by default.  Enable this setting to re-activate them.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'feeds'
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'feeds'
 		)
 	);
 
@@ -262,7 +285,7 @@ function define_customizer_fields( $wp_customize ) {
 				'type'        => 'text',
 				'label'       => 'Default Header Title Text',
 				'description' => 'Title text to use by default in the header in single person templates. Can be overridden per-person.',
-				'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+				'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'people'
 			)
 		);
 
@@ -279,7 +302,7 @@ function define_customizer_fields( $wp_customize ) {
 				'type'        => 'text',
 				'label'       => 'Default Header Subtitle Text',
 				'description' => 'Subtitle text to use by default in the header in single person templates. Can be overridden per-person.',
-				'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+				'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'people'
 			)
 		);
 
@@ -296,7 +319,7 @@ function define_customizer_fields( $wp_customize ) {
 				array(
 					'label'       => 'Default Thumbnail',
 					'description' => 'Default thumbnail image to use when displaying photos of people.',
-					'section'     => THEME_CUSTOMIZER_PREFIX . 'people'
+					'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'people'
 				)
 			)
 		);
@@ -312,7 +335,7 @@ function define_customizer_fields( $wp_customize ) {
 				array(
 					'label'       => 'Default Header Image (-sm+)',
 					'description' => 'Default header image at the -sm breakpoint and up for single person templates. Recommended dimensions: 1600px x 400px',
-					'section'     => THEME_CUSTOMIZER_PREFIX . 'people',
+					'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'people',
 					'mime_type'   => 'image'
 				)
 			)
@@ -329,7 +352,7 @@ function define_customizer_fields( $wp_customize ) {
 				array(
 					'label'       => 'Default Header Image (-xs)',
 					'description' => 'Default header image at the -xs breakpoint for single person templates. Recommended dimensions: 575px x 575px',
-					'section'     => THEME_CUSTOMIZER_PREFIX . 'people',
+					'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'people',
 					'mime_type'   => 'image'
 				)
 			)
@@ -351,7 +374,7 @@ function define_customizer_fields( $wp_customize ) {
 				array(
 					'label'       => 'Default Header Image (-sm+)',
 					'description' => 'Default header image at the -sm breakpoint and up for single degree templates. Recommended dimensions: 1600px x 400px',
-					'section'     => THEME_CUSTOMIZER_PREFIX . 'degrees',
+					'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'degrees',
 					'mime_type'   => 'image'
 				)
 			)
@@ -368,7 +391,7 @@ function define_customizer_fields( $wp_customize ) {
 				array(
 					'label'       => 'Default Header Image (-xs)',
 					'description' => 'Default header image at the -xs breakpoint for single degree templates. Recommended dimensions: 575px x 575px',
-					'section'     => THEME_CUSTOMIZER_PREFIX . 'degrees',
+					'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'degrees',
 					'mime_type'   => 'image'
 				)
 			)

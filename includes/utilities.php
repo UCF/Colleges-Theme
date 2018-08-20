@@ -18,10 +18,10 @@ function format_raw_postmeta( $postmeta ) {
 
 
 /**
- * Returns a theme mod value from THEME_CUSTOMIZER_DEFAULTS.
+ * Returns a theme mod value from COLLEGES_THEME_CUSTOMIZER_DEFAULTS.
  **/
 function get_theme_mod_default( $theme_mod ) {
-	$defaults = unserialize( THEME_CUSTOMIZER_DEFAULTS );
+	$defaults = unserialize( COLLEGES_THEME_CUSTOMIZER_DEFAULTS );
 	if ( $defaults && isset( $defaults[$theme_mod] ) ) {
 		return $defaults[$theme_mod];
 	}
@@ -30,7 +30,7 @@ function get_theme_mod_default( $theme_mod ) {
 
 
 /**
- * Returns a theme mod value or the default set in THEME_CUSTOMIZER_DEFAULTS if
+ * Returns a theme mod value or the default set in COLLEGES_THEME_CUSTOMIZER_DEFAULTS if
  * the theme mod value hasn't been set yet.
  **/
 function get_theme_mod_or_default( $theme_mod ) {
