@@ -4,7 +4,7 @@
  **/
 
  /**
-  * The following constants are now deprecated.
+  * The following constants are deprecated.
   * They will be removed from the theme in version 1.2.0
   * #TODO: Remove these constants prior to releasing v1.2.0
   */
