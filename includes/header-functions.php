@@ -125,6 +125,9 @@ function get_header_title( $obj ) {
 		if ( $obj->post_type === 'person' ) {
 			$title = get_theme_mod_or_default( 'person_header_title' ) ?: get_field( 'page_header_title', $obj->ID );
 		}
+		else {
+			$title = get_field( 'page_header_title', $obj->ID );
+		}
 
 		if ( ! $title ) {
 			$title = single_post_title( '', false );

@@ -12,6 +12,7 @@ define( 'THEME_CUSTOMIZER_PREFIX', 'ucf_colleges_' );
 define( 'THEME_CUSTOMIZER_DEFAULTS', serialize( array(
 	'apply_undergraduate_url' => 'https://apply.ucf.edu/application/',
 	'apply_graduate_url'      => 'https://application.graduate.ucf.edu/',
+	'enable_feeds'            => false,
 	'person_header_title'     => 'Faculty and Research',
 	'person_header_subtitle'  => get_bloginfo( 'name' ),
 	'person_thumbnail'        => THEME_IMG_URL . '/no-photo.jpg'
@@ -83,6 +84,13 @@ function define_customizer_sections( $wp_customize ) {
 		THEME_CUSTOMIZER_PREFIX . 'admissions',
 		array(
 			'title' => 'UCF Admissions'
+		)
+	);
+
+	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'feeds',
+		array(
+			'title' => 'Feeds'
 		)
 	);
 
@@ -217,6 +225,24 @@ function define_customizer_fields( $wp_customize ) {
 			'label'       => 'Graduate Application URL',
 			'description' => 'URL that points to the graduate student application.',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'admissions'
+		)
+	);
+
+	// Feeds
+	$wp_customize->add_setting(
+		'enable_feeds',
+		array(
+			'default' => get_theme_mod_default( 'enable_feeds' )
+		)
+	);
+
+	$wp_customize->add_control(
+		'enable_feeds',
+		array(
+			'type'        => 'checkbox',
+			'label'       => 'Enable feeds',
+			'description' => 'This theme disables <a target="_blank" href="https://codex.wordpress.org/WordPress_Feeds">built-in RSS and Atom feeds</a> by default.  Enable this setting to re-activate them.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'feeds'
 		)
 	);
 
@@ -402,14 +428,17 @@ add_filter( 'redirect_canonical', 'no_redirect_on_404' );
 
 
 /**
- * Kill attachment pages, author pages, daily archive pages, and feeds.
+ * Kill attachment pages, author pages, daily archive pages, and
+ * (optionally) feeds.
  *
  * http://betterwp.net/wordpress-tips/disable-some-wordpress-pages/
  **/
 function kill_unused_templates() {
 	global $wp_query, $post;
 
-	if ( is_author() || is_attachment() || is_day() || is_feed() ) {
+	$enable_feeds = filter_var( get_theme_mod_or_default( 'enable_feeds' ), FILTER_VALIDATE_BOOLEAN );
+
+	if ( is_author() || is_attachment() || is_day() || ( is_feed() && $enable_feeds === false ) ) {
 		wp_redirect( home_url() );
 		exit();
 	}

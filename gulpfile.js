@@ -10,7 +10,6 @@ var browserSync = require('browser-sync').create(),
     sass = require('gulp-sass'),
     scsslint = require('gulp-scss-lint'),
     uglify = require('gulp-uglify'),
-    runSequence = require('run-sequence'),
     merge = require('merge');
 
 
@@ -42,43 +41,51 @@ var configLocal = require('./gulp-config.json'),
 //
 
 // Web font processing
-gulp.task('move-components-font-sans-serif', function() {
-  return gulp.src([
+gulp.task('move-components-font-sans-serif', function(done) {
+  gulp.src([
     config.packagesPath + config.athena.fontPath + '/ucf-sans-serif-alt/*',
     '!' + config.athena.fontPath + '/ucf-sans-serif-alt/generator_config.txt'
   ])
     .pipe(gulp.dest(config.dist.fontPath + '/ucf-sans-serif-alt'));
+
+  done();
 });
 
-gulp.task('move-components-font-condensed', function() {
-  return gulp.src([
+gulp.task('move-components-font-condensed', function(done) {
+  gulp.src([
     config.packagesPath + config.athena.fontPath + '/ucf-condensed-alt/*',
     '!' + config.athena.fontPath + '/ucf-condensed-alt/generator_config.txt'
   ])
     .pipe(gulp.dest(config.dist.fontPath + '/ucf-condensed-alt'));
+
+  done();
 });
 
-gulp.task('move-components-font-slab-serif', function() {
-  return gulp.src([
+gulp.task('move-components-font-slab-serif', function(done) {
+  gulp.src([
     config.packagesPath + config.athena.fontPath + '/tulia/*',
     '!' + config.athena.fontPath + '/tulia/generator_config.txt'
   ])
     .pipe(gulp.dest(config.dist.fontPath + '/tulia'));
+
+  done();
 });
 
 // Copy Font Awesome files
-gulp.task('move-components-fontawesome', function() {
+gulp.task('move-components-fontawesome', function(done) {
   gulp.src(config.packagesPath + '/font-awesome/fonts/**/*')
    .pipe(gulp.dest(config.dist.fontPath + '/font-awesome'));
+
+  done();
 });
 
 // Run all component-related tasks
-gulp.task('components', [
+gulp.task('components', gulp.parallel(
   'move-components-fontawesome',
   'move-components-font-sans-serif',
   'move-components-font-condensed',
   'move-components-font-slab-serif'
-]);
+));
 
 
 //
@@ -116,10 +123,10 @@ gulp.task('scss-build-theme-css', function() {
   return buildCSS(config.src.scssPath + '/style.scss', 'style.min.css');
 });
 
-gulp.task('scss-build', ['scss-build-theme-css']);
+gulp.task('scss-build', gulp.parallel('scss-build-theme-css'));
 
 // All css-related tasks
-gulp.task('css', ['scss-lint', 'scss-build']);
+gulp.task('css', gulp.series('scss-lint', 'scss-build'));
 
 
 //
@@ -149,9 +156,7 @@ gulp.task('js-build', function() {
 });
 
 // All js-related tasks
-gulp.task('js', function() {
-  runSequence('es-lint', 'js-build');
-});
+gulp.task('js', gulp.series('es-lint', 'js-build'));
 
 
 //
@@ -166,15 +171,12 @@ gulp.task('watch', function() {
     });
   }
 
-  gulp.watch(config.src.scssPath + '/**/*.scss', ['css']).on('change', browserSync.reload);
-  gulp.watch(config.src.jsPath + '/**/*.js', ['js']).on('change', browserSync.reload);
+  gulp.watch(config.src.scssPath + '/**/*.scss', gulp.series('css')).on('change', browserSync.reload);
+  gulp.watch(config.src.jsPath + '/**/*.js', gulp.series('js')).on('change', browserSync.reload);
 });
 
 
 //
 // Default task
 //
-gulp.task('default', function() {
-  // Make sure 'components' completes before 'css' or 'js' are allowed to run
-  runSequence('components', ['css', 'js']);
-});
+gulp.task('default', gulp.series('components', 'css', 'js'));

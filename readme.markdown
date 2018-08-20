@@ -1,6 +1,6 @@
 # Colleges Theme
 
-A responsive WordPress theme for UCF's college websites, built off of the [Athena Framework](https://github.com/UCF/Athena-Framework).
+A responsive WordPress theme for UCF's college websites, built off of the [Athena Framework](https://ucf.github.io/Athena-Framework/).
 
 
 ## Installation Requirements
@@ -8,34 +8,36 @@ A responsive WordPress theme for UCF's college websites, built off of the [Athen
 This theme is developed and tested against WordPress 4.7.3+ and PHP 5.3.x+.
 
 ### Required Plugins
-* Advanced Custom Fields PRO
+These plugins *must* be activated for the theme to function properly.
+* [Advanced Custom Fields PRO](https://www.advancedcustomfields.com/pro/)
 
-### Recommended Plugins
-* Athena Shortcodes
-* Automatic Sections Menu Shortcode
-* Gravity Forms
-* Page Links To
-* UCF Degree Custom Post Type
-* UCF Departments Taxonomy
-* UCF Employee Types Taxonomy
-* UCF Events
-* UCF News
-* UCF Page Assets
-* UCF Post List Shortcode (2.0.0+)
-* UCF People Custom Post Type
-* UCF Section
-* UCF Social
-* UCF Spotlight
-* Varnish Dependency Purger or UCF WordPress Varnish as a Service
-* WP Allowed Hosts
-* WP Mail SMTP
-* WP Shortcode Interface
-* Yoast SEO
+### Supported Plugins
+The plugins listed below are extended upon in this theme--this may include custom layouts for feeds, style modifications, etc. These plugins are not technically required on sites running this theme, and shouldn't be activated on sites that don't require their features. A plugin does not have to be listed here to be compatible with this theme.
+* [Athena Shortcodes](https://github.com/UCF/Athena-Shortcodes-Plugin)
+* [Automatic Sections Menus Shortcode](https://github.com/UCF/Section-Menus-Shortcode)
+* [Gravity Forms](https://www.gravityforms.com/)
+* [Page Links To](https://wordpress.org/plugins/page-links-to/)
+* [UCF Degree Custom Post Type](https://github.com/UCF/UCF-Degree-CPT-Plugin)
+* [UCF Departments Taxonomy](https://github.com/UCF/UCF-Departments-Tax-Plugin)
+* [UCF Employee Type Taxonomy](https://github.com/UCF/UCF-Employee-Type-Tax-Plugin)
+* [UCF Events](https://github.com/UCF/UCF-Events-Plugin)
+* [UCF News](https://github.com/UCF/UCF-News-Plugin)
+* [UCF Page Assets](https://github.com/UCF/UCF-Page-Assets-Plugin)
+* [UCF Post List Shortcode (2.0.0+)](https://github.com/UCF/UCF-Post-List-Shortcode)
+* [UCF People Custom Post Type](https://github.com/UCF/UCF-People-CPT)
+* [UCF Section](https://github.com/UCF/UCF-Section-Plugin)
+* [UCF Social](https://github.com/UCF/UCF-Social-Plugin)
+* [UCF Spotlights](https://github.com/UCF/UCF-Spotlights-Plugin)
+* [WP Allowed Hosts](https://github.com/UCF/WP-Allowed-Hosts)
+* [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/)
+* [WP Shortcode Interface](https://github.com/UCF/WP-Shortcode-Interface)
+* [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
 
 
 ## Configuration
 * Ensure that menus have been created and assigned to the Header Menu and Footer Menu locations.
 * Import field groups (`dev/acf-fields.json`) using the ACF importer under Custom Fields > Tools.
+* Set the homepage to a static page in Settings > Reading
 * If you have a [Cloud.Typography](https://www.typography.com/cloud/welcome/) account, ensure that webfonts have been properly configured to a CSS Key that [allows access to your environment](https://dashboard.typography.com/user-guide/managing-domains).
 
 
@@ -47,7 +49,7 @@ Note that compiled, minified css and js files are included within the repo.  Cha
 
 ### Requirements
 * node
-* gulp
+* gulp-cli
 
 ### Instructions
 1. Clone the Colleges-Theme repo into your development environment, within your WordPress installation's `themes/` directory: `git clone https://github.com/UCF/Colleges-Theme.git`
