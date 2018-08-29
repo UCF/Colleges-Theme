@@ -47,7 +47,6 @@ function get_theme_mod_or_default( $theme_mod ) {
 }
 
 
-
 /**
  * Utility function that returns an image url by its thumbnail size.
  **/
@@ -57,4 +56,15 @@ function get_attachment_src_by_size( $id, $size ) {
 		return $attachment[0];
 	}
 	return $attachment;
+}
+
+
+/**
+ * Checks if a given option is set to the provided value, and updates it
+ * if it is not
+ */
+function force_option_value( $option, $value ) {
+	if ( get_option( $option ) !== $value ) {
+		update_option( $option, $value );
+	}
 }

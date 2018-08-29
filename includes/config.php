@@ -420,8 +420,8 @@ remove_filter( 'the_excerpt', 'wpautop' );
 /**
  * Disable comments and trackbacks/pingbacks on this site.
  **/
-update_option( 'default_ping_status', 'off' );
-update_option( 'default_comment_status', 'off' );
+force_option_value( 'default_ping_status', 'off' );
+force_option_value( 'default_comment_status', 'off' );
 
 
 /**

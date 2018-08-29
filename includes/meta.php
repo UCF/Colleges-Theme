@@ -176,5 +176,5 @@ function colleges_post_list_js_deps( $deps ) {
 
 add_filter( 'ucf_post_list_js_deps', 'colleges_post_list_js_deps', 10, 1 );
 
-update_option( 'ucf_post_list_include_js_libs', false );
-update_option( 'ucf_degree_search_include_typeahead', false );
+force_option_value( 'ucf_post_list_include_js_libs', false );
+force_option_value( 'ucf_degree_search_include_typeahead', false );
