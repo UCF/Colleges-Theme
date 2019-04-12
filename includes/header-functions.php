@@ -25,7 +25,7 @@ function get_nav_markup() {
 ?>
 	<nav class="navbar navbar-toggleable-md navbar-inverse site-navbar" role="navigation">
 		<div class="container">
-			<?php if ( is_home() ): ?>
+			<?php if ( is_front_page() ): ?>
 			<h1 class="navbar-brand mb-0">
 				<?php echo get_sitename_formatted(); ?>
 			</h1>
