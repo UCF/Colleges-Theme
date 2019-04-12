@@ -25,10 +25,12 @@ function get_nav_markup() {
 ?>
 	<nav class="navbar navbar-toggleable-md navbar-inverse site-navbar" role="navigation">
 		<div class="container">
-			<?php if ( is_home() ): ?>
-			<h1 class="navbar-brand mb-0">
-				<?php echo get_sitename_formatted(); ?>
-			</h1>
+			<?php if ( is_front_page() ): ?>
+			<a href="<?php echo bloginfo( 'url' ); ?>" class="text-decoration-none">
+				<h1 class="navbar-brand mb-0">
+					<?php echo get_sitename_formatted(); ?>
+				</h1>
+			</a>
 			<?php else: ?>
 			<a href="<?php echo bloginfo( 'url' ); ?>" class="navbar-brand">
 				<?php echo get_sitename_formatted(); ?>
