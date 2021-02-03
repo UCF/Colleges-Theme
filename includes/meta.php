@@ -174,7 +174,35 @@ function colleges_post_list_js_deps( $deps ) {
 	return array( 'jquery', 'typeaheadjs', 'handlebars' );
 }
 
-add_filter( 'ucf_post_list_js_deps', 'colleges_post_list_js_deps', 10, 1 );
+if ( defined( 'UCF_POST_LIST__PLUGIN_FILE' ) ) {
+	$post_list_plugin_data = get_plugin_data( UCF_POST_LIST__PLUGIN_FILE, false, false );
 
-update_option( 'ucf_post_list_include_js_libs', false );
-update_option( 'ucf_degree_search_include_typeahead', false );
+	if (
+		isset( $post_list_plugin_data['Version'] )
+		&& version_compare( $post_list_plugin_data['Version'], '2.0.7', '<' )
+	) {
+		add_filter( 'ucf_post_list_js_deps', 'colleges_post_list_js_deps', 10, 1 );
+		add_filter( 'option_ucf_post_list_include_js_libs', '__return_false' );
+	} else {
+		add_filter( 'option_ucf_post_list_include_js_libs', '__return_true' );
+	}
+}
+
+if ( defined( 'UCF_DEGREE_SEARCH__PLUGIN_FILE' ) ) {
+	$degree_search_plugin_data = get_plugin_data( UCF_DEGREE_SEARCH__PLUGIN_FILE, false, false );
+	$post_list_plugin_data = array();
+	if ( defined( 'UCF_POST_LIST__PLUGIN_FILE' ) ) {
+		$post_list_plugin_data = get_plugin_data( UCF_POST_LIST__PLUGIN_FILE, false, false );
+	}
+
+	if (
+		isset( $degree_search_plugin_data['Version'] )
+		&& version_compare( $degree_search_plugin_data['Version'], '0.7.7', '<' )
+		&& isset( $post_list_plugin_data['Version'] )
+		&& version_compare( $post_list_plugin_data['Version'], '2.0.7', '<' )
+	) {
+		add_filter( 'option_ucf_degree_search_include_typeahead', '__return_false' );
+	} else {
+		add_filter( 'option_ucf_degree_search_include_typeahead', '__return_true' );
+	}
+}
