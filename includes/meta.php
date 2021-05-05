@@ -8,15 +8,22 @@
  * Enqueue front-end css and js.
  **/
 function enqueue_frontend_assets() {
-	wp_enqueue_style( 'style', COLLEGES_THEME_CSS_URL . '/style.min.css' );
+	$theme         = wp_get_theme( 'Colleges-Theme' );
+	$theme_version = ( $theme instanceof WP_Theme ) ? $theme->get( 'Version' ) : false;
+	$style_deps    = array();
 
+	// Register Cloud.Typography CSS Key
 	if ( $fontkey = get_theme_mod( 'cloud_typography_key' ) ) {
-		wp_enqueue_style( 'webfont', $fontkey );
+		wp_enqueue_style( 'webfont', $fontkey, null, null );
+		$style_deps[] = 'webfont';
 	}
+
+	// Register main theme stylesheet
+	wp_enqueue_style( 'style', COLLEGES_THEME_CSS_URL . '/style.min.css', $style_deps, $theme_version );
 
 	// Deregister jquery and re-register newer version in the document head.
 	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', '//code.jquery.com/jquery-3.2.1.min.js', null, null, false );
+	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js', null, null, false );
 	wp_enqueue_script( 'jquery' );
 
 	// Add other header scripts
@@ -25,8 +32,8 @@ function enqueue_frontend_assets() {
 
 	// Add footer scripts
 	wp_enqueue_script( 'ucf-header', '//universityheader.ucf.edu/bar/js/university-header.js?use-1200-breakpoint=1', null, null, true );
-	wp_enqueue_script( 'tether', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', null, null, true );
-	wp_enqueue_script( 'script', COLLEGES_THEME_JS_URL . '/script.min.js', array( 'jquery', 'tether' ), null, true );
+	wp_enqueue_script( 'tether', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js', null, null, true );
+	wp_enqueue_script( 'script', COLLEGES_THEME_JS_URL . '/script.min.js', array( 'jquery', 'tether' ), $theme_version, true );
 
 	// Add localized script variables to the document
 	$site_url = parse_url( get_site_url() );
