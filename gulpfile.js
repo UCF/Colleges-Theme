@@ -8,7 +8,7 @@ var browserSync = require('browser-sync').create(),
     babel = require('gulp-babel'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
-    scsslint = require('gulp-scss-lint'),
+    sassLint = require('gulp-sass-lint'),
     uglify = require('gulp-uglify'),
     merge = require('merge');
 
@@ -95,9 +95,9 @@ gulp.task('components', gulp.parallel(
 // Lint scss files
 gulp.task('scss-lint', function() {
   return gulp.src(config.src.scssPath + '/*.scss')
-    .pipe(scsslint({
-      'maxBuffer': 400 * 1024  // default: 300 * 1024
-    }));
+    .pipe(sassLint())
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError());
 });
 
 // Compile scss files
