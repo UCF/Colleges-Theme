@@ -185,6 +185,20 @@ function define_customizer_fields( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'ga4_account'
+	);
+
+	$wp_customize->add_control(
+		'ga4_account',
+		array(
+			'type'        => 'text',
+			'label'       => 'Google Analytics 4 Account',
+			'description' => 'Example: <em>G-ABC456HIJ0</em>.<br>Leave blank for development, or if you\'ve provided a Google Tag Manager Container ID and include Google Analytics via Google Tag Manager. Takes precedence over the Google Analytics Account setting below.',
+			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'analytics'
+		)
+	);
+
+	$wp_customize->add_setting(
 		'ga_account'
 	);
 
@@ -193,7 +207,7 @@ function define_customizer_fields( $wp_customize ) {
 		array(
 			'type'        => 'text',
 			'label'       => 'Google Analytics Account',
-			'description' => 'Example: <em>UA-9876543-21</em>. Leave blank for development.',
+			'description' => 'Example: <em>UA-9876543-21</em>.<br>Leave blank for development, or if you\'ve provided a Google Tag Manager Container ID and include Google Analytics via Google Tag Manager.',
 			'section'     => COLLEGES_THEME_CUSTOMIZER_PREFIX . 'analytics'
 		)
 	);
