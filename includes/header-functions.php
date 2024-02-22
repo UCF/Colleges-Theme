@@ -119,7 +119,11 @@ if( !function_exists( 'get_header_title' ) ) {
 		$title = '';
 
 		if ( is_home() || is_front_page() ) {
-			$title = get_field( 'homepage_header_title', $obj->ID );
+			$title = null;
+
+			if ( $obj ) {
+				$title = get_field( 'homepage_header_title', $obj->ID );
+			}
 
 			if ( ! $title ) {
 				$title = get_bloginfo( 'name' );
