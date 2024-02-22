@@ -23,12 +23,12 @@ function enqueue_frontend_assets() {
 
 	// Deregister jquery and re-register newer version in the document head.
 	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js', null, null, false );
+	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js', null, null, true );
 	wp_enqueue_script( 'jquery' );
 
 	// Add other header scripts
-	wp_register_script( 'typeaheadjs', 'https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.0.1/typeahead.bundle.min.js', array( 'jquery' ), null, false );
-	wp_register_script( 'handlebars', 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js', null, null, false );
+	wp_register_script( 'typeaheadjs', 'https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.0.1/typeahead.bundle.min.js', array( 'jquery' ), null, true );
+	wp_register_script( 'handlebars', 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js', null, null, true );
 
 	// Add footer scripts
 	wp_enqueue_script( 'ucf-header', '//universityheader.ucf.edu/bar/js/university-header.js?use-1200-breakpoint=1', null, null, true );
