@@ -12,12 +12,6 @@ function enqueue_frontend_assets() {
 	$theme_version = ( $theme instanceof WP_Theme ) ? $theme->get( 'Version' ) : false;
 	$style_deps    = array();
 
-	// Register Cloud.Typography CSS Key
-	if ( $fontkey = get_theme_mod( 'cloud_typography_key' ) ) {
-		wp_enqueue_style( 'webfont', $fontkey, null, null );
-		$style_deps[] = 'webfont';
-	}
-
 	// Register main theme stylesheet
 	wp_enqueue_style( 'style', COLLEGES_THEME_CSS_URL . '/style.min.css', $style_deps, $theme_version );
 
