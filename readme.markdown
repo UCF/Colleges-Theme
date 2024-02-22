@@ -38,7 +38,6 @@ The plugins listed below are extended upon in this theme--this may include custo
 * Ensure that menus have been created and assigned to the Header Menu and Footer Menu locations.
 * Import field groups (`dev/acf-fields.json`) using the ACF importer under Custom Fields > Tools.
 * Set the homepage to a static page in Settings > Reading
-* If you have a [Cloud.Typography](https://www.typography.com/cloud/welcome/) account, ensure that webfonts have been properly configured to a CSS Key that [allows access to your environment](https://dashboard.typography.com/user-guide/managing-domains).
 
 
 ## Development
