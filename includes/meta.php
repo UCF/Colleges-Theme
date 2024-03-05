@@ -71,6 +71,29 @@ add_filter( 'emoji_svg_url', '__return_false' );
 
 
 /**
+ * Replaces the ucf-header bar ID with the correct
+ * ID needed for the script to work correctly.
+ *
+ * @author Jim Barnes
+ * @since v1.5.0
+ *
+ * @param string $tag The script tag being filtered
+ * @param string $handle The handle of the header script
+ * @param string $src The source of the script
+ */
+function ucfhb_script_handle( $tag, $handle, $src ) {
+	if ( false !== strpos( $src, 'universityheader.ucf.edu' ) ) {
+		$tag = str_replace( "{$handle}-js", 'ucfhb-script', $tag );
+	}
+
+	return $tag;
+}
+
+if ( version_compare( $wp_version, '6.3.0', '>=' ) ) {
+	add_filter( 'script_loader_tag', 'ucfhb_script_handle', 10, 3 );
+}
+
+/**
  * Adds ID attribute to UCF Header script.
  **/
 function add_id_to_ucfhb( $url ) {
@@ -84,7 +107,9 @@ function add_id_to_ucfhb( $url ) {
     return $url;
 }
 
-add_filter( 'clean_url', 'add_id_to_ucfhb', 10, 1 );
+if ( version_compare( $wp_version, '6.3.0', '<' ) ) {
+	add_filter( 'clean_url', 'add_id_to_ucfhb', 10, 1 );
+}
 
 
 /**
